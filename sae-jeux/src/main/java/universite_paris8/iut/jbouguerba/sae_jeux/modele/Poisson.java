@@ -1,0 +1,34 @@
+package universite_paris8.iut.jbouguerba.sae_jeux.modele;
+
+public abstract class Poisson {
+    private String nom;
+    private int degats;
+    private int pv;
+    private String pouvoir;
+    private double x , y ;
+
+
+
+    public Poisson(String nom, int degats, int pv, String pouvoir, double x, double y) {
+        this.nom = nom;
+        this.degats = degats;
+        this.pv = pv;
+        this.pouvoir = pouvoir;
+        this.x = x;
+        this.y = y;
+    }
+    public String getNom() { return nom; }
+    public int getPv() { return pv; }
+    public int getDegats() { return degats; }
+    public String getPouvoir() { return pouvoir; }
+    public double getX() {
+        return this.x;
+    }
+
+    public double getY() {
+        return this.y;
+    }
+
+
+
+}
