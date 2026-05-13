@@ -4,13 +4,15 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+code/.idea/modules.xml
+code/.idea/jarRepositories.xml
+code/.idea/compiler.xml
+code/.idea/libraries/
 *.iws
 *.iml
 *.ipr
+code/.idea/*
+code/.mvn/
 
 ### Eclipse ###
 .apt_generated
