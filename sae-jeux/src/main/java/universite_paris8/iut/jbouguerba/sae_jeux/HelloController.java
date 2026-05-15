@@ -4,23 +4,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.animation.AnimationTimer;
-import javafx.animation.AnimationTimer;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Ennemi;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Environnement;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Tile;
+import java.net.URL;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
-import java.util.ArrayList;
 public class HelloController {
+    @FXML
     private AnimationTimer gameLoop;
+
+    @FXML
     private Environnement env;
 
     @FXML
@@ -37,23 +33,39 @@ public class HelloController {
 
     public void initialize() {
         this.env = new Environnement(6,4);
-
+        creeVueModele();
     }
 
-    public void afficherTerrain(){
-        map.getChildren().clear();
-        Tile[][] grille = env.getMap();
-        Image imgEau = new Image(getClass().getResource("").toExternalForm());
-        Image imgRocher = new Image(getClass().getResource("").toExternalForm());
+    private Image chargerImage(String nomFichier){
+        URL url = getClass().getResource(nomFichier);
+        if (url == null) {
+            System.out.println("IMAGE INTROUVABLE : " + nomFichier);
+            return null;
+        }
+        return new Image(String.valueOf(url));
+    }
 
-        for (int l = 0; l < env.getHauteur(); l++) {
-            for(int c =0; c < env.getLargeur(); c++){
+    public void creeVueModele(){
+       // Tile[][] grille = env.getMap();
 
-                Pane casePane = new Pane();
-                casePane.setPrefSize(40,40);
 
-                ImageView vueImage = new ImageView();
-                if (grille[l][c].getType() == TilePane.)
+        Image imgEau = chargerImage("Carré_vert_foncé.jpg");
+        Image imgRocher = chargerImage("carré_marron.jpg");
+
+        for (int i = 0; i < env.getHauteur(); i++) {
+            for (int j = 0; j < env.getLargeur(); j++) {
+
+                ImageView imv = new ImageView();
+                imv.setFitWidth(114.23);
+                imv.setFitHeight(114.2);
+
+                if (env.getMap()[i][j] == 0) {
+                    imv.setImage(imgEau);
+                } else {
+                    imv.setImage(imgRocher);
+                }
+
+                map.getChildren().add(imv);
             }
         }
     }

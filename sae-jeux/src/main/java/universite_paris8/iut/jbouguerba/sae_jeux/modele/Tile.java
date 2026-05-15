@@ -7,6 +7,7 @@ public class Tile {
 
     private int type; // 1 pour Eau, 2 pour Rocher
 
+
     public Tile(int type) {
         this.type = type;
     }

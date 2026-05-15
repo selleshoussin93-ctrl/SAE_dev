@@ -10,7 +10,7 @@
 <?import javafx.scene.control.Button?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="universite_paris8.iut.jbouguerba.sae_jeux.HelloController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox fx:id="PRessource" prefHeight="70.0" prefWidth="100.0" styleClass="background" stylesheets="@dark.css" BorderPane.alignment="CENTER">
          <children>
@@ -51,6 +51,6 @@
       </HBox>
    </top>
    <center>
-      <TilePane fx:id="map" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <TilePane fx:id="map" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT" />
    </center>
 </BorderPane>
