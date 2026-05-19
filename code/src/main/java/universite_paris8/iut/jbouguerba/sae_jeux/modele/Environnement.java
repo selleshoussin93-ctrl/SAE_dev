@@ -12,11 +12,14 @@ public class Environnement {
             {0, 0, 0, 0, 0, 0, 0}
     };
 
-    private ArrayList<Poisson> poisson;
+    private ArrayList<Poisson> poissons;
+    private ArrayList<Ennemi> ennemis;
 
-    public Environnement(int largeur, int hauteur) {
+    public Environnement(int largeur, int hauteur ) {
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.poissons = new ArrayList<>();
+        this.ennemis = new ArrayList<>();
 
     }
 
