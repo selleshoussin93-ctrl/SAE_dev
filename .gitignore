@@ -13,6 +13,8 @@ code/.idea/libraries/
 *.ipr
 code/.idea/*
 code/.mvn/
+.idea/
+
 
 ### Eclipse ###
 .apt_generated
