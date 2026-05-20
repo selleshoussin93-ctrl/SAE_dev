@@ -1,11 +1,11 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 
-public class Ennemi extends Poisson {
+public class PoissonAttaque extends Poisson {
 
     private int recompense;
     private double vitesse;
 
-    public Ennemi(String nom, int degats, int pv, String pouvoir, double x, double y, int recompense, double vitesse) {
+    public PoissonAttaque(String nom, int degats, int pv, String pouvoir, double x, double y, int recompense, double vitesse) {
         super(nom, pv, degats, pouvoir, x, y);
         this.recompense = recompense;
         this.vitesse = vitesse;
@@ -26,6 +26,11 @@ public class Ennemi extends Poisson {
 
 
     public double getVitesse() { return vitesse; }
+
+    public int getPv(){
+        return super.getPv();
+    }
+    
 
 
 
