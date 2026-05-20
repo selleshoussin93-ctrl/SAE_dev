@@ -1,13 +1,16 @@
 package universite_paris8.iut.jbouguerba.sae_jeux;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+
 import javafx.scene.layout.TilePane;
-import javafx.animation.AnimationTimer;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Ennemi;
+
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Environnement;
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 
 import java.net.URL;
 
@@ -16,15 +19,23 @@ public class HelloController {
 
     private Environnement env;
     private String outilSelectionne = null;
-
-    @FXML
-    private AnimationTimer gameLoop;
+    private Timeline gameLoop;
+    private int temps;
 
     @FXML
     private ImageView poissonRouge;
 
     @FXML
     private ImageView etoileDeMer;
+
+    @FXML
+    private ImageView crabe;
+
+    @FXML
+    private ImageView poulpe;
+
+    @FXML
+    private ImageView poissonGlobe;
 
     @FXML
     private TilePane map;
@@ -39,15 +50,27 @@ public class HelloController {
         poissonRouge.setOnMouseClicked(e -> outilSelectionne = "poisson_rouge.png");
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
 
-        AnimationTimer gameLoop = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                // ici on fera bouger les requins
-                mettreAJourVue();
-            }
-        };
-           gameLoop.start();
+        initAnimation();
+        gameLoop.play();
 
+    }
+
+    private void initAnimation() {
+        gameLoop = new Timeline();
+        temps = 0;
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+
+        KeyFrame kf = new KeyFrame(
+                Duration.seconds(0.017),
+                (ev -> {
+                    if (temps % 60 == 0) {
+                        mettreAJourVue();
+                    }
+                    temps++;
+                })
+        );
+
+        gameLoop.getKeyFrames().add(kf);
     }
 
     private Image chargerImage(String nomFichier){
@@ -107,7 +130,7 @@ public class HelloController {
             }
         }
 
-        for (Ennemi e : env.getListeEnnemi()) {
+        for (PoissonAttaque e : env.getListeEnnemi()) {
             e.avancer();
             int col = (int) e.getX();
             int ligne = (int) e.getY();
