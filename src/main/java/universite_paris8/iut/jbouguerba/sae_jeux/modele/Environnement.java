@@ -43,7 +43,7 @@ public class Environnement {
     public int getHauteur() {
         return map.length;
     }
-    public ArrayList<PoissonAttaque> getListePossonsAttaque() {
+    public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
         return PoissonsAtt;
     }
 

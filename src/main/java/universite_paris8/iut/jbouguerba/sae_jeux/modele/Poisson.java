@@ -29,6 +29,10 @@ public abstract class Poisson {
         return this.y;
     }
     public void setY(double y) { this.y = y; }
+    public void setPv(int pv){
+        this.pv = pv;
+
+    }
 
 
     public boolean Estmort(){

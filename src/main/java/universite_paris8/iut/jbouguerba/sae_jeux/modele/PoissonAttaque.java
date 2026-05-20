@@ -30,6 +30,7 @@ public class PoissonAttaque extends Poisson {
     public int getPv(){
         return super.getPv();
     }
+
     
 
 
