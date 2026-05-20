@@ -14,21 +14,21 @@ public class Environnement {
     };
 
 
-    private ArrayList<PoissonDeffense> PoissonsDe;
-    private ArrayList<PoissonAttaque> PoissonsAttaques;
+    private ArrayList<PoissonDeffense> listepoissonsDeffences;
+    private ArrayList<PoissonAttaque> listepoissonsAttaques;
     private int ressources;
 
     public Environnement(int largeur, int hauteur) {
         this.hauteur = map.length;
         this.largeur = map[0].length;
 
-        this.listeTour = new ArrayList<>();
-        this.listeEnnemi = new ArrayList<>();
+        this.listepoissonsDeffences = new ArrayList<>();
+        this.listepoissonsAttaques = new ArrayList<>();
         this.ressources = 40;
 
-        listeEnnemi.add(new PoissonAttaque("Requin Basic", 50, 50, "aucun", 6, 0, 10, 1.0));
-        listeEnnemi.add(new PoissonAttaque("Requin Marteau", 30, 30, "rapide", 6, 1, 15, 2.0));
-        listeEnnemi.add(new PoissonAttaque("Requin Baleine", 100, 100, "resistant", 6, 2, 30, 0.5));
+        listepoissonsAttaques.add(new PoissonAttaque("Requin Basic", 50, 50, "aucun", 6, 0, 10, 1.0));
+        listepoissonsAttaques.add(new PoissonAttaque("Requin Marteau", 30, 30, "rapide", 6, 1, 15, 2.0));
+        listepoissonsAttaques.add(new PoissonAttaque("Requin Baleine", 100, 100, "resistant", 6, 2, 30, 0.5));
 
 
     }
@@ -44,7 +44,7 @@ public class Environnement {
         return map.length;
     }
     public ArrayList<PoissonAttaque> getListeEnnemi() {
-        return listeEnnemi;
+        return listepoissonsAttaques;
     }
 
 

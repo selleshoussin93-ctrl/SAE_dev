@@ -11,6 +11,7 @@ import universite_paris8.iut.jbouguerba.sae_jeux.modele.Environnement;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 
@@ -24,6 +25,9 @@ public class HelloController {
 
     @FXML
     private ImageView poissonRouge;
+
+    @FXML
+    private Pane coucheEnnemi;
 
     @FXML
     private ImageView etoileDeMer;
@@ -52,6 +56,15 @@ public class HelloController {
 
         initAnimation();
         gameLoop.play();
+
+        for (PoissonAttaque e : env.getListeEnnemi()) {
+            ImageView imv = new ImageView(chargerImage("requin-normal.png"));
+            imv.setFitWidth(114);
+            imv.setFitHeight(114);
+            imv.setLayoutX(e.getX() * 114);
+            imv.setLayoutY(e.getY() * 114);
+            coucheEnnemi.getChildren().add(imv);
+        }
 
     }
 
@@ -84,8 +97,8 @@ public class HelloController {
 
     public void creeVueModele(){
 
-        Image imgEau = chargerImage("Carré_vert_foncé.jpg");
-        Image imgRocher = chargerImage("carré_marron.jpg");
+        Image imgEau = chargerImage("fond-chemin-droit.png");
+        Image imgRocher = chargerImage("fond-chemin-droit.png");
 
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
@@ -93,8 +106,8 @@ public class HelloController {
                 ImageView imv = new ImageView();
                 imv.setFitWidth(114);   ///128
                 imv.setFitHeight(114);
-                final int col = j;
-                final int ligne = i;
+                imv.setPreserveRatio(false);
+
 
 
                 if (env.getMap()[i][j] == 0) {
@@ -121,7 +134,7 @@ public class HelloController {
             for (int j = 0; j < env.getLargeur(); j++) {
                 ImageView imv = (ImageView) map.getChildren().get(i * env.getLargeur() + j);
                 if (env.getMap()[i][j] == 0) {
-                    imv.setImage(chargerImage("Carré_vert_foncé.jpg"));
+                    imv.setImage(chargerImage("fond-chemin-droit.png"));
                 } else {
                     imv.setImage(chargerImage("carré_marron.jpg"));
                 }
@@ -132,18 +145,9 @@ public class HelloController {
 
         for (PoissonAttaque e : env.getListeEnnemi()) {
             e.avancer();
-            int col = (int) e.getX();
-            int ligne = (int) e.getY();
-            int index = ligne * env.getLargeur() + col;
-            ImageView imv = (ImageView) map.getChildren().get(index);
-
-            if (e.getNom().equals("Requin Basic")) {
-                imv.setImage(chargerImage("requin-normal.png"));
-            } else if (e.getNom().equals("Requin Marteau")) {
-                imv.setImage(chargerImage("requin-marteau.png"));
-            } else if (e.getNom().equals("Requin Baleine")) {
-                imv.setImage(chargerImage("requin-baleine.png"));
-            }
+            ImageView imv = (ImageView) coucheEnnemi.getChildren().get(env.getListeEnnemi().indexOf(e));
+            imv.setLayoutX(e.getX());
+            imv.setLayoutY(e.getY() * 114);
         }
     }
 
