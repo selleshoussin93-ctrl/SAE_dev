@@ -4,11 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.animation.AnimationTimer;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.Ennemi;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Environnement;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
 
 import java.net.URL;
 
@@ -108,7 +107,7 @@ public class HelloController {
             }
         }
 
-        for (PoissonAttaque e : env.getListeEnnemi()) {
+        for (Ennemi e : env.getListeEnnemi()) {
             e.avancer();
             int col = (int) e.getX();
             int ligne = (int) e.getY();

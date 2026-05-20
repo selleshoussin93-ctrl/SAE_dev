@@ -4,7 +4,7 @@ public abstract class Poisson {
     private String nom;
     private int degats;
     private int pv;
-    private String pouvoir;
+    private String pouvoir; //?
     private double x , y ;
 
 
