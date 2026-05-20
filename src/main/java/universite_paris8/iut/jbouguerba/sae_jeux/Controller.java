@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import java.net.URL;
 
 
-public class HelloController {
+public class Controller {
 
     private Environnement env;
     private String outilSelectionne = null;
@@ -63,7 +63,9 @@ public class HelloController {
             imv.setFitHeight(114);
             imv.setLayoutX(e.getX() * 114);
             imv.setLayoutY(e.getY() * 114);
+
             coucheEnnemi.getChildren().add(imv);
+
         }
 
     }
@@ -74,7 +76,7 @@ public class HelloController {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
-                Duration.seconds(0.017),
+                Duration.seconds(0.010),  //0.017
                 (ev -> {
                     if (temps % 60 == 0) {
                         mettreAJourVue();
@@ -97,8 +99,8 @@ public class HelloController {
 
     public void creeVueModele(){
 
-        Image imgEau = chargerImage("fond-chemin-droit.png");
-        Image imgRocher = chargerImage("fond-chemin-droit.png");
+        Image imgEau = chargerImage("Carré_vert_foncé.jpg");
+        Image imgRocher = chargerImage("carré_marron.jpg");
 
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
@@ -134,7 +136,7 @@ public class HelloController {
             for (int j = 0; j < env.getLargeur(); j++) {
                 ImageView imv = (ImageView) map.getChildren().get(i * env.getLargeur() + j);
                 if (env.getMap()[i][j] == 0) {
-                    imv.setImage(chargerImage("fond-chemin-droit.png"));
+                    imv.setImage(chargerImage("Carré_vert_foncé.jpg"));
                 } else {
                     imv.setImage(chargerImage("carré_marron.jpg"));
                 }
