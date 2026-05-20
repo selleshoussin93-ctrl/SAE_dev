@@ -14,8 +14,8 @@ public class Environnement {
     };
 
 
-    private ArrayList<Tour> listeTour;
-    private ArrayList<Ennemi> listeEnnemi;
+    private ArrayList<PoissonDeffense> listeTour;
+    private ArrayList<PoissonAttaque> listeEnnemi;
     private int ressources;
 
     public Environnement(int largeur, int hauteur) {
@@ -26,9 +26,9 @@ public class Environnement {
         this.listeEnnemi = new ArrayList<>();
         this.ressources = 40;
 
-        listeEnnemi.add(new Ennemi("Requin Basic", 50, 50, "aucun", 6, 0, 10, 1.0));
-        listeEnnemi.add(new Ennemi("Requin Marteau", 30, 30, "rapide", 6, 1, 15, 2.0));
-        listeEnnemi.add(new Ennemi("Requin Baleine", 100, 100, "resistant", 6, 2, 30, 0.5));
+        listeEnnemi.add(new PoissonAttaque("Requin Basic", 50, 50, "aucun", 6, 0, 10, 1.0));
+        listeEnnemi.add(new PoissonAttaque("Requin Marteau", 30, 30, "rapide", 6, 1, 15, 2.0));
+        listeEnnemi.add(new PoissonAttaque("Requin Baleine", 100, 100, "resistant", 6, 2, 30, 0.5));
 
 
     }
@@ -43,7 +43,7 @@ public class Environnement {
     public int getHauteur() {
         return map.length;
     }
-    public ArrayList<Ennemi> getListeEnnemi() {
+    public ArrayList<PoissonAttaque> getListeEnnemi() {
         return listeEnnemi;
     }
 
