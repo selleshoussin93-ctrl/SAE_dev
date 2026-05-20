@@ -31,5 +31,12 @@ public abstract class Poisson {
     public void setY(double y) { this.y = y; }
 
 
+    public boolean Estmort(){
+        if(getPv()==0){
+            return true;
+        }
+        return false;
+    }
+
 
 }
