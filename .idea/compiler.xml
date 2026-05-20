@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="sae_jeux (1)" />
-        <module name="sae_jeux" />
         <module name="sae_jeux (2)" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sae_jeux" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

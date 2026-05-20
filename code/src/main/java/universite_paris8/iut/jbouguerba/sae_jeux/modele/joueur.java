@@ -16,5 +16,8 @@ public class joueur {
     public void ajouterRessource(getRecompense){
 
 
+
+
+
     }
 }

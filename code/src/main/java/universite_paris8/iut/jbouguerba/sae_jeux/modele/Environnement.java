@@ -13,13 +13,11 @@ public class Environnement {
     };
 
     private ArrayList<Poisson> poissons;
-    private ArrayList<Ennemi> ennemis;
 
     public Environnement(int largeur, int hauteur ) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.poissons = new ArrayList<>();
-        this.ennemis = new ArrayList<>();
 
     }
 
