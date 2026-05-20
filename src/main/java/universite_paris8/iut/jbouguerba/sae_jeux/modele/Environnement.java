@@ -14,8 +14,8 @@ public class Environnement {
     };
 
 
-    private ArrayList<PoissonDeffense> listeTour;
-    private ArrayList<PoissonAttaque> listeEnnemi;
+    private ArrayList<PoissonDeffense> PoissonsDe;
+    private ArrayList<PoissonAttaque> PoissonsAttaques;
     private int ressources;
 
     public Environnement(int largeur, int hauteur) {
