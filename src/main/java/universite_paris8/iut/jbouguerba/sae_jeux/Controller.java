@@ -49,6 +49,7 @@ public class Controller {
         this.env = new Environnement(6,4);
         creeVueModele();
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
+        System.out.println("poissonRouge est null ? " + (poissonRouge == null));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
 
         poissonRouge.setOnMouseClicked(e -> outilSelectionne = "poisson_rouge.png");
@@ -63,6 +64,7 @@ public class Controller {
             imv.setFitHeight(114);
             imv.setLayoutX(e.getX() * 114);
             imv.setLayoutY(e.getY() * 114);
+            imv.setMouseTransparent(true);
 
             coucheEnnemi.getChildren().add(imv);
 
@@ -102,6 +104,7 @@ public class Controller {
         Image imgEau = chargerImage("Carré_vert_foncé.jpg");
         Image imgRocher = chargerImage("carré_marron.jpg");
 
+
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
 
@@ -109,6 +112,8 @@ public class Controller {
                 imv.setFitWidth(114);   ///128
                 imv.setFitHeight(114);
                 imv.setPreserveRatio(false);
+                final int col = j;
+                final int l = i;
 
 
 
@@ -119,8 +124,10 @@ public class Controller {
                 }
 
                 imv.setOnMouseClicked(e -> {
+                    System.out.println("CLIC DETECTE");
                     if (outilSelectionne != null) {
                         imv.setImage(chargerImage(outilSelectionne));
+
                     }
                 });
 
