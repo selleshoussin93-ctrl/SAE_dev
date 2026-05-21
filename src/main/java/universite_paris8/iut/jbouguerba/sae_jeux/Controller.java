@@ -11,6 +11,7 @@ import universite_paris8.iut.jbouguerba.sae_jeux.modele.Environnement;
 import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 
@@ -24,6 +25,9 @@ public class Controller {
 
     @FXML
     private ImageView poissonRouge;
+
+    @FXML
+    private Pane coucheEnnemi;
 
     @FXML
     private ImageView etoileDeMer;
@@ -45,6 +49,7 @@ public class Controller {
         this.env = new Environnement(6,4);
         creeVueModele();
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
+        System.out.println("poissonRouge est null ? " + (poissonRouge == null));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
 
         poissonRouge.setOnMouseClicked(e -> outilSelectionne = "poisson_rouge.png");
@@ -52,6 +57,18 @@ public class Controller {
 
         initAnimation();
         gameLoop.play();
+
+        for (PoissonAttaque e : env.getListeEnnemi()) {
+            ImageView imv = new ImageView(chargerImage("requin-normal.png"));
+            imv.setFitWidth(114);
+            imv.setFitHeight(114);
+            imv.setLayoutX(e.getX() * 114);
+            imv.setLayoutY(e.getY() * 114);
+            imv.setMouseTransparent(true);
+
+            coucheEnnemi.getChildren().add(imv);
+
+        }
 
     }
 
@@ -61,7 +78,7 @@ public class Controller {
         gameLoop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
-                Duration.seconds(0.017),
+                Duration.seconds(0.010),  //0.017
                 (ev -> {
                     if (temps % 60 == 0) {
                         mettreAJourVue();
@@ -87,14 +104,17 @@ public class Controller {
         Image imgEau = chargerImage("Carré_vert_foncé.jpg");
         Image imgRocher = chargerImage("carré_marron.jpg");
 
+
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
 
                 ImageView imv = new ImageView();
                 imv.setFitWidth(114);   ///128
                 imv.setFitHeight(114);
+                imv.setPreserveRatio(false);
                 final int col = j;
-                final int ligne = i;
+                final int l = i;
+
 
 
                 if (env.getMap()[i][j] == 0) {
@@ -104,8 +124,10 @@ public class Controller {
                 }
 
                 imv.setOnMouseClicked(e -> {
+                    System.out.println("CLIC DETECTE");
                     if (outilSelectionne != null) {
                         imv.setImage(chargerImage(outilSelectionne));
+
                     }
                 });
 
@@ -130,20 +152,11 @@ public class Controller {
             }
         }
 
-        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
+        for (PoissonAttaque e : env.getListeEnnemi()) {
             e.avancer();
-            int col = (int) e.getX();
-            int ligne = (int) e.getY();
-            int index = ligne * env.getLargeur() + col;
-            ImageView imv = (ImageView) map.getChildren().get(index);
-
-            if (e.getNom().equals("Requin Basic")) {
-                imv.setImage(chargerImage("requin-normal.png"));
-            } else if (e.getNom().equals("Requin Marteau")) {
-                imv.setImage(chargerImage("requin-marteau.png"));
-            } else if (e.getNom().equals("Requin Baleine")) {
-                imv.setImage(chargerImage("requin-baleine.png"));
-            }
+            ImageView imv = (ImageView) coucheEnnemi.getChildren().get(env.getListeEnnemi().indexOf(e));
+            imv.setLayoutX(e.getX());
+            imv.setLayoutY(e.getY() * 114);
         }
     }
 

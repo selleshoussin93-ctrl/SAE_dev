@@ -1,7 +1,6 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 
 import java.util.ArrayList;
-import javafx.scene.paint.Color;
 
 public class Environnement {
     private int largeur;
@@ -14,8 +13,12 @@ public class Environnement {
     };
 
 
-    private ArrayList<PoissonDeffense> PoissonsDe;
-    private ArrayList<PoissonAttaque> PoissonsAtt;
+
+ 
+
+    private ArrayList<PoissonDeffense> poissonsDeff;
+    private ArrayList<PoissonAttaque> poissonsAtt;
+
     private int ressources;
 
     public Environnement(int largeur, int hauteur) {
@@ -43,8 +46,13 @@ public class Environnement {
     public int getHauteur() {
         return map.length;
     }
+
     public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
         return PoissonsAtt;
+
+    public ArrayList<PoissonAttaque> getListeEnnemi() {
+        return poissonsAtt;
+
     }
 
 
