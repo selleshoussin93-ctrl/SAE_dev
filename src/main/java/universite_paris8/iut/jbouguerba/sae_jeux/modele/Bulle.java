@@ -5,14 +5,14 @@ public class Bulle {
     private double x,y;
     private int degats;
     private double vitesse;
-    private PoissonAttaque cible;
+    private String pouvoir;
 
 
-    public Bulle(int degats, double vitesse, PoissonAttaque cible, double x, double y){
+    public Bulle(int degats, double vitesse, double x, double y, String pouvoir){
 
-        this.cible = cible;
         this.vitesse = vitesse;
         this.degats = degats;
+        this.pouvoir = pouvoir;
         this.y =y;
         this.x =x;
 
@@ -28,18 +28,7 @@ public class Bulle {
         }
     }
 
-    public boolean toucheCible() {
-        return this.x >= cible.getX();   // vérifie si le projectile a atteint l'ennemi
-    }
 
-    public void attaquer(){
-
-            if (toucheCible() == true) {
-                cible.setPv(cible.getPv() - getDegats()); // Enléve des point de vie au poisson qui attaque
-
-            }
-
-    }
 
     public double getX(){return this.x;}
     public void setX(double x) {this.x = x;}
