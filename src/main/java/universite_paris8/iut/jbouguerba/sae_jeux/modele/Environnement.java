@@ -26,9 +26,9 @@ public class Environnement {
         this.PoissonsAtt = new ArrayList<>();
         this.ressources = 40;
 
-        PoissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, "aucun", 6, 0, 10, 1.0));
-        PoissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30, "rapide", 6, 1, 15, 2.0));
-        PoissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, "resistant", 6, 2, 30, 0.5));
+        PoissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, 6, 0, 10, 1.0));
+        PoissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6, 1, 15, 2.0));
+        PoissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6, 2, 30, 0.5));
 
 
     }
@@ -43,7 +43,7 @@ public class Environnement {
     public int getHauteur() {
         return map.length;
     }
-    public ArrayList<PoissonAttaque> getListePossonsAttaque() {
+    public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
         return PoissonsAtt;
     }
 

@@ -130,7 +130,7 @@ public class HelloController {
             }
         }
 
-        for (PoissonAttaque e : env.getListeEnnemi()) {
+        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
             e.avancer();
             int col = (int) e.getX();
             int ligne = (int) e.getY();

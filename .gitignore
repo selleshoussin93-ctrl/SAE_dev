@@ -13,7 +13,7 @@ code/.idea/libraries/
 *.ipr
 code/.idea/*
 code/.mvn/
-.idea/
+.idea/*
 
 
 ### Eclipse ###
