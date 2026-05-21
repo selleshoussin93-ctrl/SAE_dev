@@ -4,11 +4,12 @@ public class PoissonAttaque extends Poisson {
 
     private int recompense;
     private double vitesse;
-
-    public PoissonAttaque(String nom, int degats, int pv, String pouvoir, double x, double y, int recompense, double vitesse) {
-        super(nom, pv, degats, pouvoir, x, y);
+    private int degats;
+    public PoissonAttaque(String nom, int pv,int degats, double x, double y, int recompense, double vitesse) {
+        super(nom, pv, x, y);
         this.recompense = recompense;
         this.vitesse = vitesse;
+        this.degats = degats;
     }
 
     public void avancer(){
@@ -31,7 +32,12 @@ public class PoissonAttaque extends Poisson {
         return super.getPv();
     }
 
-    
+    public void agit(){
+
+
+
+
+    }
 
 
 

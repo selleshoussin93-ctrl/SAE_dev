@@ -33,13 +33,14 @@ public class Bulle {
     }
 
     public void attaquer(){
-        if(toucheCible() == true){
-            cible.setPv(cible.getPv()-getDegats());
 
-        }
+            if (toucheCible() == true) {
+                cible.setPv(cible.getPv() - getDegats()); // Enléve des point de vie au poisson qui attaque
 
+            }
 
     }
+
     public double getX(){return this.x;}
     public void setX(double x) {this.x = x;}
     public double getY(){return this.y;}
