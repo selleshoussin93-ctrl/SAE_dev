@@ -15,7 +15,7 @@ import javafx.animation.Timeline;
 import java.net.URL;
 
 
-public class HelloController {
+public class Controller {
 
     private Environnement env;
     private String outilSelectionne = null;
