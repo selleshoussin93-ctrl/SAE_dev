@@ -3,7 +3,6 @@ package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 public abstract class Poisson {
     private String nom;
     private int pv;
-    private String pouvoir; //?
     private double x , y ;
 
 
@@ -11,13 +10,11 @@ public abstract class Poisson {
     public Poisson(String nom, int pv, double x, double y) {
         this.nom = nom;
         this.pv = pv;
-        this.pouvoir = pouvoir;
         this.x = x;
         this.y = y;
     }
     public String getNom() { return nom; }
     public int getPv() { return pv; }
-    public String getPouvoir() { return pouvoir; }
     public double getX() {
         return this.x;
     }
@@ -32,12 +29,13 @@ public abstract class Poisson {
     }
 
 
-    public boolean Estmort(){
+    public boolean estmort(){
         if(getPv()==0){
             return true;
         }
         return false;
     }
+
     public abstract void agit();
 
 
