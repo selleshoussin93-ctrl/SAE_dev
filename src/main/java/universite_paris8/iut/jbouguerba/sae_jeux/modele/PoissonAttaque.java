@@ -30,6 +30,7 @@ public class PoissonAttaque extends Poisson {
         if(this.getX() <= 0){
             this.setX(6 * 114);
         }
+
         /*this.setX(this.getX() - 5);// si le requin se deplace vers la gauche x diminue
         if(this.getX() <= 0){
             this.setX(6*114);

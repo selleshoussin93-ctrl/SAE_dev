@@ -123,6 +123,8 @@ public class Controller {
                 ImageView imv = new ImageView();
                 imv.setFitWidth(114);   ///128
                 imv.setFitHeight(114);
+                final int col = j;
+                final int l = i;
 
 
                 imv.setOnMouseClicked(e -> {
@@ -130,7 +132,10 @@ public class Controller {
                     if (outilSelectionne != null) {
                         System.out.println("Pret");
                         imv.setImage(chargerImage(outilSelectionne));
+                       /* env.getMap()[l][col] = 2;
+                        System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
 
+*/
 
                     }
                 });
