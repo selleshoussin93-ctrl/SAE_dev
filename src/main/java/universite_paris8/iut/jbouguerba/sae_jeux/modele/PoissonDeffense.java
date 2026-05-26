@@ -11,7 +11,7 @@ public class PoissonDeffense extends Poisson{
 
     }
 
-    public void CreerBulle(){//Cette methode creer une bulle a l'endroit du PoissonDeffense
+    public void CreerBulle(){   //Cette methode creer une bulle a l'endroit du PoissonDeffense
 
         if(getNom()=="crabe"){
             this.projectile = new Bulle(10,10,getX(),getY(),"gele");
@@ -25,14 +25,21 @@ public class PoissonDeffense extends Poisson{
             this.projectile = new Bulle(50,10,getX(),getY(),"explose");
         }
 
+
+
+
     }
     public Bulle getBull(){
-
         return this.projectile;
     }
 
 
     public void agit(){
+        if (this.projectile == null){
+             CreerBulle();
+        }else {
+            this.projectile.avancer();
+        }
 
     }
     public String getNom(){

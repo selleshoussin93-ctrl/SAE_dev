@@ -48,6 +48,10 @@ public class Controller {
     private TilePane map;
 
 
+    @FXML
+    private Pane coucheBulle;
+
+
     public void initialize() {
         this.env = new Environnement(6,4);
         creeVueModele();
@@ -162,7 +166,7 @@ public class Controller {
 
             int col = (int)(e.getX() / 114);
             int ligne = (int)(e.getY() / 114);
-            System.out.println("col : " + col + " ligne : " + ligne + " map : " + env.getMap()[ligne][col]);
+           // System.out.println("col : " + col + " ligne : " + ligne + " map : " + env.getMap()[ligne][col]);
 
             if (col > 0 && ligne >= 0 && ligne < env.getHauteur()) {
                 if (env.getMap()[ligne][col - 1] == 2) {
