@@ -65,6 +65,15 @@ public class PoissonAttaque extends Poisson {
 
 
     }
+    public void toucheCible(){
+
+
+
+
+    }
+    public void setCyble(PoissonDeffense cible){
+        this.cible = cible;
+    }
 
 
 
