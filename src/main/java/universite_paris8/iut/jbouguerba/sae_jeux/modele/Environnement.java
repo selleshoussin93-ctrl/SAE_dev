@@ -25,13 +25,13 @@ public class Environnement {
         this.hauteur = map.length;
         this.largeur = map[0].length;
 
-        this.PoissonsDe = new ArrayList<>();
-        this.PoissonsAtt = new ArrayList<>();
+        this.poissonsDeff = new ArrayList<>();
+        this.poissonsAtt = new ArrayList<>();
         this.ressources = 40;
 
-        PoissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, 6, 0, 10, 1.0));
-        PoissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6, 1, 15, 2.0));
-        PoissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6, 2, 30, 0.5));
+        poissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, 6*114, 0*114, 10, 4.0));
+        poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6*114, 1*114, 15, 10.0));
+        poissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6*114, 2*114, 30, 0.2));
 
 
     }
@@ -48,12 +48,10 @@ public class Environnement {
     }
 
     public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
-        return PoissonsAtt;
-
-    public ArrayList<PoissonAttaque> getListeEnnemi() {
         return poissonsAtt;
-
     }
+
+
 
 
 }

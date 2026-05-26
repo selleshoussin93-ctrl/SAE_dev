@@ -38,6 +38,7 @@ public abstract class Poisson {
         }
         return false;
     }
+
     public abstract void agit();
 
 
