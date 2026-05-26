@@ -19,13 +19,6 @@ public class Bulle {
     }
     public void avancer(){
         this.setX(this.getX()+vitesse);// si la bulle se deplace vers la droite x augmente
-        if(this.getX() >= 6){
-            this.setX(0);
-            this.setY(this.getY() + 1); // descend d'une ligne
-            if (this.getY() >= 4) {
-                this.setY(0);
-            }
-        }
     }
 
 

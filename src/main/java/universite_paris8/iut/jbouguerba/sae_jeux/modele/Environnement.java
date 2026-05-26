@@ -30,6 +30,28 @@ public class Environnement {
         poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6, 1, 15, 2.0));
         poissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6, 2, 30, 0.5));
 
+        poissonsDe.add(new PoissonDeffense("poisson rouge",20,0,0,10));
+        poissonsDe.add(new PoissonDeffense("poisson rouge",20,0,1,10));
+        poissonsDe.add(new PoissonDeffense("poisson rouge",20,0,2,10));
+
+    }
+
+    public void tirer(){
+
+
+    }
+
+    public void ajouterPoissonDeffense(){
+
+
+
+
+
+    }
+
+    public void ajouterPoissonAttaque(){
+
+
 
     }
 
