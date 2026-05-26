@@ -29,6 +29,7 @@ public class PoissonAttaque extends Poisson {
         this.setX(this.getX() - (this.getVitesse()+10));
         if(this.getX() <= 0){
             this.setX(6 * 114);
+            this.setPv(50);
         }
 
         /*this.setX(this.getX() - 5);// si le requin se deplace vers la gauche x diminue
@@ -47,9 +48,11 @@ public class PoissonAttaque extends Poisson {
         nbRecul = 0;
     }
 
+    @Override
     public boolean estMort() {
-        return super.getPv() <= 0;
+        return getPv() <= 0;
     }
+
     public int getRecompense() {
         return recompense; }
 
@@ -72,11 +75,12 @@ public class PoissonAttaque extends Poisson {
 
 
     }
+    /*
     public void setCyble(PoissonDeffense cible){
         this.cible = cible;
     }
 
-
+*/
 
 }
 

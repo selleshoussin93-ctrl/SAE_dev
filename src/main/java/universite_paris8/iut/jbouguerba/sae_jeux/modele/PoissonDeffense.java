@@ -27,12 +27,15 @@ public class PoissonDeffense extends Poisson{
 
     }
 
+    @Override
+    public boolean estMort() {
+        return super.estMort();
+    }
+
 
     public void agit(){
-
     }
     public String getNom(){
-
 
         return super.getNom();
     }

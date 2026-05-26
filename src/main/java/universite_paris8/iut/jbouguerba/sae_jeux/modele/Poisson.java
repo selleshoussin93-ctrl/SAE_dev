@@ -29,12 +29,10 @@ public abstract class Poisson {
     }
 
 
-    public boolean estmort(){
-        if(getPv()==0){
-            return true;
-        }
-        return false;
+    public boolean estMort() {
+        return getPv() <= 0;
     }
+
 
     public abstract void agit();
 

@@ -42,6 +42,9 @@ public class Controller {
     @FXML
     private ImageView poissonGlobe;
 
+    @FXML
+    private
+
 
     @FXML
     private TilePane map;
@@ -57,6 +60,7 @@ public class Controller {
         System.out.println("poisson rouge");}
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
+
 
         initAnimation();
         gameLoop.play();
@@ -105,7 +109,7 @@ public class Controller {
     private Image chargerImage(String nomFichier){
         URL url = getClass().getResource(nomFichier);
         if (url == null) {
-            System.out.println("IMAGE INTROUVABLE : " + nomFichier);
+           // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
             return null;
         }
         return new Image(String.valueOf(url));
@@ -128,14 +132,14 @@ public class Controller {
 
 
                 imv.setOnMouseClicked(e -> {
-                    System.out.println("CLIC DETECTE" );
+                   // System.out.println("CLIC DETECTE" );
                     if (outilSelectionne != null) {
-                        System.out.println("Pret");
+                       // System.out.println("Pret");
                         imv.setImage(chargerImage(outilSelectionne));
-                       /* env.getMap()[l][col] = 2;
-                        System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
+                        env.getMap()[l][col] = 2;
+                     //   System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
 
-*/
+
 
                     }
                 });
@@ -146,8 +150,6 @@ public class Controller {
                 } else {
                     imv.setImage(imgRocher);
                 }
-
-
 
                 map.getChildren().add(imv);
             }
@@ -165,13 +167,16 @@ public class Controller {
 
             int col = (int)(e.getX() / 114);
             int ligne = (int)(e.getY() / 114);
-            System.out.println("col : " + col + " ligne : " + ligne + " map : " + env.getMap()[ligne][col]);
 
-            if (col > 0 && ligne >= 0 && ligne < env.getHauteur()) {
-                if (env.getMap()[ligne][col - 1] == 2) {
+
+            if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
+                if (env.getMap()[ligne][col] == 2) {
                     e.subirAttaque(10);
                     if (e.estMort()) {
-                        env.getMap()[ligne][col - 1] = 0;
+                        env.getMap()[ligne][col ] = 0;
+                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
+                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
+
                     }
                 }
             }
