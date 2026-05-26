@@ -26,6 +26,10 @@ public class PoissonDeffense extends Poisson{
         }
 
     }
+    public Bulle getBull(){
+
+        return this.projectile;
+    }
 
 
     public void agit(){

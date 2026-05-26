@@ -30,6 +30,7 @@ public class Controller {
     @FXML
     private Pane coucheEnnemi;
 
+
     @FXML
     private ImageView etoileDeMer;
 
@@ -52,11 +53,12 @@ public class Controller {
         creeVueModele();
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
-
+        crabe.setImage(chargerImage("crabe.png"));
         poissonRouge.setOnMouseClicked(e -> {outilSelectionne = "poisson_rouge.png";
         System.out.println("poisson rouge");}
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
+        crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
 
         initAnimation();
         gameLoop.play();

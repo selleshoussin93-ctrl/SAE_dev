@@ -30,7 +30,7 @@
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
                   <Label text="10 res" />
-                  <ImageView fx:id="crabe" fitHeight="50.0" fitWidth="50.0" />
+                  <ImageView fx:id="crabe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="100.0">
