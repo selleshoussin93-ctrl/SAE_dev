@@ -18,6 +18,7 @@ public class Environnement {
 
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
+    private ArrayList<Bulle> bulles;
 
     private int ressources;
 
@@ -34,6 +35,19 @@ public class Environnement {
         poissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6*114, 2*114, 30, 0.2));
 
 
+
+
+    }
+
+
+    public ArrayList<Bulle> getListeBulles() {
+        ArrayList<Bulle> bulles = new ArrayList<>();
+        for (PoissonDeffense p : poissonsDeff) {
+            if (p.getBull() != null) {
+                bulles.add(p.getBull());
+            }
+        }
+        return bulles;
     }
 
 
@@ -49,6 +63,10 @@ public class Environnement {
 
     public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
         return poissonsAtt;
+    }
+
+    public ArrayList<PoissonDeffense> getListePoissonsDeffense() {
+        return poissonsDeff;
     }
 
 

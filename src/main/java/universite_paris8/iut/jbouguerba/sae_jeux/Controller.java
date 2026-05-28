@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +16,7 @@ import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
 
 import java.net.URL;
 
@@ -31,6 +33,7 @@ public class Controller {
 
     @FXML
     private Pane coucheEnnemi;
+
 
     @FXML
     private ImageView etoileDeMer;
@@ -51,16 +54,21 @@ public class Controller {
     private TilePane map;
 
 
+    @FXML
+    private Pane coucheBulle;
+
+
     public void initialize() {
         this.env = new Environnement(6,4);
         creeVueModele();
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
-
+        crabe.setImage(chargerImage("crabe.png"));
         poissonRouge.setOnMouseClicked(e -> {outilSelectionne = "poisson_rouge.png";
         System.out.println("poisson rouge");}
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
+        crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
 
 
         initAnimation();
@@ -168,6 +176,7 @@ public class Controller {
 
             int col = (int)(e.getX() / 114);
             int ligne = (int)(e.getY() / 114);
+           // System.out.println("col : " + col + " ligne : " + ligne + " map : " + env.getMap()[ligne][col]);
 
 
             if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
@@ -188,6 +197,23 @@ public class Controller {
                 }
             }
 
+            // Mettre à jour les poissons de défense et leurs bulles
+           /* coucheBulle.getChildren().clear(); // on redessine à chaque frame
+
+            for (PoissonDeffense p : env.getListePoissonsDeffense()) {
+                p.agit(); // déclenche avancer() ou CreerBulle()
+
+                Bulle b = p.getBull();
+                if (b != null) {
+                    ImageView imvBulle = new ImageView(chargerImage("bulle.png"));
+                    imvBulle.setFitWidth(30);
+                    imvBulle.setFitHeight(30);
+                    imvBulle.setLayoutX(b.getX());
+                    imvBulle.setLayoutY(b.getY());
+                    coucheBulle.getChildren().add(imvBulle);
+                }
+            }
+            */
 
         }
     }

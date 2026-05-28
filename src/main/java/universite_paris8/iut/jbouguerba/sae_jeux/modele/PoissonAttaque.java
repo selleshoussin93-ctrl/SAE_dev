@@ -54,7 +54,7 @@ public class PoissonAttaque extends Poisson {
     }
 
     public int getRecompense() {
-        return recompense; }
+        return this.recompense; }
 
 
     public double getVitesse() { return vitesse; }
