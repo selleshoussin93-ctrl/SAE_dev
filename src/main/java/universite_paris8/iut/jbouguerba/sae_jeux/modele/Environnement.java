@@ -65,6 +65,10 @@ public class Environnement {
         return poissonsAtt;
     }
 
+    public ArrayList<PoissonDeffense> getListePoissonsDeffense() {
+        return poissonsDeff;
+    }
+
 
 
 

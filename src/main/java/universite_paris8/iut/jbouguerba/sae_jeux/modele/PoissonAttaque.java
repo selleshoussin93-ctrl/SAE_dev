@@ -50,7 +50,7 @@ public class PoissonAttaque extends Poisson {
         return super.getPv() <= 0;
     }
     public int getRecompense() {
-        return recompense; }
+        return this.recompense; }
 
 
     public double getVitesse() { return vitesse; }
