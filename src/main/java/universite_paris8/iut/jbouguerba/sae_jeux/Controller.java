@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
 
 import java.net.URL;
 
@@ -177,6 +179,23 @@ public class Controller {
                 }
             }
 
+            // Mettre à jour les poissons de défense et leurs bulles
+           /* coucheBulle.getChildren().clear(); // on redessine à chaque frame
+
+            for (PoissonDeffense p : env.getListePoissonsDeffense()) {
+                p.agit(); // déclenche avancer() ou CreerBulle()
+
+                Bulle b = p.getBull();
+                if (b != null) {
+                    ImageView imvBulle = new ImageView(chargerImage("bulle.png"));
+                    imvBulle.setFitWidth(30);
+                    imvBulle.setFitHeight(30);
+                    imvBulle.setLayoutX(b.getX());
+                    imvBulle.setLayoutY(b.getY());
+                    coucheBulle.getChildren().add(imvBulle);
+                }
+            }
+            */
 
         }
     }
