@@ -62,6 +62,11 @@ public class Controller {
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
 
+        pelle.setImage(chargerImage("pelle.png"));
+        pelle.setOnMouseClicked(e -> {
+            outilSelectionne = "pelle";
+        });
+
 
         initAnimation();
         gameLoop.play();
@@ -173,18 +178,28 @@ public class Controller {
             if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
                 if (env.getMap()[ligne][col] == 2) {
                     e.subirAttaque(10);
-                    if (e.estMort()) {
-                        env.getMap()[ligne][col ] = 0;
+
+                    if (e.estMort() ) {
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
-                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
+
+                        if(env.getMap()[ligne][col ] == 1) {
+                            imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
+
+                        }else {
+
+                            imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
+                        }
+                    env.getMap()[ligne][col] = 0;
 
                     }
-                    if (e.estMort()) {
+                    /*
+                    if (e.estMort() && env.getMap()[ligne][col] == 1) {
                         env.getMap()[ligne][col] = 0;
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
                         imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
                     }
-
+                    else {
+*/
                 }
             }
 
