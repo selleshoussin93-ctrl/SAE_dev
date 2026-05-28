@@ -13,6 +13,8 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
 
 import java.net.URL;
 
@@ -43,8 +45,7 @@ public class Controller {
     private ImageView poissonGlobe;
 
     @FXML
-    private
-
+    private ImageView pelle;
 
     @FXML
     private TilePane map;
@@ -178,6 +179,12 @@ public class Controller {
                         imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
 
                     }
+                    if (e.estMort()) {
+                        env.getMap()[ligne][col] = 0;
+                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
+                        imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
+                    }
+
                 }
             }
 

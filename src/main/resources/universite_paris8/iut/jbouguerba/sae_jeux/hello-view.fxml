@@ -42,7 +42,7 @@
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
                   <Label prefHeight="19.0" prefWidth="101.0" text="15 res" />
-                  <ImageView fx:id="poulpe" fitHeight="50.0" fitWidth="50.0" />
+                  <ImageView fx:id="poulpe" fitHeight="102.0" fitWidth="100.0" />
                </children>
             </VBox>
          </children>
@@ -53,13 +53,14 @@
          <children>
             <VBox prefHeight="70.0" prefWidth="165.0">
                <children>
-                  <Label prefHeight="70.0" prefWidth="166.0" text="Ressources :" />
+                  <Label fx:id="nbRessource" prefHeight="70.0" prefWidth="166.0" text="Ressources :" />
                </children></VBox>
             <VBox prefHeight="70.0" prefWidth="137.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="136.0" text="          Pelle" />
+                  <ImageView fx:id="pelle" fitHeight="50.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" />
                </children></VBox>
-            <VBox prefHeight="70.0" prefWidth="601.0">
+            <VBox fx:id="statutPartie" prefHeight="70.0" prefWidth="601.0">
                <children>
                   <Label prefHeight="15.0" prefWidth="606.0" text="                                                       Statut partie" />
                </children>
