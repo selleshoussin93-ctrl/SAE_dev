@@ -69,7 +69,9 @@ public class Environnement {
         return poissonsDeff;
     }
 
-
+    public void ajouterPoissonDeffense(PoissonDeffense p){
+        poissonsDeff.add(p);
+    }
 
 
 }

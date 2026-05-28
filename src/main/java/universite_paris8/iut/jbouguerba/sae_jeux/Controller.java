@@ -152,7 +152,9 @@ public class Controller {
                         imv.setImage(chargerImage(outilSelectionne));
                         env.getMap()[l][col] = 2;
                      //   System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
-
+                        env.ajouterPoissonDeffense(
+                                new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
+                        );
 
 
                     }
@@ -187,40 +189,30 @@ public class Controller {
             if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
                 if (env.getMap()[ligne][col] == 2) {
                     e.subirAttaque(10);
-
-                    if (e.estMort() ) {
+                    if (e.estMort()) {
+                        env.getMap()[ligne][col ] = 0;
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
-
-                        if(env.getMap()[ligne][col ] == 1) {
-                            imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
-
-                        }else {
-
-                            imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
-                        }
-                    env.getMap()[ligne][col] = 0;
+                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
 
                     }
-                    /*
-                    if (e.estMort() && env.getMap()[ligne][col] == 1) {
+                    if (e.estMort()) {
                         env.getMap()[ligne][col] = 0;
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
                         imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
                     }
-                    else {
-*/
+
                 }
             }
 
             // Mettre à jour les poissons de défense et leurs bulles
-           /* coucheBulle.getChildren().clear(); // on redessine à chaque frame
+            coucheBulle.getChildren().clear(); // on redessine à chaque frame
 
             for (PoissonDeffense p : env.getListePoissonsDeffense()) {
                 p.agit(); // déclenche avancer() ou CreerBulle()
 
                 Bulle b = p.getBull();
                 if (b != null) {
-                    ImageView imvBulle = new ImageView(chargerImage("bulle.png"));
+                    ImageView imvBulle = new ImageView(chargerImage("bulle2.png"));
                     imvBulle.setFitWidth(30);
                     imvBulle.setFitHeight(30);
                     imvBulle.setLayoutX(b.getX());
@@ -228,7 +220,7 @@ public class Controller {
                     coucheBulle.getChildren().add(imvBulle);
                 }
             }
-            */
+
 
         }
     }

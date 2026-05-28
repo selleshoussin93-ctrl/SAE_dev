@@ -8,7 +8,7 @@ public class Bulle {
     private String pouvoir;
 
 
-    public Bulle(int degats, double vitesse, double x, double y, String pouvoir){
+    public Bulle(int degats, double vitesse, double x , double y, String pouvoir){
 
         this.vitesse = vitesse;
         this.degats = degats;
