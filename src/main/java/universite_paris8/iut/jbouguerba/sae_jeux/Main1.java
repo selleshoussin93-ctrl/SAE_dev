@@ -14,7 +14,7 @@ public class Main1 extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main1.class.getResource("hello-view.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 800, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 651);
         stage.setTitle("///");
         stage.setScene(scene);
         PoissonDeffense p = new PoissonDeffense("poisson rouge",30,0,0,10);

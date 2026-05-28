@@ -14,6 +14,8 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
 
 import java.net.URL;
@@ -45,6 +47,8 @@ public class Controller {
     @FXML
     private ImageView poissonGlobe;
 
+    @FXML
+    private ImageView pelle;
 
     @FXML
     private TilePane map;
@@ -65,6 +69,7 @@ public class Controller {
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
         crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
+
 
         initAnimation();
         gameLoop.play();
@@ -113,7 +118,7 @@ public class Controller {
     private Image chargerImage(String nomFichier){
         URL url = getClass().getResource(nomFichier);
         if (url == null) {
-            System.out.println("IMAGE INTROUVABLE : " + nomFichier);
+           // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
             return null;
         }
         return new Image(String.valueOf(url));
@@ -131,13 +136,18 @@ public class Controller {
                 ImageView imv = new ImageView();
                 imv.setFitWidth(114);   ///128
                 imv.setFitHeight(114);
+                final int col = j;
+                final int l = i;
 
 
                 imv.setOnMouseClicked(e -> {
-                    System.out.println("CLIC DETECTE" );
+                   // System.out.println("CLIC DETECTE" );
                     if (outilSelectionne != null) {
-                        System.out.println("Pret");
+                       // System.out.println("Pret");
                         imv.setImage(chargerImage(outilSelectionne));
+                        env.getMap()[l][col] = 2;
+                     //   System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
+
 
 
                     }
@@ -149,8 +159,6 @@ public class Controller {
                 } else {
                     imv.setImage(imgRocher);
                 }
-
-
 
                 map.getChildren().add(imv);
             }
@@ -170,12 +178,22 @@ public class Controller {
             int ligne = (int)(e.getY() / 114);
            // System.out.println("col : " + col + " ligne : " + ligne + " map : " + env.getMap()[ligne][col]);
 
-            if (col > 0 && ligne >= 0 && ligne < env.getHauteur()) {
-                if (env.getMap()[ligne][col - 1] == 2) {
+
+            if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
+                if (env.getMap()[ligne][col] == 2) {
                     e.subirAttaque(10);
                     if (e.estMort()) {
-                        env.getMap()[ligne][col - 1] = 0;
+                        env.getMap()[ligne][col ] = 0;
+                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
+                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
+
                     }
+                    if (e.estMort()) {
+                        env.getMap()[ligne][col] = 0;
+                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
+                        imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
+                    }
+
                 }
             }
 

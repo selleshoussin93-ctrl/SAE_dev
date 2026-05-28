@@ -33,6 +33,10 @@ public class PoissonDeffense extends Poisson{
         return this.projectile;
     }
 
+    @Override
+    public boolean estMort() {
+        return super.estMort();
+    }
 
     public void agit(){
         if (this.projectile == null){
@@ -41,9 +45,9 @@ public class PoissonDeffense extends Poisson{
             this.projectile.avancer();
         }
 
+    public void agit(){
     }
     public String getNom(){
-
 
         return super.getNom();
     }
