@@ -15,16 +15,17 @@ public class PoissonDeffense extends Poisson{
 
     public void CreerBulle(){   //Cette methode creer une bulle a l'endroit du PoissonDeffense
 
-        if(getNom()=="crabe"){
-            this.projectile = new Bulle(10,10,getX()+57,getY()+57,"gele");
-        } else if (getNom() == "poisson rouge") {
-            this.projectile = new Bulle(10,10,getX()+57,getY()+57,"aucun");
-        }else if(getNom() =="poulpe") {
-            this.projectile = new Bulle(10,10,getX()+57,getY()+57,"aucun");
+        if(getNom().equals("crabe.png")){
+            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"gele");
+            System.out.println("Bulle crabe créée, pouvoir : " + this.projectile.getPouvoir());
+        } else if (getNom().equals("poisson rouge")) {
+            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"aucun");
+        }else if(getNom().equals("poulpe")) {
+            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"aucun");
 
-            this.projectile = new Bulle(10,10,getX()+57,getY()+57,"aucun");
+            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"aucun");
         }else {
-            this.projectile = new Bulle(50,10,getX()+57,getY()+57,"explose");
+            this.projectile = new Bulle(50,30,getX()+57,getY()+57,"explose");
         }
 
 
@@ -41,6 +42,7 @@ public class PoissonDeffense extends Poisson{
     }
 
     public void agit() {
+
         if (this.projectile == null) {
             CreerBulle();
         } else {

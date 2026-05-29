@@ -30,4 +30,7 @@ public class Bulle {
     public int getDegats(){
         return this.degats;
     }
+    public String getPouvoir(){
+
+        return this.pouvoir;   }
 }

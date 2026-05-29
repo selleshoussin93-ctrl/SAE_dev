@@ -7,12 +7,15 @@ public class PoissonAttaque extends Poisson {
     private int degats;
     private int nbRecul = 0;
     private boolean enRecul = false;
-    public PoissonAttaque(String nom, int pv,int degats, double x, double y, int recompense, double vitesse) {
+    private double vitesseNormale;
+    private boolean ralenti;
+    public PoissonAttaque(String nom, int pv,int degats, double x, double y, int recompense, double vitesse ) {
         super(nom, pv, x, y);
         this.recompense = recompense;
         this.vitesse = vitesse;
         this.degats = degats;
-
+        this.vitesseNormale = vitesse;
+        this.ralenti = false;
     }
 
     public void avancer(){
@@ -26,7 +29,7 @@ public class PoissonAttaque extends Poisson {
             return;
         }
 
-        this.setX(this.getX() - (this.getVitesse()+10));
+        this.setX(this.getX() - this.getVitesse());
         if(this.getX() <= 0){
             this.setX(6 * 114);
             this.setPv(50);
@@ -41,6 +44,7 @@ public class PoissonAttaque extends Poisson {
             }
         }*/
     }
+
 
     public void subirAttaque(int degats) {
         super.setPv(super.getPv() - degats);
@@ -69,7 +73,41 @@ public class PoissonAttaque extends Poisson {
 
 
     }
-    public void toucheCible(){
+
+    public void enleveVie(Bulle e){
+        this.pv-=e.getDegats();
+    }
+
+    public void toucher(Bulle projectile, PoissonAttaque requin) {
+        double distance = Math.abs(projectile.getX() - requin.getX());
+        System.out.println("Distance bulle/requin : " + distance);
+
+        if (distance < 57) {
+            System.out.println("Collision détectée ! Pouvoir : " + projectile.getPouvoir());
+            enleveVie(projectile);
+
+            if (projectile.getPouvoir().equals("gele")) {
+                System.out.println("Ralentissement !");
+                this.ralentir();
+            }
+        }
+    }
+    public void ralentir() {
+        System.out.println("Vitesse avant : " + this.vitesse);
+        if (!ralenti) {
+            this.vitesse = this.vitesseNormale / 2;
+            this.ralenti = true;
+        }
+        System.out.println("Vitesse après : " + this.vitesse);
+    }
+
+    public void retablirVitesse() {
+        this.vitesse = this.vitesseNormale;
+        this.ralenti = false;
+    }
+}
+
+    /*public void toucheCible(){
 
 
 
@@ -82,5 +120,5 @@ public class PoissonAttaque extends Poisson {
 
 */
 
-}
+
 
