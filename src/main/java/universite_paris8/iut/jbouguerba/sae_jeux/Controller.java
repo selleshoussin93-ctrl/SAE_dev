@@ -158,19 +158,11 @@ public class Controller {
                         } else if (!outilSelectionne.equals("pelle")) {
                             imv.setImage(chargerImage(outilSelectionne));
                             env.getMap()[l][col] = 2;
+                            env.ajouterPoissonDeffense(
+                                    new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
+                            );
                         }
                     }
-                   /* if (outilSelectionne != null) {
-
-                        imv.setImage(chargerImage(outilSelectionne));
-                        env.getMap()[l][col] = 2;
-                     //   System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
-                        env.ajouterPoissonDeffense(
-                                new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
-                        );
-
-
-                    }*/
                 });
 
 
