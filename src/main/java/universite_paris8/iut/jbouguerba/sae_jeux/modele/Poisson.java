@@ -2,7 +2,7 @@ package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 
 public abstract class Poisson {
     private String nom;
-    private int pv;
+    protected int pv;
     private double x , y ;
 
 
@@ -34,7 +34,7 @@ public abstract class Poisson {
     }
 
 
-    public abstract void agit();
+
 
 
 }
