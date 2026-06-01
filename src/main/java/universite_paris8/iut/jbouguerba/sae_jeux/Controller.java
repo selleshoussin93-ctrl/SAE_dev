@@ -158,14 +158,11 @@ public class Controller {
                         } else if (!outilSelectionne.equals("pelle")) {
                             imv.setImage(chargerImage(outilSelectionne));
                             env.getMap()[l][col] = 2;
+                            env.ajouterPoissonDeffense(
+                                    new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
+                            );
                         }
                     }
-                   /* if (outilSelectionne != null) {
-
-                        imv.setImage(chargerImage(outilSelectionne));
-                        env.getMap()[l][col] = 2;
-
-                    }*/
                 });
 
 
@@ -190,16 +187,15 @@ public class Controller {
 
     private void mettreAJourVue() {
 
+        // Boucle ennemis
         for (PoissonAttaque e : env.getListePoissonsAttaque()) {
             e.avancer();
             ImageView imv = (ImageView) coucheEnnemi.getChildren().get(env.getListePoissonsAttaque().indexOf(e));
             imv.setLayoutX(e.getX());
-            imv.setLayoutY(e.getY() ); //*114
+            imv.setLayoutY(e.getY());
 
             int col = (int)(e.getX() / 114);
             int ligne = (int)(e.getY() / 114);
-           // System.out.println("col : " + col + " ligne : " + ligne + " map : " + env.getMap()[ligne][col]);
-
 
             if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
                 if (env.getMap()[ligne][col] == 2) {
@@ -218,27 +214,34 @@ public class Controller {
                     }
 
 
+                    if (e.estMort()) {
+                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
+                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
+                    }
                 }
             }
+        }
 
-            // Mettre à jour les poissons de défense et leurs bulles
-           /* coucheBulle.getChildren().clear(); // on redessine à chaque frame
+        // Boucle bulles — EN DEHORS de la boucle ennemis
+        coucheBulle.getChildren().clear();
+        for (PoissonDeffense p : env.getListePoissonsDeffense()) {
+            p.agit(); // ✅ appelé une seule fois
 
-            for (PoissonDeffense p : env.getListePoissonsDeffense()) {
-                p.agit(); // déclenche avancer() ou CreerBulle()
+            Bulle b = p.getBull();
+            if (b != null) {
+                // Afficher la bulle
+                ImageView imvBulle = new ImageView(chargerImage("bulle2.png"));
+                imvBulle.setFitWidth(30);
+                imvBulle.setFitHeight(30);
+                imvBulle.setLayoutX(b.getX());
+                imvBulle.setLayoutY(b.getY());
+                coucheBulle.getChildren().add(imvBulle);
 
-                Bulle b = p.getBull();
-                if (b != null) {
-                    ImageView imvBulle = new ImageView(chargerImage("bulle.png"));
-                    imvBulle.setFitWidth(30);
-                    imvBulle.setFitHeight(30);
-                    imvBulle.setLayoutX(b.getX());
-                    imvBulle.setLayoutY(b.getY());
-                    coucheBulle.getChildren().add(imvBulle);
+                // Vérifier collision avec chaque requin
+                for (PoissonAttaque requin : env.getListePoissonsAttaque()) {
+                    requin.toucher(b, requin); // ✅ ici pas dans la boucle ennemis
                 }
             }
-            */
-
         }
     }
 
