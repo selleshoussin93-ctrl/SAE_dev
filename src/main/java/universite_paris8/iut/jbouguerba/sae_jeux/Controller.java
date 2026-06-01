@@ -215,7 +215,6 @@ public class Controller {
 
 
                     if (e.estMort()) {
-                        env.getMap()[ligne][col] = 0;
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
                         imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
                     }
