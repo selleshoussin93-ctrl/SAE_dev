@@ -2,6 +2,7 @@ package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 
 import java.util.ArrayList;
 
+
 public class Environnement {
     private int largeur;
     private int hauteur;
@@ -16,7 +17,7 @@ public class Environnement {
     private ArrayList<PoissonAttaque> poissonsAtt;
     private ArrayList<Bulle> bulles;
 
-    private int ressources;
+
 
     public Environnement(int largeur, int hauteur) {
         this.hauteur = map.length;
@@ -24,7 +25,7 @@ public class Environnement {
 
         this.poissonsDeff = new ArrayList<>();
         this.poissonsAtt = new ArrayList<>();
-        this.ressources = 40;
+
 
         poissonsAtt.add(new PoissonAttaque("Requin Basic",   50,  50, 6*114, 0*114, 10, 14.0));
         poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30,  30, 6*114, 1*114, 15, 20.0));

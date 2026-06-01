@@ -15,8 +15,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.control.Label;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
+
 
 import java.net.URL;
 
@@ -54,6 +55,9 @@ public class Controller {
     @FXML
     private TilePane map;
 
+    @FXML
+    private Label nbRessource;
+
 
     @FXML
     private Pane coucheBulle;
@@ -62,6 +66,7 @@ public class Controller {
     public void initialize() {
         this.env = new Environnement(6,4);
         creeVueModele();
+
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
         crabe.setImage(chargerImage("crabe.png"));

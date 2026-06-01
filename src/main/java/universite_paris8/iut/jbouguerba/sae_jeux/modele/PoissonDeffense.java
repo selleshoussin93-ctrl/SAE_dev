@@ -52,12 +52,15 @@ public class PoissonDeffense extends Poisson{
     }
 
     public String getNom(){
+
         return super.getNom();
     }
     public double getX(){
+
         return super.getX();
     }
     public double getY(){
+
         return super.getY();
     }
 }
