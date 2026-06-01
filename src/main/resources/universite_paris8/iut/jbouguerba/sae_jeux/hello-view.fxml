@@ -60,7 +60,7 @@
             <VBox prefHeight="70.0" prefWidth="137.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="136.0" text="          Pelle" />
-                  <ImageView fx:id="pelle" fitHeight="50.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="pelle" fitHeight="49.0" fitWidth="134.0" pickOnBounds="true" />
                </children></VBox>
             <VBox fx:id="statutPartie" prefHeight="70.0" prefWidth="601.0">
                <children>
