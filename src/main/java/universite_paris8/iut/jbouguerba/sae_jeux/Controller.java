@@ -27,6 +27,7 @@ public class Controller {
     private String outilSelectionne = null;
     private Timeline gameLoop;
     private int temps;
+    private int[][] mapOriginale;
 
     @FXML
     private ImageView poissonRouge;
@@ -146,9 +147,21 @@ public class Controller {
 
 
                 imv.setOnMouseClicked(e -> {
-                   // System.out.println("CLIC DETECTE" );
                     if (outilSelectionne != null) {
-                       // System.out.println("Pret");
+                        if (outilSelectionne.equals("pelle") && env.getMap()[l][col] == 2) {
+                            env.getMap()[l][col] = mapOriginale[l][col];
+                            if (mapOriginale[l][col] == 1) {
+                                imv.setImage(chargerImage("New Piskel-1.png(3).png"));
+                            } else {
+                                imv.setImage(chargerImage("Carré_vert_foncéee.png"));
+                            }
+                        } else if (!outilSelectionne.equals("pelle")) {
+                            imv.setImage(chargerImage(outilSelectionne));
+                            env.getMap()[l][col] = 2;
+                        }
+                    }
+                   /* if (outilSelectionne != null) {
+
                         imv.setImage(chargerImage(outilSelectionne));
                         env.getMap()[l][col] = 2;
                      //   System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
@@ -157,7 +170,7 @@ public class Controller {
                         );
 
 
-                    }
+                    }*/
                 });
 
 
@@ -168,6 +181,13 @@ public class Controller {
                 }
 
                 map.getChildren().add(imv);
+            }
+        }
+
+        mapOriginale = new int[env.getHauteur()][env.getLargeur()];
+        for (int i = 0; i < env.getHauteur(); i++) {
+            for (int j = 0; j < env.getLargeur(); j++) {
+                mapOriginale[i][j] = env.getMap()[i][j];
             }
         }
 
@@ -188,6 +208,20 @@ public class Controller {
             if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
                 if (env.getMap()[ligne][col] == 2) {
                     e.subirAttaque(10);
+
+
+                    if (e.estMort()) {
+                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
+
+                        if (mapOriginale[ligne][col] == 1) {
+                            imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
+                        } else {
+                            imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
+                        }
+                        env.getMap()[ligne][col] = mapOriginale[ligne][col];
+                    }
+
+
                     if (e.estMort()) {
                         env.getMap()[ligne][col] = 0;
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
