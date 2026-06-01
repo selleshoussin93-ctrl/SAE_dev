@@ -9,6 +9,10 @@ public class PoissonAttaque extends Poisson {
     private boolean enRecul = false;
     private double vitesseNormale;
     private boolean ralenti;
+    private int tempRalenti;
+
+
+
     public PoissonAttaque(String nom, int pv,int degats, double x, double y, int recompense, double vitesse ) {
         super(nom, pv, x, y);
         this.recompense = recompense;
@@ -16,9 +20,19 @@ public class PoissonAttaque extends Poisson {
         this.degats = degats;
         this.vitesseNormale = vitesse;
         this.ralenti = false;
+        this.tempRalenti=0;
     }
 
     public void avancer(){
+
+        if (ralenti) {
+            tempRalenti++;
+            if (tempRalenti >= 5) {
+                retablirVitesse();
+                tempRalenti = 0;
+            }
+        }
+
         if (enRecul) {
             this.setX(this.getX() + 2); // recule de 2 pixels
             nbRecul++;
@@ -79,6 +93,7 @@ public class PoissonAttaque extends Poisson {
     }
 
     public void toucher(Bulle projectile, PoissonAttaque requin) {
+
         double distance = Math.abs(projectile.getX() - requin.getX());
         System.out.println("Distance bulle/requin : " + distance);
 
@@ -95,7 +110,7 @@ public class PoissonAttaque extends Poisson {
     public void ralentir() {
         System.out.println("Vitesse avant : " + this.vitesse);
         if (!ralenti) {
-            this.vitesse = this.vitesseNormale / 2;
+            this.vitesse = 0;
             this.ralenti = true;
         }
         System.out.println("Vitesse après : " + this.vitesse);
