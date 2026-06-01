@@ -222,7 +222,6 @@ public class Controller {
             }
         }
 
-        // Boucle bulles — EN DEHORS de la boucle ennemis
         coucheBulle.getChildren().clear();
         for (PoissonDeffense p : env.getListePoissonsDeffense()) {
             p.agit(); // ✅ appelé une seule fois
@@ -239,7 +238,7 @@ public class Controller {
 
                 // Vérifier collision avec chaque requin
                 for (PoissonAttaque requin : env.getListePoissonsAttaque()) {
-                    requin.toucher(b, requin); // ✅ ici pas dans la boucle ennemis
+                    requin.toucher(b, requin);
                 }
             }
         }
