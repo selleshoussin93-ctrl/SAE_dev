@@ -97,7 +97,7 @@ public class PoissonAttaque extends Poisson {
 
             if (projectile.getPouvoir().equals("gele")) {
                 System.out.println("Ralentissement !");
-                this.ralentir();
+                ralentir();//si le pouvoir est gele alors apelle de la methode ralentir
             }
         }
     }
