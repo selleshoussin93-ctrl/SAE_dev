@@ -12,6 +12,10 @@ public class Environnement {
             {1, 0, 0, 0, 0, 0, 0}
     };
 
+
+
+ 
+
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
     private ArrayList<Bulle> bulles;
@@ -26,10 +30,9 @@ public class Environnement {
         this.poissonsAtt = new ArrayList<>();
         this.ressources = 40;
 
-        poissonsAtt.add(new PoissonAttaque("Requin Basic",   50,  50, 6*114, 0*114, 10, 14.0));
-        poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30,  30, 6*114, 1*114, 15, 20.0));
+        poissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, 6*114, 0*114, 10, 14.0));
+        poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6*114, 1*114, 15, 20.0));
         poissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6*114, 2*114, 30, 10.2));
-
 
 
     }

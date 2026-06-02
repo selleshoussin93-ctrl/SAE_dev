@@ -66,7 +66,7 @@ public class Controller {
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
         crabe.setImage(chargerImage("crabe.png"));
         poissonRouge.setOnMouseClicked(e -> {outilSelectionne = "poisson_rouge.png";
-        System.out.println("poisson rouge");}
+            System.out.println("poisson rouge");}
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
         crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
@@ -81,7 +81,7 @@ public class Controller {
         gameLoop.play();
 
         for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-           // ImageView imv = new ImageView(chargerImage("requin-normal.png"));
+            // ImageView imv = new ImageView(chargerImage("requin-normal.png"));
             ImageView imv = new ImageView();
             imv.setFitWidth(114);
             imv.setFitHeight(114);
@@ -124,7 +124,7 @@ public class Controller {
     private Image chargerImage(String nomFichier){
         URL url = getClass().getResource(nomFichier);
         if (url == null) {
-           // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
+            // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
             return null;
         }
         return new Image(String.valueOf(url));
@@ -215,6 +215,7 @@ public class Controller {
 
 
                     if (e.estMort()) {
+                        env.getMap()[ligne][col] = 0;
                         ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
                         imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
                     }
