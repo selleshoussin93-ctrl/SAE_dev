@@ -81,15 +81,9 @@ public class PoissonAttaque extends Poisson {
         return super.getPv();
     }
 
-    public void agit(){
-
-
-
-
-    }
 
     public void enleveVie(Bulle e){
-        this.pv-=e.getDegats();
+        this.pv -= e.getDegats();
     }
 
     public void toucher(Bulle projectile, PoissonAttaque requin) {

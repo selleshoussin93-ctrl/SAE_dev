@@ -224,8 +224,8 @@ public class Controller {
         }
 
         coucheBulle.getChildren().clear();
-        for (PoissonDeffense p : env.getListePoissonsDeffense()) {
-            p.agit();
+        for (PoissonDeffense p : env.getListePoissonsDeffense()) {  //affect un poisson de deffense a la variable p
+            p.agit(); //agit creer une bulle et ou la fait avancer
 
             Bulle b = p.getBull();
             if (b != null) {
