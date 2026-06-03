@@ -2,6 +2,10 @@ package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
+
 public class Environnement {
     private int largeur;
     private int hauteur;
@@ -19,8 +23,8 @@ public class Environnement {
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
     private ArrayList<Bulle> bulles;
+    private IntegerProperty ressourcesProperty;
 
-    private int ressources;
 
     public Environnement(int largeur, int hauteur) {
         this.hauteur = map.length;
@@ -28,7 +32,7 @@ public class Environnement {
 
         this.poissonsDeff = new ArrayList<>();
         this.poissonsAtt = new ArrayList<>();
-        this.ressources = 40;
+        this.ressourcesProperty = new SimpleIntegerProperty(40);
 
         poissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, 6*114, 0*114, 10, 14.0));
         poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6*114, 1*114, 15, 20.0));
@@ -36,7 +40,6 @@ public class Environnement {
 
 
     }
-
 
     public ArrayList<Bulle> getListeBulles() {
         ArrayList<Bulle> bulles = new ArrayList<>();
@@ -69,6 +72,17 @@ public class Environnement {
 
     public void ajouterPoissonDeffense(PoissonDeffense p){
         poissonsDeff.add(p);
+    }
+    public final int getRessources() {
+        return ressourcesProperty.getValue();
+    }
+
+    public final void setRessources(int n) {
+        ressourcesProperty.setValue(n);
+    }
+
+    public final IntegerProperty ressourcesProperty() {
+        return ressourcesProperty;
     }
 
 

@@ -30,19 +30,19 @@
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
                   <Label prefHeight="19.0" prefWidth="102.0" text="10 res" />
-                  <ImageView fx:id="crabe" fitHeight="101.0" fitWidth="101.0" />
+                  <ImageView fx:id="crabe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
                   <Label prefHeight="19.0" prefWidth="102.0" text="20 res" />
-                  <ImageView fx:id="poissonGlobe" fitHeight="102.0" fitWidth="105.0" />
+                  <ImageView fx:id="poissonGlobe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
                   <Label prefHeight="19.0" prefWidth="101.0" text="15 res" />
-                  <ImageView fx:id="poulpe" fitHeight="102.0" fitWidth="100.0" />
+                  <ImageView fx:id="poulpe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
          </children>
@@ -51,10 +51,13 @@
    <top>
       <HBox prefHeight="70.0" prefWidth="100.0" styleClass="background" stylesheets="@dark.css" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="70.0" prefWidth="165.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="165.0" spacing="5.0">
                <children>
-                  <Label fx:id="nbRessource" prefHeight="70.0" prefWidth="166.0" text="Ressources :" />
-               </children></VBox>
+                  <Label  prefHeight="70.0" prefWidth="166.0" text="Ressources :" />
+
+                  <Label fx:id="nbRessource" prefHeight="70.0" prefWidth="166.0" />
+               </children>
+            </HBox>
             <VBox prefHeight="70.0" prefWidth="137.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="136.0" text="          Pelle" />
@@ -73,9 +76,7 @@
          <children>
             <TilePane fx:id="map" hgap="2.0" prefColumns="7" prefHeight="456.0" prefRows="4" prefWidth="896.0" vgap="2.0" />
             <Pane fx:id="coucheEnnemi" focusTraversable="true" mouseTransparent="true" prefHeight="459.0" prefWidth="896.0" style="-fx-background-color: transparent;" />
-            <Pane fx:id="coucheBulle" prefHeight="459.0" prefWidth="896.0"
-                  mouseTransparent="true"
-                  style="-fx-background-color: transparent;" />
+            <Pane fx:id="coucheBulle" mouseTransparent="true" prefHeight="459.0" prefWidth="896.0" style="-fx-background-color: transparent;" />
          </children>
       </Pane>
    </center>

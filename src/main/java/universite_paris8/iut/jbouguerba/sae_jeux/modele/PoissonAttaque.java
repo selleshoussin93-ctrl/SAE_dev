@@ -49,14 +49,6 @@ public class PoissonAttaque extends Poisson {
             this.setPv(50);
         }
 
-        /*this.setX(this.getX() - 5);// si le requin se deplace vers la gauche x diminue
-        if(this.getX() <= 0){
-            this.setX(6*114);
-            this.setY(this.getY() + 114); // descend d'une ligne
-            if (this.getY() >= 4 * 114) {
-                this.setY(0);
-            }
-        }*/
     }
 
 
@@ -103,12 +95,12 @@ public class PoissonAttaque extends Poisson {
         }
     }
     public void ralentir() {
-        System.out.println("Vitesse avant : " + this.vitesse);
+        //System.out.println("Vitesse avant : " + this.vitesse);
         if (!ralenti) {
             this.vitesse = 0;
             this.ralenti = true;
         }
-        System.out.println("Vitesse après : " + this.vitesse);
+      //  System.out.println("Vitesse après : " + this.vitesse);
     }
 
     public void retablirVitesse() {
@@ -117,18 +109,7 @@ public class PoissonAttaque extends Poisson {
     }
 }
 
-    /*public void toucheCible(){
 
-
-
-
-    }
-    /*
-    public void setCyble(PoissonDeffense cible){
-        this.cible = cible;
-    }
-
-*/
 
 
 
