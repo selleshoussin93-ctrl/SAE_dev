@@ -71,7 +71,7 @@ public class Controller {
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
         crabe.setImage(chargerImage("crabe.png"));
         poulpe.setImage(chargerImage("poulpe.png"));
-        // poissonGlobe.setImage(chargerImage("0000000000000000000000.png"));
+        poissonGlobe.setImage(chargerImage("poissonGlobe2.png"));
 
 
 
@@ -81,7 +81,7 @@ public class Controller {
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
         crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
         poulpe.setOnMouseClicked(e -> outilSelectionne = "poulpe.png");
-        // poissonGlobe.setOnMouseClicked(e -> outilSelectionne = "00000000000000000.png");
+        poissonGlobe.setOnMouseClicked(e -> outilSelectionne = "poissonGlobe2.png");
         pelle.setImage(chargerImage("pelle.png"));
         pelle.setOnMouseClicked(e -> {
             outilSelectionne = "pelle";
@@ -202,7 +202,7 @@ public class Controller {
                             else if (outilSelectionne.equals("etoile_mer.png")) { prixPoisson = 5; }
                             else if (outilSelectionne.equals("crabe.png")) { prixPoisson = 10; }
                             else if (outilSelectionne.equals("poulpe.png")) { prixPoisson = 20; }
-                            //  else if (outilSelectionne.equals("00000000000000000.png")) { prixPoisson = 15; }
+                            else if (outilSelectionne.equals("poissonGlobe2.png")) { prixPoisson = 15; }
 
                             if (env.getRessources() >= prixPoisson) {
                                 env.setRessources(env.getRessources() - prixPoisson);
