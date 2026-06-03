@@ -70,12 +70,18 @@ public class Controller {
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
         crabe.setImage(chargerImage("crabe.png"));
+        poulpe.setImage(chargerImage("poulpe.png"));
+        //poissonGlobe.setImage(chargerImage("0000000000000000000000.png"));
+
+
+
         poissonRouge.setOnMouseClicked(e -> {outilSelectionne = "poisson_rouge.png";
         System.out.println("poisson rouge");}
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
         crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
-
+        poulpe.setOnMouseClicked(e -> outilSelectionne = "poulpe.png");
+       // poissonGlobe.setOnMouseClicked(e -> outilSelectionne = "00000000000000000.png");
         pelle.setImage(chargerImage("pelle.png"));
         pelle.setOnMouseClicked(e -> {
             outilSelectionne = "pelle";
@@ -105,6 +111,8 @@ public class Controller {
             coucheEnnemi.getChildren().add(imv);
 
         }
+        this.nbRessource.textProperty().bind(env.ressourcesProperty().asString());
+
 
     }
 
@@ -135,6 +143,8 @@ public class Controller {
         return new Image(String.valueOf(url));
     }
 
+
+
     public void creeVueModele(){
 
         Image imgEau = chargerImage("Carré_vert_foncéee.png");
@@ -151,7 +161,7 @@ public class Controller {
                 final int l = i;
 
 
-                imv.setOnMouseClicked(e -> {
+                /*imv.setOnMouseClicked(e -> {
                     if (outilSelectionne != null) {
                         if (outilSelectionne.equals("pelle") && env.getMap()[l][col] == 2) {
                             env.getMap()[l][col] = mapOriginale[l][col];
@@ -163,21 +173,52 @@ public class Controller {
                         } else if (!outilSelectionne.equals("pelle")) {
                             imv.setImage(chargerImage(outilSelectionne));
                             env.getMap()[l][col] = 2;
+                            env.ajouterPoissonDeffense(
+                                    new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
+                            );
                         }
                     }
-                   /* if (outilSelectionne != null) {
+                });*/
 
-                        imv.setImage(chargerImage(outilSelectionne));
-                        env.getMap()[l][col] = 2;
-                     //   System.out.println("MAP["+l+"]["+col+"] = " + env.getMap()[l][col]);
-                        env.ajouterPoissonDeffense(
-                                new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
-                        );
+                imv.setOnMouseClicked(e -> {
+                    if (outilSelectionne != null) {
 
 
-                    }*/
+                        if (outilSelectionne.equals("pelle") && env.getMap()[l][col] == 2) {
+                            env.getMap()[l][col] = mapOriginale[l][col];
+                            if (mapOriginale[l][col] == 1) {
+                                imv.setImage(chargerImage("New Piskel-1.png(3).png"));
+                            } else {
+                                imv.setImage(chargerImage("Carré_vert_foncéee.png"));
+                            }
+                        }
+
+
+                        else if (!outilSelectionne.equals("pelle")) {
+
+
+                            int prixPoisson = 0;
+                            if (outilSelectionne.equals("poisson_rouge.png")) { prixPoisson = 10; }
+                            else if (outilSelectionne.equals("etoile_mer.png")) { prixPoisson = 5; }
+                            else if (outilSelectionne.equals("crabe.png")) { prixPoisson = 10; }
+                            else if (outilSelectionne.equals("poulpe.png")) { prixPoisson = 20; }
+                          //  else if (outilSelectionne.equals("00000000000000000.png")) { prixPoisson = 15; }
+
+                            if (env.getRessources() >= prixPoisson) {
+                                env.setRessources(env.getRessources() - prixPoisson);
+                                imv.setImage(chargerImage(outilSelectionne));
+                                env.getMap()[l][col] = 2;
+                                env.ajouterPoissonDeffense(
+                                        new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
+                                );
+                                System.out.println("Poisson posé ! Il vous reste : " + env.getRessources());
+
+                            } else {
+                                System.out.println("Pas assez de ressources pour acheter ce poisson ! (Prix : " + prixPoisson + ")");
+                            }
+                        }
+                    }
                 });
-
 
                 if (env.getMap()[i][j] == 0) {
                     imv.setImage(imgEau);
@@ -195,7 +236,6 @@ public class Controller {
                 mapOriginale[i][j] = env.getMap()[i][j];
             }
         }
-
     }
 
     private void mettreAJourVue() {
@@ -226,20 +266,14 @@ public class Controller {
                         env.getMap()[ligne][col] = mapOriginale[ligne][col];
                     }
 
-
-                    if (e.estMort()) {
-                        env.getMap()[ligne][col] = 0;
-                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
-                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
-                    }
                 }
             }
         }
 
-        // Boucle bulles — EN DEHORS de la boucle ennemis
+        // Boucle bulles — EN DEHORS De la boucle ennemis
         coucheBulle.getChildren().clear();
         for (PoissonDeffense p : env.getListePoissonsDeffense()) {
-            p.agit(); // ✅ appelé une seule fois
+            p.agit(); // appelé une seule fois
 
             Bulle b = p.getBull();
             if (b != null) {
@@ -251,17 +285,11 @@ public class Controller {
                 imvBulle.setLayoutY(b.getY());
                 coucheBulle.getChildren().add(imvBulle);
 
-                // Vérifier collision avec chaque requin
+                // verifier collision avec chaque requin
                 for (PoissonAttaque requin : env.getListePoissonsAttaque()) {
-                    requin.toucher(b, requin); // ✅ ici pas dans la boucle ennemis
+                    requin.toucher(b, requin); // ici pas dans la boucle ennemis
                 }
             }
         }
     }
-
-
-
-
-
-
 }
