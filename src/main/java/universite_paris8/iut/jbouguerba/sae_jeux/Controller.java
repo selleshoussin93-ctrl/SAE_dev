@@ -155,7 +155,7 @@ public class Controller {
                             } else {
                                 imv.setImage(chargerImage("Carré_vert_foncéee.png"));
                             }
-                        } else if (!outilSelectionne.equals("pelle")) {
+                        } else if (!outilSelectionne.equals("pelle")) { //si l'outilSelectionne n'est pas la pelle alors on place un poisson de deffense
                             imv.setImage(chargerImage(outilSelectionne));
                             env.getMap()[l][col] = 2;
                             env.ajouterPoissonDeffense(

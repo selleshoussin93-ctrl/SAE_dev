@@ -48,7 +48,7 @@ public class PoissonDeffense extends Poisson{
         } else {
             this.projectile.avancer();
         }
-        return ;
+
     }
 
     public String getNom(){
