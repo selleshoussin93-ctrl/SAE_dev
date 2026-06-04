@@ -1,8 +1,7 @@
-package universite_paris8.iut.jbouguerba.sae_jeux;
+package universite_paris8.iut.jbouguerba.sae_jeux.controller;
 
 import javafx.fxml.FXML;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
@@ -14,9 +13,9 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
+import universite_paris8.iut.jbouguerba.sae_jeux.vue.PoissonVue;
 
 
 import java.net.URL;
@@ -136,9 +135,10 @@ public class Controller {
     }
 
     private Image chargerImage(String nomFichier) {
-        URL url = getClass().getResource(nomFichier);
+        // ✅ Chemin absolu depuis la racine des resources
+        URL url = getClass().getResource("/universite_paris8/iut/jbouguerba/sae_jeux/" + nomFichier);
         if (url == null) {
-            // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
+            System.out.println("IMAGE INTROUVABLE : " + nomFichier);
             return null;
         }
         return new Image(String.valueOf(url));
@@ -205,9 +205,9 @@ public class Controller {
                             } else if (outilSelectionne.equals("crabe.png")) {
                                 prixPoisson = 10;
                             } else if (outilSelectionne.equals("poulpe.png")) {
-                                prixPoisson = 20;
+                                prixPoisson = 15;
                             }
-                            //  else if (outilSelectionne.equals("00000000000000000.png")) { prixPoisson = 15; }
+                              else if (outilSelectionne.equals("poissonGlobe2.png")) { prixPoisson = 20; }
 
                             if (env.getRessources() >= prixPoisson) {
                                 env.setRessources(env.getRessources() - prixPoisson);
