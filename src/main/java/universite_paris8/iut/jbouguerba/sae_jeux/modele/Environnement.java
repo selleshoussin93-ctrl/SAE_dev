@@ -44,9 +44,7 @@ public class Environnement {
     public ArrayList<Bulle> getListeBulles() {
         ArrayList<Bulle> bulles = new ArrayList<>();
         for (PoissonDeffense p : poissonsDeff) {
-            if (p.getBull() != null) {
-                bulles.add(p.getBull());
-            }
+            bulles.addAll(p.getBull()); // addAll car getBull() retourne une liste
         }
         return bulles;
     }
@@ -85,5 +83,14 @@ public class Environnement {
         return ressourcesProperty;
     }
 
+    public void supprimerPoissonDeffense(double x, double y) {
+        System.out.println("Suppression poisson à x=" + x + " y=" + y);
+        System.out.println("Liste avant : " + poissonsDeff.size());
+        poissonsDeff.removeIf(p -> {
+            System.out.println("Poisson à x=" + p.getX() + " y=" + p.getY());
+            return p.getX() == x && p.getY() == y;
+        });
+        System.out.println("Liste après : " + poissonsDeff.size());
+    }
 
 }

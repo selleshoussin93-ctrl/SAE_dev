@@ -64,24 +64,25 @@ public class Controller {
 
 
     public void initialize() {
-        this.env = new Environnement(6,4);
+        this.env = new Environnement(6, 4);
         creeVueModele();
 
         poissonRouge.setImage(chargerImage("poisson_rouge.png"));
         etoileDeMer.setImage(chargerImage("etoile_mer.png"));
         crabe.setImage(chargerImage("crabe.png"));
         poulpe.setImage(chargerImage("poulpe.png"));
-        //poissonGlobe.setImage(chargerImage("0000000000000000000000.png"));
+        poissonGlobe.setImage(chargerImage("poissonGlobe2.png"));
 
 
-
-        poissonRouge.setOnMouseClicked(e -> {outilSelectionne = "poisson_rouge.png";
-            System.out.println("poisson rouge");}
+        poissonRouge.setOnMouseClicked(e -> {
+                    outilSelectionne = "poisson_rouge.png";
+                    System.out.println("poisson rouge");
+                }
         );
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
         crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
         poulpe.setOnMouseClicked(e -> outilSelectionne = "poulpe.png");
-       // poissonGlobe.setOnMouseClicked(e -> outilSelectionne = "00000000000000000.png");
+        poissonGlobe.setOnMouseClicked(e -> outilSelectionne = "poissonGlobe2.png");
         pelle.setImage(chargerImage("pelle.png"));
         pelle.setOnMouseClicked(e -> {
             outilSelectionne = "pelle";
@@ -134,7 +135,7 @@ public class Controller {
         gameLoop.getKeyFrames().add(kf);
     }
 
-    private Image chargerImage(String nomFichier){
+    private Image chargerImage(String nomFichier) {
         URL url = getClass().getResource(nomFichier);
         if (url == null) {
             // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
@@ -144,8 +145,7 @@ public class Controller {
     }
 
 
-
-    public void creeVueModele(){
+    public void creeVueModele() {
 
         Image imgEau = chargerImage("Carré_vert_foncéee.png");
         Image imgRocher = chargerImage("New Piskel-1.png(3).png");
@@ -161,10 +161,13 @@ public class Controller {
                 final int l = i;
 
 
-                /*imv.setOnMouseClicked(e -> {
+                imv.setOnMouseClicked(e -> {
                     if (outilSelectionne != null) {
                         if (outilSelectionne.equals("pelle") && env.getMap()[l][col] == 2) {
                             env.getMap()[l][col] = mapOriginale[l][col];
+
+                            env.supprimerPoissonDeffense(col * 114, l * 114);
+
                             if (mapOriginale[l][col] == 1) {
                                 imv.setImage(chargerImage("New Piskel-1.png(3).png"));
                             } else {
@@ -178,7 +181,7 @@ public class Controller {
                             );
                         }
                     }
-                });*/
+                });
 
                 imv.setOnMouseClicked(e -> {
                     if (outilSelectionne != null) {
@@ -191,18 +194,20 @@ public class Controller {
                             } else {
                                 imv.setImage(chargerImage("Carré_vert_foncéee.png"));
                             }
-                        }
-
-
-                        else if (!outilSelectionne.equals("pelle")) {
+                        } else if (!outilSelectionne.equals("pelle")) {
 
 
                             int prixPoisson = 0;
-                            if (outilSelectionne.equals("poisson_rouge.png")) { prixPoisson = 10; }
-                            else if (outilSelectionne.equals("etoile_mer.png")) { prixPoisson = 5; }
-                            else if (outilSelectionne.equals("crabe.png")) { prixPoisson = 10; }
-                            else if (outilSelectionne.equals("poulpe.png")) { prixPoisson = 20; }
-                          //  else if (outilSelectionne.equals("00000000000000000.png")) { prixPoisson = 15; }
+                            if (outilSelectionne.equals("poisson_rouge.png")) {
+                                prixPoisson = 10;
+                            } else if (outilSelectionne.equals("etoile_mer.png")) {
+                                prixPoisson = 5;
+                            } else if (outilSelectionne.equals("crabe.png")) {
+                                prixPoisson = 10;
+                            } else if (outilSelectionne.equals("poulpe.png")) {
+                                prixPoisson = 20;
+                            }
+                            //  else if (outilSelectionne.equals("00000000000000000.png")) { prixPoisson = 15; }
 
                             if (env.getRessources() >= prixPoisson) {
                                 env.setRessources(env.getRessources() - prixPoisson);
@@ -212,7 +217,6 @@ public class Controller {
                                         new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
                                 );
                                 System.out.println("Poisson posé ! Il vous reste : " + env.getRessources());
-                });
 
                             } else {
                                 System.out.println("Pas assez de ressources pour acheter ce poisson ! (Prix : " + prixPoisson + ")");
@@ -248,8 +252,8 @@ public class Controller {
             imv.setLayoutX(e.getX());
             imv.setLayoutY(e.getY());
 
-            int col = (int)(e.getX() / 114);
-            int ligne = (int)(e.getY() / 114);
+            int col = (int) (e.getX() / 114);
+            int ligne = (int) (e.getY() / 114);
 
             if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
                 if (env.getMap()[ligne][col] == 2) {
@@ -265,8 +269,9 @@ public class Controller {
                             imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
                         }
                         env.getMap()[ligne][col] = mapOriginale[ligne][col];
-                    }
 
+                        env.supprimerPoissonDeffense(col * 114, ligne * 114);
+                    }
 
 
                 }
@@ -274,12 +279,11 @@ public class Controller {
         }
 
         coucheBulle.getChildren().clear();
-        for (PoissonDeffense p : env.getListePoissonsDeffense()) {  //affect un poisson de deffense a la variable p
-            p.agit(); //agit creer une bulle et ou la fait avancer
-
-            Bulle b = p.getBull();
-            if (b != null) {
-                // Afficher la bulle
+        for (PoissonDeffense p : env.getListePoissonsDeffense()) {
+            p.agit();
+            System.out.println("Nb bulles : " + p.getBull().size()); //  combien de bulles ?
+            for (Bulle b : p.getBull()) { //parcourt toutes les bulles
+                System.out.println("Bulle à x=" + b.getX() + " y=" + b.getY()); // position
                 ImageView imvBulle = new ImageView(chargerImage("bulle2.png"));
                 imvBulle.setFitWidth(30);
                 imvBulle.setFitHeight(30);
@@ -287,7 +291,6 @@ public class Controller {
                 imvBulle.setLayoutY(b.getY());
                 coucheBulle.getChildren().add(imvBulle);
 
-                // verifier collision avec chaque requin
                 for (PoissonAttaque requin : env.getListePoissonsAttaque()) {
                     requin.toucher(b, requin);
                 }
