@@ -1,8 +1,8 @@
 package universite_paris8.iut.jbouguerba.sae_jeux;
 
+import javafx.application.Application;
 import javafx.fxml.FXML;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
@@ -14,7 +14,6 @@ import javafx.util.Duration;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
 
@@ -122,7 +121,7 @@ public class Controller {
     }
 
     private Image chargerImage(String nomFichier){
-        URL url = getClass().getResource(nomFichier);
+        URL url = Main1.class.getResource(nomFichier);
         if (url == null) {
             // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
             return null;

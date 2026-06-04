@@ -6,4 +6,6 @@ module universite_paris8.iut.jbouguerba.sae_jeux {
 
     opens universite_paris8.iut.jbouguerba.sae_jeux to javafx.fxml;
     exports universite_paris8.iut.jbouguerba.sae_jeux;
+
+
 }
