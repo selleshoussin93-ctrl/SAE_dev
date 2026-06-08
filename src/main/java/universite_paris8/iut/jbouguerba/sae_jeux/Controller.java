@@ -161,24 +161,7 @@ public class Controller {
                 final int l = i;
 
 
-                /*imv.setOnMouseClicked(e -> {
-                    if (outilSelectionne != null) {
-                        if (outilSelectionne.equals("pelle") && env.getMap()[l][col] == 2) {
-                            env.getMap()[l][col] = mapOriginale[l][col];
-                            if (mapOriginale[l][col] == 1) {
-                                imv.setImage(chargerImage("New Piskel-1.png(3).png"));
-                            } else {
-                                imv.setImage(chargerImage("Carré_vert_foncéee.png"));
-                            }
-                        } else if (!outilSelectionne.equals("pelle")) {
-                            imv.setImage(chargerImage(outilSelectionne));
-                            env.getMap()[l][col] = 2;
-                            env.ajouterPoissonDeffense(
-                                    new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
-                            );
-                        }
-                    }
-                });*/
+
 
                 imv.setOnMouseClicked(e -> {
                     if (outilSelectionne != null) {
