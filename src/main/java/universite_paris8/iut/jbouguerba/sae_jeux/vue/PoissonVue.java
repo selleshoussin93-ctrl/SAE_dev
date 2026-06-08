@@ -3,50 +3,40 @@ package universite_paris8.iut.jbouguerba.sae_jeux.vue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Poisson;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
+import javafx.scene.layout.TilePane;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class PoissonVue {
-
+    private TilePane map;
     private Pane coucheBulle;
     private Image imageBulle;
-    private ArrayList<PoissonDeffense> poissonDeffenses;
 
-    public PoissonVue(Pane coucheBulle, Image imageBulle) {
+    public PoissonVue(TilePane map, Pane coucheBulle, Image imageBulle) {
+        this.map = map;
         this.coucheBulle = coucheBulle;
         this.imageBulle = imageBulle;
-        this.poissonDeffenses = new ArrayList<>();
     }
 
-
-
-    public void afficherPoisson(ArrayList<PoissonDeffense> poissonDeffenses){
-
-        for(PoissonDeffense p : poissonDeffenses){
-
-
-
-
-        }
-
-
-
+    public void afficherPoisson(int index, Image image) {
+        ImageView imv = (ImageView) map.getChildren().get(index);
+        imv.setImage(image);
     }
-    // Met à jour les bulles à l'écran
-    public void mettreAJourBulles(ArrayList<PoissonDeffense> poissons) {
+
+    public void effacerPoisson(int index, Image imageOrigine) {
+        ImageView imv = (ImageView) map.getChildren().get(index);
+        imv.setImage(imageOrigine);
+    }
+
+    public void mettreAJourBulles(List<double[]> positions) {
         coucheBulle.getChildren().clear();
-        for (PoissonDeffense p : poissons) {
-            for (Bulle b : p.getBull()) {
-                ImageView imvBulle = new ImageView(imageBulle);
-                imvBulle.setFitWidth(30);
-                imvBulle.setFitHeight(30);
-                imvBulle.setLayoutX(b.getX());
-                imvBulle.setLayoutY(b.getY());
-                coucheBulle.getChildren().add(imvBulle);
-            }
+        for (double[] pos : positions) {
+            ImageView imvBulle = new ImageView(imageBulle);
+            imvBulle.setFitWidth(30);
+            imvBulle.setFitHeight(30);
+            imvBulle.setLayoutX(pos[0]);
+            imvBulle.setLayoutY(pos[1]);
+            coucheBulle.getChildren().add(imvBulle);
         }
     }
 }
