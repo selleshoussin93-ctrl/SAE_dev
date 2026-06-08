@@ -19,4 +19,9 @@ public class TerrainVue {
         ImageView imv = (ImageView) map.getChildren().get(index);
         imv.setImage(image);
     }
+    public void afficherTerrain(int hauteur, int largeur){
+
+
+    }
+
 }

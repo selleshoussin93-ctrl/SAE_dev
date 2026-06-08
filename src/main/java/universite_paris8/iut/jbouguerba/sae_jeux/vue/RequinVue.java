@@ -12,6 +12,7 @@ public class RequinVue {
     }
 
     public void ajouterRequin(Image image, double x, double y) {
+
         ImageView imv = new ImageView(image);
         imv.setFitWidth(114);
         imv.setFitHeight(114);
