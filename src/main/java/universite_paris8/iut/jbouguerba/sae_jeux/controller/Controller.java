@@ -2,6 +2,7 @@ package universite_paris8.iut.jbouguerba.sae_jeux.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.Label;
@@ -36,6 +37,11 @@ public class Controller {
     @FXML private Label nbRessource;
     @FXML private Pane coucheEnnemi;
     @FXML private Pane coucheBulle;
+    @FXML
+  //void setOutilSelectionnerPoissonRouge(MouseEvent) {
+    //    outilSelectionne ="poisson_rouge.png";
+    //}
+
 
     public void initialize() {
         this.env = new Environnement(6, 4);
