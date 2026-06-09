@@ -180,13 +180,7 @@ public class Controller {
         poissonVue.mettreAJourBulles(positions);
 
         // Collisions
-        for (PoissonDeffense p : env.getListePoissonsDeffense()) {
-            for (Bulle b : p.getBull()) {
-                for (PoissonAttaque requin : env.getListePoissonsAttaque()) {
-                    requin.toucher(b, requin);
-                }
-            }
-        }
+        env.gererCollisions();
     }
 
     private int getPrix(String nom) {

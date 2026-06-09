@@ -7,6 +7,7 @@ import javafx.scene.layout.TilePane;
 public class TerrainVue {
     private TilePane map;
 
+
     public TerrainVue(TilePane map) {
         this.map = map;
     }

@@ -23,7 +23,8 @@ public class PoissonDeffense extends Poisson{
             projectiles.add(new Bulle(10, 30, getX()+57, getY()+57, "aucun"));
         } else if (getNom().equals("poulpe.png")) {
             projectiles.add(new Bulle(10, 30, getX()+27, getY()+57, "aucun"));
-            projectiles.add(new Bulle(10, 30, getX()+87, getY()+57, "aucun"));} else {
+            projectiles.add(new Bulle(10, 30, getX()+87, getY()+57, "aucun"));}
+        else {
             projectiles.add(new Bulle(50, 30, getX()+57, getY()+57, "explose"));
             //System.out.println("Bulle explose créée !");
         }
