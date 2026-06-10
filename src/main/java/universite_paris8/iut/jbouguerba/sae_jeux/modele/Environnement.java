@@ -92,5 +92,14 @@ public class Environnement {
         });
         System.out.println("Liste après : " + poissonsDeff.size());
     }
+    public void gererCollisions() {
+        for (PoissonDeffense p : poissonsDeff) {
+            for (Bulle b : p.getBull()) {
+                for (PoissonAttaque requin : poissonsAtt) {
+                    requin.toucher(b, requin);
+                }
+            }
+        }
+    }
 
 }

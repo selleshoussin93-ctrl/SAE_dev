@@ -22,7 +22,6 @@ public class ImageLoader {
         if (nom.equals("Requin Baleine")) return charger("requin-baleine.png");
         return null;
     }
-
     public static Image imageCase(int valeur) {
         return valeur == 1
                 ? charger("New Piskel-1.png(3).png")

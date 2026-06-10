@@ -7,6 +7,7 @@ import javafx.scene.layout.TilePane;
 public class TerrainVue {
     private TilePane map;
 
+
     public TerrainVue(TilePane map) {
         this.map = map;
     }
@@ -19,4 +20,9 @@ public class TerrainVue {
         ImageView imv = (ImageView) map.getChildren().get(index);
         imv.setImage(image);
     }
+    public void afficherTerrain(int hauteur, int largeur){
+
+
+    }
+
 }
