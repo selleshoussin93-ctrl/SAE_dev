@@ -96,9 +96,25 @@ public class Environnement {
     public void gererCollisions() {
         for (PoissonDeffense p : poissonsDeff) {
             for (Bulle b : p.getBull()) {
+                if(!b.estActive()) continue;
                 for (PoissonAttaque requin : poissonsAtt) {
-                    requin.toucher(b, requin);
+                    double distanceX = Math.abs(b.getX() - requin.getX());
+                    int ligneBulle  = (int)(b.getY() / 114);
+                    int ligneRequin = (int)(requin.getY() / 114);
+
+                    if (distanceX < 57 && ligneBulle == ligneRequin) {
+                        requin.enleveVie(b);
+
+                        if (b.getPouvoir().equals("gele")) {
+                            requin.ralentir();
+                        }
+
+                        b.desactiver(); // la bulle disparaît après impact
+                        break;
+                    }
+
                 }
+
             }
         }
     }

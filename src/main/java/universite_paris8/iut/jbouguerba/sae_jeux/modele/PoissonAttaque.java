@@ -78,7 +78,7 @@ public class PoissonAttaque extends Poisson {
         this.pv -= e.getDegats();
     }
 
-    public void toucher(Bulle projectile, PoissonAttaque requin) {
+    /*public void toucher(Bulle projectile, PoissonAttaque requin) {
 
         double distanceX = Math.abs(projectile.getX() - requin.getX());
 
@@ -93,7 +93,7 @@ public class PoissonAttaque extends Poisson {
                 this.ralentir();
             }
         }
-    }
+    }*/
     public void ralentir() {
         //System.out.println("Vitesse avant : " + this.vitesse);
         if (!ralenti) {

@@ -6,6 +6,7 @@ public class Bulle {
     private int degats;
     private double vitesse;
     private String pouvoir;
+    private boolean active = true;
 
 
     public Bulle(int degats, double vitesse, double x , double y, String pouvoir){
@@ -33,4 +34,8 @@ public class Bulle {
     public String getPouvoir(){
 
         return this.pouvoir;   }
+
+
+    public boolean estActive() { return active; }   // sert a voir si bulle deja utiliser
+    public void desactiver() { active = false; }
 }
