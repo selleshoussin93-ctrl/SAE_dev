@@ -1,10 +1,10 @@
-package universite_paris8.iut.jbouguerba.sae_jeux;
+package universite_paris8.iut.jbouguerba.sae_jeux.controller;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 
 import javafx.scene.layout.TilePane;
 
+import universite_paris8.iut.jbouguerba.sae_jeux.Main1;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
 import javafx.scene.image.Image;
