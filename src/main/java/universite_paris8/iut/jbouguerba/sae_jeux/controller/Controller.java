@@ -15,6 +15,8 @@ import universite_paris8.iut.jbouguerba.sae_jeux.vue.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense.getPrix;
+
 public class Controller {
 
     private Environnement env;
@@ -78,25 +80,18 @@ public class Controller {
     }
 
     private void initialiserTerrain() {
+        // Le controller gère mapOriginale
         mapOriginale = new int[env.getHauteur()][env.getLargeur()];
-
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
-                ImageView imv = new ImageView(
-                        ImageLoader.imageCase(env.getMap()[i][j])
-                );
-                imv.setFitWidth(114);
-                imv.setFitHeight(114);
-                imv.setPickOnBounds(true);
-
-                final int col = j;
-                final int l = i;
-                imv.setOnMouseClicked(e -> gererClicCase(col, l));
-
-                terrainVue.ajouterCase(imv);
                 mapOriginale[i][j] = env.getMap()[i][j];
             }
         }
+        // TerrainVue gère uniquement l'affichage
+        terrainVue.initialiserTerrain(
+                env.getMap(),
+                (col, l) -> gererClicCase(col, l)
+        );
     }
 
     private void initialiserRequins() {
@@ -107,9 +102,10 @@ public class Controller {
             );
         }
     }
-
     private void gererClicCase(int col, int ligne) {
         if (outilSelectionne == null) return;
+
+
 
         if (outilSelectionne.equals("pelle") && env.getMap()[ligne][col] == 2) {
             env.getMap()[ligne][col] = mapOriginale[ligne][col];
@@ -126,18 +122,24 @@ public class Controller {
                 env.getMap()[ligne][col] = 2;
                 env.ajouterPoissonDeffense(
                         new PoissonDeffense(outilSelectionne, 100, col * 114, ligne * 114, getDegats(outilSelectionne))
+
                 );
+            }
+        } else {
+            int prix = getPrix(outilSelectionne);
+            boolean succes = env.placerPoisson(outilSelectionne, col, ligne, prix);
+            if (succes) {
                 poissonVue.afficherPoisson(
                         ligne * env.getLargeur() + col,
                         ImageLoader.imagePoisson(outilSelectionne)
                 );
-            } else {
-                System.out.println("Pas assez de ressources ! (Prix : " + prix + ")");
             }
         }
     }
 
     private void mettreAJourVue() {
+        // Modèle — avancer les requins
+        env.avancerRequins();
 
 
         env.gererCollisions();
@@ -188,15 +190,7 @@ public class Controller {
             }
         }
         poissonVue.mettreAJourBulles(positions);
-    }
 
-    private int getPrix(String nom) {
-        if (nom.equals("poisson_rouge.png")) return 10;
-        if (nom.equals("etoile_mer.png")) return 5;
-        if (nom.equals("crabe.png")) return 10;
-        if (nom.equals("poulpe.png")) return 20;
-        if (nom.equals("poissonGlobe2.png")) return 15;
-        return 0;
     }
 
     private void initAnimation() {
