@@ -18,13 +18,12 @@ public class PoissonDeffense extends Poisson{
 
         if (getNom().equals("crabe.png")) {
             projectiles.add(new Bulle(10, 30, getX()+57, getY()+27, "gele"));
-            //System.out.println("Bulle crabe créée !");
         } else if (getNom().equals("poisson_rouge.png")) { //  vérifie le nom exact
             projectiles.add(new Bulle(10, 30, getX()+57, getY()+57, "aucun"));
         } else if (getNom().equals("poulpe.png")) {
             projectiles.add(new Bulle(10, 30, getX()+27, getY()+57, "aucun"));
             projectiles.add(new Bulle(10, 30, getX()+87, getY()+57, "aucun"));}
-        else {
+        else if(getNom().equals("poissonGlobe2.png")){
             projectiles.add(new Bulle(50, 30, getX()+57, getY()+57, "explose"));
             //System.out.println("Bulle explose créée !");
         }
@@ -59,6 +58,12 @@ public class PoissonDeffense extends Poisson{
         if (nom.equals("poulpe.png")) return 20;
         if (nom.equals("poissonGlobe2.png")) return 15;
         return 0;
+    }
+    public void etoileDeMer(){
+        if(getNom().equals("etoile_mer.png")){
+            setPv(100);
+        }
+
     }
 
     public String getNom(){
