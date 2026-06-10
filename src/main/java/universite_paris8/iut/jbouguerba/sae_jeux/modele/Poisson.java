@@ -20,6 +20,7 @@ public abstract class Poisson {
             this.pv = 0;
         }
     }
+
     public String getNom() { return nom; }
     public int getPv() { return pv; }
     public double getX() {
