@@ -52,6 +52,14 @@ public class PoissonDeffense extends Poisson{
             compteur = 0;
         }
     }
+    public static int getPrix(String nom) {
+        if (nom.equals("poisson_rouge.png")) return 10;
+        if (nom.equals("etoile_mer.png")) return 5;
+        if (nom.equals("crabe.png")) return 10;
+        if (nom.equals("poulpe.png")) return 20;
+        if (nom.equals("poissonGlobe2.png")) return 15;
+        return 0;
+    }
 
     public String getNom(){
 

@@ -1,6 +1,7 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -100,6 +101,68 @@ public class Environnement {
                 }
             }
         }
+    }
+    // Avancer tous les requins
+    public void avancerRequins() {
+        for (PoissonAttaque e : poissonsAtt) {
+            e.avancer();
+        }
+    }
+    // Vérifier les collisions requin/case
+    public List<int[]> verifierCollisionsRequins() {
+        List<int[]> casesDetruites = new ArrayList<>();
+        for (PoissonAttaque e : poissonsAtt) {
+            int col = (int)(e.getX() / 114);
+            int ligne = (int)(e.getY() / 114);
+            if (col >= 0 && col < getLargeur() && ligne >= 0 && ligne < getHauteur()) {
+                if (map[ligne][col] == 2) {
+                    e.subirAttaque(10);
+                    if (e.estMort()) {
+                        supprimerPoissonDeffense(col * 114, ligne * 114);
+                        casesDetruites.add(new int[]{ligne, col});
+                    }
+                }
+            }
+        }
+        return casesDetruites; // le controller met à jour la vue avec ces cases
+    }
+
+    // Fais agir les poissons de défense
+    public void agirPoissonsDeffense() {
+        for (PoissonDeffense p : poissonsDeff) {
+            p.agit();
+        }
+    }
+    // Collecte la positions des bulles
+    public List<double[]> getPositionsBulles() {
+        List<double[]> positions = new ArrayList<>();
+        for (PoissonDeffense p : poissonsDeff) {
+            for (Bulle b : p.getBull()) {
+                positions.add(new double[]{b.getX(), b.getY()});
+            }
+        }
+        return positions;
+    }
+    // Retourne true si la pelle a bien supprimé un poisson
+    public boolean utiliserPelle(int col, int ligne, int[][] mapOriginale) {
+        if (map[ligne][col] == 2) {
+            map[ligne][col] = mapOriginale[ligne][col];
+            supprimerPoissonDeffense(col * 114, ligne * 114);
+            return true;
+        }
+        return false;
+    }
+    // Retourne true si le poisson a bien été posé
+    public boolean placerPoisson(String nom, int col, int ligne, int prix) {
+        if (getRessources() >= prix) {
+            setRessources(getRessources() - prix);
+            map[ligne][col] = 2;
+            ajouterPoissonDeffense(
+                    new PoissonDeffense(nom, 100, col * 114, ligne * 114, 10)
+            );
+            return true;
+        }
+        return false;
     }
 
 }

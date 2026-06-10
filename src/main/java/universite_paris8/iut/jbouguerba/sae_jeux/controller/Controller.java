@@ -15,6 +15,8 @@ import universite_paris8.iut.jbouguerba.sae_jeux.vue.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense.getPrix;
+
 public class Controller {
 
     private Environnement env;
@@ -78,25 +80,18 @@ public class Controller {
     }
 
     private void initialiserTerrain() {
+        // Le controller gère mapOriginale
         mapOriginale = new int[env.getHauteur()][env.getLargeur()];
-
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
-                ImageView imv = new ImageView(
-                        ImageLoader.imageCase(env.getMap()[i][j])
-                );
-                imv.setFitWidth(114);
-                imv.setFitHeight(114);
-                imv.setPickOnBounds(true);
-
-                final int col = j;
-                final int l = i;
-                imv.setOnMouseClicked(e -> gererClicCase(col, l));
-
-                terrainVue.ajouterCase(imv);
                 mapOriginale[i][j] = env.getMap()[i][j];
             }
         }
+        // TerrainVue gère uniquement l'affichage
+        terrainVue.initialiserTerrain(
+                env.getMap(),
+                (col, l) -> gererClicCase(col, l)
+        );
     }
 
     private void initialiserRequins() {
@@ -107,89 +102,58 @@ public class Controller {
             );
         }
     }
-
     private void gererClicCase(int col, int ligne) {
         if (outilSelectionne == null) return;
 
-        if (outilSelectionne.equals("pelle") && env.getMap()[ligne][col] == 2) {
-            env.getMap()[ligne][col] = mapOriginale[ligne][col];
-            env.supprimerPoissonDeffense(col * 114, ligne * 114);
-            poissonVue.effacerPoisson(
-                    ligne * env.getLargeur() + col,
-                    ImageLoader.imageCase(mapOriginale[ligne][col])
-            );
-
-        } else if (!outilSelectionne.equals("pelle")) {
-            int prix = getPrix(outilSelectionne);
-            if (env.getRessources() >= prix) {
-                env.setRessources(env.getRessources() - prix);
-                env.getMap()[ligne][col] = 2;
-                env.ajouterPoissonDeffense(
-                        new PoissonDeffense(outilSelectionne, 100, col * 114, ligne * 114, 10)
+        if (outilSelectionne.equals("pelle")) {
+            // Modèle
+            boolean succes = env.utiliserPelle(col, ligne, mapOriginale);
+            // Vue
+            if (succes) {
+                poissonVue.effacerPoisson(
+                        ligne * env.getLargeur() + col,
+                        ImageLoader.imageCase(mapOriginale[ligne][col])
                 );
+            }
+        } else {
+            int prix = getPrix(outilSelectionne);
+            boolean succes = env.placerPoisson(outilSelectionne, col, ligne, prix);
+            if (succes) {
                 poissonVue.afficherPoisson(
                         ligne * env.getLargeur() + col,
                         ImageLoader.imagePoisson(outilSelectionne)
                 );
-            } else {
-                System.out.println("Pas assez de ressources ! (Prix : " + prix + ")");
             }
         }
     }
 
     private void mettreAJourVue() {
+        // Modèle — avancer les requins
+        env.avancerRequins();
 
-        // Requins
-        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-            e.avancer();
-            requinVue.mettreAJourPosition(
-                    env.getListePoissonsAttaque().indexOf(e),
-                    e.getX(), e.getY()
+        // met à jour positions requins dans la vue
+        for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
+            PoissonAttaque e = env.getListePoissonsAttaque().get(i);
+            requinVue.mettreAJourPosition(i, e.getX(), e.getY());
+        }
+
+        // collisions, retourne les cases à mettre à jour
+        List<int[]> casesDetruites = env.verifierCollisionsRequins();
+
+        // met à jour les cases détruites dans la vue
+        for (int[] c : casesDetruites) {
+            terrainVue.mettreAJourCase(
+                    c[0] * env.getLargeur() + c[1],
+                    ImageLoader.imageCase(mapOriginale[c[0]][c[1]])
             );
-
-            int col = (int)(e.getX() / 114);
-            int ligne = (int)(e.getY() / 114);
-
-            if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
-                if (env.getMap()[ligne][col] == 2) {
-                    e.subirAttaque(10);
-                    if (e.estMort()) {
-                        env.getMap()[ligne][col] = mapOriginale[ligne][col];
-                        env.supprimerPoissonDeffense(col * 114, ligne * 114);
-                        terrainVue.mettreAJourCase(
-                                ligne * env.getLargeur() + col,
-                                ImageLoader.imageCase(mapOriginale[ligne][col])
-                        );
-                    }
-                }
-            }
+            env.getMap()[c[0]][c[1]] = mapOriginale[c[0]][c[1]];
         }
-
-        // Poissons de défense
-        for (PoissonDeffense p : env.getListePoissonsDeffense()) {
-            p.agit();
-        }
-
-        // Collecte positions bulles → passe à la vue
-        List<double[]> positions = new ArrayList<>();
-        for (PoissonDeffense p : env.getListePoissonsDeffense()) {
-            for (Bulle b : p.getBull()) {
-                positions.add(new double[]{b.getX(), b.getY()});
-            }
-        }
-        poissonVue.mettreAJourBulles(positions);
-
-        // Collisions
+        // fais agir les poissons de défense
+        env.agirPoissonsDeffense();
+        // passe les positions des bulles à la vue
+        poissonVue.mettreAJourBulles(env.getPositionsBulles());
+        // collisions bulles/requins
         env.gererCollisions();
-    }
-
-    private int getPrix(String nom) {
-        if (nom.equals("poisson_rouge.png")) return 10;
-        if (nom.equals("etoile_mer.png")) return 5;
-        if (nom.equals("crabe.png")) return 10;
-        if (nom.equals("poulpe.png")) return 20;
-        if (nom.equals("poissonGlobe2.png")) return 15;
-        return 0;
     }
 
     private void initAnimation() {
