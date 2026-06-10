@@ -65,7 +65,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                universite_paris8.iut.jbouguerba.sae_jeux/universite_paris8.iut.jbouguerba.sae_jeux.HelloApplication
+                                universite_paris8.iut.jbouguerba.sae_jeux/universite_paris8.iut.jbouguerba.sae_jeux.Main1
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

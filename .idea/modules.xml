@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SAE_dev.iml" filepath="$PROJECT_DIR$/.idea/SAE_dev.iml" />
-      <module fileurl="file://$PROJECT_DIR$/code/sae_jeux (1).iml" filepath="$PROJECT_DIR$/code/sae_jeux (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/sae-jeux/sae_jeux (2).iml" filepath="$PROJECT_DIR$/sae-jeux/sae_jeux (2).iml" />
     </modules>
   </component>

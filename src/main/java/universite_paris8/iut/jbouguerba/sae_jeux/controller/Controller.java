@@ -1,24 +1,21 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.controller;
 
 import javafx.fxml.FXML;
-
-import javafx.scene.layout.TilePane;
-
-import universite_paris8.iut.jbouguerba.sae_jeux.Main1;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Environnement;
-import javafx.util.Duration;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
+import javafx.scene.control.Label;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.*;
+import universite_paris8.iut.jbouguerba.sae_jeux.vue.*;
 
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.net.URL;
-
+import static universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense.getPrix;
 
 public class Controller {
 
@@ -28,225 +25,145 @@ public class Controller {
     private int temps;
     private int[][] mapOriginale;
 
+    private TerrainVue terrainVue;
+    private RequinVue requinVue;
+    private PoissonVue poissonVue;
+
+    @FXML private ImageView poissonRouge;
+    @FXML private ImageView etoileDeMer;
+    @FXML private ImageView crabe;
+    @FXML private ImageView poulpe;
+    @FXML private ImageView poissonGlobe;
+    @FXML private ImageView pelle;
+    @FXML private TilePane map;
+    @FXML private Label nbRessource;
+    @FXML private Pane coucheEnnemi;
+    @FXML private Pane coucheBulle;
     @FXML
-    private ImageView poissonRouge;
-
-    @FXML
-    private Pane coucheEnnemi;
-
-
-    @FXML
-    private ImageView etoileDeMer;
-
-    @FXML
-    private ImageView crabe;
-
-    @FXML
-    private ImageView poulpe;
-
-    @FXML
-    private ImageView poissonGlobe;
-
-    @FXML
-    private ImageView pelle;
-
-    @FXML
-    private TilePane map;
-
-
-    @FXML
-    private Pane coucheBulle;
+  //void setOutilSelectionnerPoissonRouge(MouseEvent) {
+    //    outilSelectionne ="poisson_rouge.png";
+    //}
 
 
     public void initialize() {
-        this.env = new Environnement(6,4);
-        creeVueModele();
-        poissonRouge.setImage(chargerImage("poisson_rouge.png"));
-        etoileDeMer.setImage(chargerImage("etoile_mer.png"));
-        crabe.setImage(chargerImage("crabe.png"));
-        poissonRouge.setOnMouseClicked(e -> {outilSelectionne = "poisson_rouge.png";
-            System.out.println("poisson rouge");}
+        this.env = new Environnement(6, 4);
+
+        this.terrainVue = new TerrainVue(map);
+        this.requinVue = new RequinVue(coucheEnnemi);
+        this.poissonVue = new PoissonVue(map, coucheBulle,
+                ImageLoader.charger("bulle2.png")
         );
-        etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
-        crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
 
-        pelle.setImage(chargerImage("pelle.png"));
-        pelle.setOnMouseClicked(e -> {
-            outilSelectionne = "pelle";
-        });
+        initialiserOutils();
+        initialiserTerrain();
+        initialiserRequins();
 
-
+        nbRessource.textProperty().bind(env.ressourcesProperty().asString());
         initAnimation();
         gameLoop.play();
-
-        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-            // ImageView imv = new ImageView(chargerImage("requin-normal.png"));
-            ImageView imv = new ImageView();
-            imv.setFitWidth(114);
-            imv.setFitHeight(114);
-            imv.setLayoutX(e.getX() * 114);
-            imv.setLayoutY(e.getY() * 114);
-
-            if (e.getNom().equals("Requin Basic")) {
-                imv.setImage(chargerImage("requin-normal.png"));
-            } else if (e.getNom().equals("Requin Marteau")) {
-                imv.setImage(chargerImage("requin-marteau.png"));
-            } else if (e.getNom().equals("Requin Baleine")) {
-                imv.setImage(chargerImage("requin-baleine.png"));
-            }
-
-
-            coucheEnnemi.getChildren().add(imv);
-
-        }
-
     }
 
-    private void initAnimation() {
-        gameLoop = new Timeline();
-        temps = 0;
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
+    private void initialiserOutils() {
+        poissonRouge.setImage(ImageLoader.charger("poisson_rouge.png"));
+        etoileDeMer.setImage(ImageLoader.charger("etoile_mer.png"));
+        crabe.setImage(ImageLoader.charger("crabe.png"));
+        poulpe.setImage(ImageLoader.charger("poulpe.png"));
+        poissonGlobe.setImage(ImageLoader.charger("poissonGlobe2.png"));
+        pelle.setImage(ImageLoader.charger("pelle.png"));
 
-        KeyFrame kf = new KeyFrame(
-                Duration.seconds(0.010),  //0.017
-                (ev -> {
-                    if (temps % 50 == 0) {
-                        mettreAJourVue();
-                    }
-                    temps++;
-                })
-        );
-
-        gameLoop.getKeyFrames().add(kf);
+        poissonRouge.setOnMouseClicked(e -> outilSelectionne = "poisson_rouge.png");
+        etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
+        crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
+        poulpe.setOnMouseClicked(e -> outilSelectionne = "poulpe.png");
+        poissonGlobe.setOnMouseClicked(e -> outilSelectionne = "poissonGlobe2.png");
+        pelle.setOnMouseClicked(e -> outilSelectionne = "pelle");
     }
 
-    private Image chargerImage(String nomFichier){
-        URL url = Main1.class.getResource(nomFichier);
-        if (url == null) {
-            // System.out.println("IMAGE INTROUVABLE : " + nomFichier);
-            return null;
-        }
-        return new Image(String.valueOf(url));
-    }
-
-    public void creeVueModele(){
-
-        Image imgEau = chargerImage("Carré_vert_foncéee.png");
-        Image imgRocher = chargerImage("New Piskel-1.png(3).png");
-
-
-        for (int i = 0; i < env.getHauteur(); i++) {
-            for (int j = 0; j < env.getLargeur(); j++) {
-
-                ImageView imv = new ImageView();
-                imv.setFitWidth(114);   ///128
-                imv.setFitHeight(114);
-                final int col = j;
-                final int l = i;
-
-
-                imv.setOnMouseClicked(e -> {
-                    if (outilSelectionne != null) {
-                        if (outilSelectionne.equals("pelle") && env.getMap()[l][col] == 2) {
-                            env.getMap()[l][col] = mapOriginale[l][col];
-                            if (mapOriginale[l][col] == 1) {
-                                imv.setImage(chargerImage("New Piskel-1.png(3).png"));
-                            } else {
-                                imv.setImage(chargerImage("Carré_vert_foncéee.png"));
-                            }
-                        } else if (!outilSelectionne.equals("pelle")) {
-                            imv.setImage(chargerImage(outilSelectionne));
-                            env.getMap()[l][col] = 2;
-                            env.ajouterPoissonDeffense(
-                                    new PoissonDeffense(outilSelectionne, 100, col * 114, l * 114, 10)
-                            );
-                        }
-                    }
-                });
-
-
-                if (env.getMap()[i][j] == 0) {
-                    imv.setImage(imgEau);
-                } else {
-                    imv.setImage(imgRocher);
-                }
-
-                map.getChildren().add(imv);
-            }
-        }
-
+    private void initialiserTerrain() {
+        // Le controller gère mapOriginale
         mapOriginale = new int[env.getHauteur()][env.getLargeur()];
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
                 mapOriginale[i][j] = env.getMap()[i][j];
             }
         }
+        // TerrainVue gère uniquement l'affichage
+        terrainVue.initialiserTerrain(
+                env.getMap(),
+                (col, l) -> gererClicCase(col, l)
+        );
+    }
 
+    private void initialiserRequins() {
+        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
+            requinVue.ajouterRequin(
+                    ImageLoader.imageRequin(e.getNom()),
+                    e.getX(), e.getY()
+            );
+        }
+    }
+    private void gererClicCase(int col, int ligne) {
+        if (outilSelectionne == null) return;
+
+        if (outilSelectionne.equals("pelle")) {
+            // Modèle
+            boolean succes = env.utiliserPelle(col, ligne, mapOriginale);
+            // Vue
+            if (succes) {
+                poissonVue.effacerPoisson(
+                        ligne * env.getLargeur() + col,
+                        ImageLoader.imageCase(mapOriginale[ligne][col])
+                );
+            }
+        } else {
+            int prix = getPrix(outilSelectionne);
+            boolean succes = env.placerPoisson(outilSelectionne, col, ligne, prix);
+            if (succes) {
+                poissonVue.afficherPoisson(
+                        ligne * env.getLargeur() + col,
+                        ImageLoader.imagePoisson(outilSelectionne)
+                );
+            }
+        }
     }
 
     private void mettreAJourVue() {
+        // Modèle — avancer les requins
+        env.avancerRequins();
 
-        // Boucle ennemis
-        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-            e.avancer();
-            ImageView imv = (ImageView) coucheEnnemi.getChildren().get(env.getListePoissonsAttaque().indexOf(e));
-            imv.setLayoutX(e.getX());
-            imv.setLayoutY(e.getY());
-
-            int col = (int)(e.getX() / 114);
-            int ligne = (int)(e.getY() / 114);
-
-            if (col >= 0 && col < env.getLargeur() && ligne >= 0 && ligne < env.getHauteur()) {
-                if (env.getMap()[ligne][col] == 2) {
-                    e.subirAttaque(10);
-
-
-                    if (e.estMort()) {
-                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
-
-                        if (mapOriginale[ligne][col] == 1) {
-                            imvCase.setImage(chargerImage("New Piskel-1.png(3).png"));
-                        } else {
-                            imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
-                        }
-                        env.getMap()[ligne][col] = mapOriginale[ligne][col];
-                    }
-
-
-                    if (e.estMort()) {
-                        env.getMap()[ligne][col] = 0;
-                        ImageView imvCase = (ImageView) map.getChildren().get(ligne * env.getLargeur() + col);
-                        imvCase.setImage(chargerImage("Carré_vert_foncéee.png"));
-                    }
-                }
-            }
+        // met à jour positions requins dans la vue
+        for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
+            PoissonAttaque e = env.getListePoissonsAttaque().get(i);
+            requinVue.mettreAJourPosition(i, e.getX(), e.getY());
         }
 
-        coucheBulle.getChildren().clear();
-        for (PoissonDeffense p : env.getListePoissonsDeffense()) {  //affect un poisson de deffense a la variable p
-            p.agit(); //agit creer une bulle et ou la fait avancer
+        // collisions, retourne les cases à mettre à jour
+        List<int[]> casesDetruites = env.verifierCollisionsRequins();
 
-            Bulle b = p.getBull();
-            if (b != null) {
-                // Afficher la bulle
-                ImageView imvBulle = new ImageView(chargerImage("bulle2.png"));
-                imvBulle.setFitWidth(30);
-                imvBulle.setFitHeight(30);
-                imvBulle.setLayoutX(b.getX());
-                imvBulle.setLayoutY(b.getY());
-                coucheBulle.getChildren().add(imvBulle);
-
-                // Vérifier collision avec chaque requin
-                for (PoissonAttaque requin : env.getListePoissonsAttaque()) {
-                    requin.toucher(b, requin);
-                }
-            }
+        // met à jour les cases détruites dans la vue
+        for (int[] c : casesDetruites) {
+            terrainVue.mettreAJourCase(
+                    c[0] * env.getLargeur() + c[1],
+                    ImageLoader.imageCase(mapOriginale[c[0]][c[1]])
+            );
+            env.getMap()[c[0]][c[1]] = mapOriginale[c[0]][c[1]];
         }
+        // fais agir les poissons de défense
+        env.agirPoissonsDeffense();
+        // passe les positions des bulles à la vue
+        poissonVue.mettreAJourBulles(env.getPositionsBulles());
+        // collisions bulles/requins
+        env.gererCollisions();
     }
 
-
-
-
-
-
+    private void initAnimation() {
+        gameLoop = new Timeline();
+        temps = 0;
+        gameLoop.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame kf = new KeyFrame(Duration.seconds(0.010), ev -> {
+            if (temps % 50 == 0) mettreAJourVue();
+            temps++;
+        });
+        gameLoop.getKeyFrames().add(kf);
+    }
 }

@@ -49,14 +49,6 @@ public class PoissonAttaque extends Poisson {
             this.setPv(50);
         }
 
-        /*this.setX(this.getX() - 5);// si le requin se deplace vers la gauche x diminue
-        if(this.getX() <= 0){
-            this.setX(6*114);
-            this.setY(this.getY() + 114); // descend d'une ligne
-            if (this.getY() >= 4 * 114) {
-                this.setY(0);
-            }
-        }*/
     }
 
 
@@ -88,26 +80,27 @@ public class PoissonAttaque extends Poisson {
 
     public void toucher(Bulle projectile, PoissonAttaque requin) {
 
-        double distance = Math.abs(projectile.getX() - requin.getX());
-        System.out.println("Distance bulle/requin : " + distance);
+        double distanceX = Math.abs(projectile.getX() - requin.getX());
 
-        if (distance < 57) {
-            System.out.println("Collision détectée ! Pouvoir : " + projectile.getPouvoir());
+        // Comparer les lignes plutôt que les pixels Y
+        int ligneBulle = (int)(projectile.getY() / 114);
+        int ligneRequin = (int)(requin.getY() / 114);
+
+        if (distanceX < 57 && ligneBulle == ligneRequin) {
             enleveVie(projectile);
 
             if (projectile.getPouvoir().equals("gele")) {
-                System.out.println("Ralentissement !");
-                ralentir();//si le pouvoir est gele alors apelle de la methode ralentir
+                this.ralentir();
             }
         }
     }
     public void ralentir() {
-        System.out.println("Vitesse avant : " + this.vitesse);
+        //System.out.println("Vitesse avant : " + this.vitesse);
         if (!ralenti) {
             this.vitesse = 0;
             this.ralenti = true;
         }
-        System.out.println("Vitesse après : " + this.vitesse);
+      //  System.out.println("Vitesse après : " + this.vitesse);
     }
 
     public void retablirVitesse() {
@@ -116,18 +109,14 @@ public class PoissonAttaque extends Poisson {
     }
 }
 
-    /*public void toucheCible(){
 
 
 
 
-    }
-    /*
-    public void setCyble(PoissonDeffense cible){
-        this.cible = cible;
-    }
 
-*/
+
+
+
 
 
 

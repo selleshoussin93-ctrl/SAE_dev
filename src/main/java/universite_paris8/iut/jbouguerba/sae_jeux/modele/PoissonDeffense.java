@@ -4,36 +4,33 @@ import java.util.ArrayList;
 
 public class PoissonDeffense extends Poisson{
     private int coupUtilisation;
-    private Bulle projectile;
+    private ArrayList<Bulle> projectiles;
+    private int compteur = 10;
+    private int intervalle = 10;
 
     public PoissonDeffense(String nom,int pv, double x, double y, int coupUtilisation){
         super(nom, pv, x, y);
         this.coupUtilisation = coupUtilisation;
-        this.projectile = null;
-
+        this.projectiles = new ArrayList<>();
     }
 
-    public void CreerBulle(){   //Cette methode creer une bulle a l'endroit du PoissonDeffense
+    public void CreerBulle() {
 
-        if(getNom().equals("crabe.png")){
-            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"gele");
-            System.out.println("Bulle crabe créée, pouvoir : " + this.projectile.getPouvoir());
-        } else if (getNom().equals("poisson rouge")) {
-            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"aucun");
-        }else if(getNom().equals("poulpe")) {
-            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"aucun");
-
-            this.projectile = new Bulle(10,30,getX()+57,getY()+57,"aucun");
-        }else {
-            this.projectile = new Bulle(50,30,getX()+57,getY()+57,"explose");
+        if (getNom().equals("crabe.png")) {
+            projectiles.add(new Bulle(10, 30, getX()+57, getY()+27, "gele"));
+            //System.out.println("Bulle crabe créée !");
+        } else if (getNom().equals("poisson_rouge.png")) { //  vérifie le nom exact
+            projectiles.add(new Bulle(10, 30, getX()+57, getY()+57, "aucun"));
+        } else if (getNom().equals("poulpe.png")) {
+            projectiles.add(new Bulle(10, 30, getX()+27, getY()+57, "aucun"));
+            projectiles.add(new Bulle(10, 30, getX()+87, getY()+57, "aucun"));}
+        else {
+            projectiles.add(new Bulle(50, 30, getX()+57, getY()+57, "explose"));
+            //System.out.println("Bulle explose créée !");
         }
-
-
-
-
     }
-    public Bulle getBull(){
-        return this.projectile;
+    public ArrayList<Bulle> getBull(){
+        return this.projectiles;
     }
 
     @Override
@@ -42,22 +39,38 @@ public class PoissonDeffense extends Poisson{
     }
 
     public void agit() {
+        compteur++;
+        //System.out.println("compteur : " + compteur + " nom : " + getNom());
 
-        if (this.projectile == null) {
-            CreerBulle();
-        } else {
-            this.projectile.avancer();
+        for (Bulle b : projectiles) {
+            b.avancer();
         }
-        return ;
+
+        if (compteur >= intervalle) {
+          //  projectiles.clear();
+            CreerBulle();
+            compteur = 0;
+        }
+    }
+    public static int getPrix(String nom) {
+        if (nom.equals("poisson_rouge.png")) return 10;
+        if (nom.equals("etoile_mer.png")) return 5;
+        if (nom.equals("crabe.png")) return 10;
+        if (nom.equals("poulpe.png")) return 20;
+        if (nom.equals("poissonGlobe2.png")) return 15;
+        return 0;
     }
 
     public String getNom(){
+
         return super.getNom();
     }
     public double getX(){
+
         return super.getX();
     }
     public double getY(){
+
         return super.getY();
     }
 }

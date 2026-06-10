@@ -1,7 +1,42 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.vue;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
+
+import java.util.List;
+
 public class PoissonVue {
+    private TilePane map;
+    private Pane coucheBulle;
+    private Image imageBulle;
 
+    public PoissonVue(TilePane map, Pane coucheBulle, Image imageBulle) {
+        this.map = map;
+        this.coucheBulle = coucheBulle;
+        this.imageBulle = imageBulle;
+    }
 
+    public void afficherPoisson(int index, Image image) {
+        ImageView imv = (ImageView) map.getChildren().get(index);
+        imv.setImage(image);
+    }
 
+    public void effacerPoisson(int index, Image imageOrigine) {
+        ImageView imv = (ImageView) map.getChildren().get(index);
+        imv.setImage(imageOrigine);
+    }
+
+    public void mettreAJourBulles(List<double[]> positions) {
+        coucheBulle.getChildren().clear();
+        for (double[] pos : positions) {
+            ImageView imvBulle = new ImageView(imageBulle);
+            imvBulle.setFitWidth(30);
+            imvBulle.setFitHeight(30);
+            imvBulle.setLayoutX(pos[0]);
+            imvBulle.setLayoutY(pos[1]);
+            coucheBulle.getChildren().add(imvBulle);
+        }
+    }
 }
