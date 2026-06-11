@@ -153,7 +153,25 @@ public class Controller {
         // passe les positions des bulles à la vue
         poissonVue.mettreAJourBulles(env.getPositionsBulles());
         // collisions bulles/requins
-        env.gererCollisions();
+      //  env.gererCollisions();
+
+
+        List<PoissonAttaque> morts = env.gererCollisions();
+
+        // Supprimer de la vue (indices décroissants pour ne pas décaler)
+        for (PoissonAttaque mort : morts) {
+            // On cherche l'index AVANT la suppression du modèle
+            // donc on reconstruit la vue entière
+        }
+
+        // Resynchroniser la vue avec le modèle
+        requinVue.viderRequins();
+        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
+            requinVue.ajouterRequin(
+                    ImageLoader.imageRequin(e.getNom()),
+                    e.getX(), e.getY()
+            );
+        }
     }
 
     private void initAnimation() {

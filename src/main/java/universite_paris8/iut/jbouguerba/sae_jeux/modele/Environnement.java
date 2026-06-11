@@ -93,7 +93,8 @@ public class Environnement {
         });
         System.out.println("Liste après : " + poissonsDeff.size());
     }
-    public void gererCollisions() {
+    public List<PoissonAttaque> gererCollisions() {
+        List<PoissonAttaque> morts = new ArrayList<>();
         for (PoissonDeffense p : poissonsDeff) {
             for (Bulle b : p.getBull()) {
                 if(!b.estActive()) continue;
@@ -109,14 +110,21 @@ public class Environnement {
                             requin.ralentir();
                         }
 
-                        b.desactiver(); // la bulle disparaît après impact
+                        b.desactiver();// la bulle disparaît après impact
+                        if(requin.estMort()){
+                            morts.add(requin);
+                        }
                         break;
                     }
-
                 }
-
             }
+
         }
+        for (PoissonAttaque mort : morts) {
+            setRessources(getRessources() + mort.getRecompense());
+        }
+        poissonsAtt.removeAll(morts);
+        return morts;
     }
     // Avancer tous les requins
     public void avancerRequins() {
@@ -127,6 +135,8 @@ public class Environnement {
     // Vérifier les collisions requin/case
     public List<int[]> verifierCollisionsRequins() {
         List<int[]> casesDetruites = new ArrayList<>();
+        List<PoissonAttaque> morts = new ArrayList<>();
+
         for (PoissonAttaque e : poissonsAtt) {
             int col = (int)(e.getX() / 114);
             int ligne = (int)(e.getY() / 114);
@@ -136,10 +146,15 @@ public class Environnement {
                     if (e.estMort()) {
                         supprimerPoissonDeffense(col * 114, ligne * 114);
                         casesDetruites.add(new int[]{ligne, col});
+                        morts.add(e);
                     }
                 }
             }
         }
+        for (PoissonAttaque mort : morts) {
+            setRessources(getRessources() + mort.getRecompense());
+        }
+        poissonsAtt.removeAll(morts);
         return casesDetruites; // le controller met à jour la vue avec ces cases
     }
 

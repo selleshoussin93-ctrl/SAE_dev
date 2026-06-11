@@ -27,7 +27,7 @@ public class RequinVue {
         imv.setLayoutY(y);
     }
 
-    public void supprimerRequin(int index) {
-        coucheEnnemi.getChildren().remove(index);
+    public void viderRequins() {
+        coucheEnnemi.getChildren().clear();
     }
 }
