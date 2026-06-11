@@ -39,10 +39,6 @@ public class Controller {
     @FXML private Label nbRessource;
     @FXML private Pane coucheEnnemi;
     @FXML private Pane coucheBulle;
-    @FXML
-    //void setOutilSelectionnerPoissonRouge(MouseEvent) {
-    //    outilSelectionne ="poisson_rouge.png";
-    //}
 
 
     public void initialize() {

@@ -84,6 +84,8 @@ public class Environnement {
         return ressourcesProperty;
     }
 
+    
+
     public void supprimerPoissonDeffense(double x, double y) {
         System.out.println("Suppression poisson à x=" + x + " y=" + y);
         System.out.println("Liste avant : " + poissonsDeff.size());
