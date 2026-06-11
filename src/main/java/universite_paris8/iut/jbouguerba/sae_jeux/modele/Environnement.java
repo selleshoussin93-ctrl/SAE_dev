@@ -17,14 +17,12 @@ public class Environnement {
             {1, 0, 0, 0, 0, 0, 0}
     };
 
-
-
- 
-
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
     private ArrayList<Bulle> bulles;
     private IntegerProperty ressourcesProperty;
+    private int numVague = 0;
+    private List<List<PoissonAttaque>> vagues;
 
 
     public Environnement(int largeur, int hauteur) {
@@ -35,11 +33,55 @@ public class Environnement {
         this.poissonsAtt = new ArrayList<>();
         this.ressourcesProperty = new SimpleIntegerProperty(40);
 
-        poissonsAtt.add(new PoissonAttaque("Requin Basic", 50, 50, 6*114, 0*114, 10, 14.0));
-        poissonsAtt.add(new PoissonAttaque("Requin Marteau", 30, 30,  6*114, 1*114, 15, 20.0));
-        poissonsAtt.add(new PoissonAttaque("Requin Baleine", 100, 100, 6*114, 2*114, 30, 10.2));
+        initialiserVagues();
+        lancerVague();
+    }
 
+    private void initialiserVagues() {
+        vagues = new ArrayList<>();
 
+        // Vague 1
+        List<PoissonAttaque> vague1 = new ArrayList<>();
+        for (int i = 0; i < 5; i++)
+            vague1.add(new PoissonAttaque("Requin Basic", 50, 50, (6+i)*114, i % 4 * 114, 10, 14.0));
+        vague1.add(new PoissonAttaque("Requin Marteau", 30, 30, 11*114, 1*114, 15, 20.0));
+        vague1.add(new PoissonAttaque("Requin Baleine", 100, 100, 12*114, 2*114, 30, 10.2));
+        vagues.add(vague1);
+
+        // Vague 2
+        List<PoissonAttaque> vague2 = new ArrayList<>();
+        for (int i = 0; i < 7; i++)
+            vague2.add(new PoissonAttaque("Requin Basic", 50, 50, (6+i)*114, i % 4 * 114, 10, 14.0));
+        for (int i = 0; i < 4; i++)
+            vague2.add(new PoissonAttaque("Requin Marteau", 30, 30, (9+i)*114, i % 4 * 114, 15, 20.0));
+        for (int i = 0; i < 2; i++)
+            vague2.add(new PoissonAttaque("Requin Baleine", 100, 100, (11+i)*114, i % 4 * 114, 30, 10.2));
+        vagues.add(vague2);
+
+        // Vague 3
+        List<PoissonAttaque> vague3 = new ArrayList<>();
+        for (int i = 0; i < 7; i++)
+            vague3.add(new PoissonAttaque("Requin Basic", 50, 50, (6+i)*114, i % 4 * 114, 10, 14.0));
+        for (int i = 0; i < 7; i++)
+            vague3.add(new PoissonAttaque("Requin Marteau", 30, 30, (9+i)*114, i % 4 * 114, 15, 20.0));
+        for (int i = 0; i < 7; i++)
+            vague3.add(new PoissonAttaque("Requin Baleine", 100, 100, (12+i)*114, i % 4 * 114, 30, 10.2));
+        vagues.add(vague3);
+    }
+
+    public void lancerVague() {
+        if (numVague < vagues.size()) {
+            poissonsAtt.addAll(vagues.get(numVague));
+            numVague++;
+        }
+    }
+
+    public boolean vagueTerminee() {
+        return poissonsAtt.isEmpty();
+    }
+
+    public boolean aUneProchainerVague() {
+        return numVague < vagues.size();
     }
 
     public ArrayList<Bulle> getListeBulles() {

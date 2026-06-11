@@ -165,6 +165,16 @@ public class Controller {
                     e.getX(), e.getY()
             );
         }
+        if (env.vagueTerminee() && env.aUneProchainerVague()) { //declanche la vague suivante
+            env.lancerVague();
+            requinVue.viderRequins();
+            for (PoissonAttaque e : env.getListePoissonsAttaque()) {
+                requinVue.ajouterRequin(
+                        ImageLoader.imageRequin(e.getNom()),
+                        e.getX(), e.getY()
+                );
+            }
+        }
     }
 
     private void initAnimation() {
