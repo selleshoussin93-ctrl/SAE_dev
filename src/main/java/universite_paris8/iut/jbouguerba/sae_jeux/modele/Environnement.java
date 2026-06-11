@@ -228,7 +228,13 @@ public class Environnement {
         return false;
     }
     // Retourne true si le poisson a bien été posé
-    public boolean placerPoisson(String nom, int col, int ligne, int prix) {
+    public boolean placerPoisson(String nom, int col, int ligne) {
+        // Vérifie que la case n'est pas déjà occupée par un poisson
+        if (map[ligne][col] == 2) {
+            return false;
+        }
+
+        int prix = PoissonDeffense.getPrix(nom);
         if (getRessources() >= prix) {
             setRessources(getRessources() - prix);
             map[ligne][col] = 2;
@@ -239,5 +245,4 @@ public class Environnement {
         }
         return false;
     }
-
 }
