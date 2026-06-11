@@ -17,10 +17,11 @@ public class TerrainVue {
         map.getChildren().add(imv);
     }
 
-    public void mettreAJourCase(int index, Image image) {
+    public void mettreAJourCase(int index, int typeCase) {
         ImageView imv = (ImageView) map.getChildren().get(index);
-        imv.setImage(image);
+        imv.setImage(ImageLoader.imageCase(typeCase));
     }
+
     public void initialiserTerrain(int[][] map, GestionClic gestionClic) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {

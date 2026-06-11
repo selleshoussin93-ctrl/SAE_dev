@@ -3,14 +3,12 @@ package universite_paris8.iut.jbouguerba.sae_jeux.modele;
 import java.util.ArrayList;
 
 public class PoissonDeffense extends Poisson{
-    private int coupUtilisation;
     private ArrayList<Bulle> projectiles;
     private int compteur = 10;
     private int intervalle = 10;
 
-    public PoissonDeffense(String nom,int pv, double x, double y, int coupUtilisation){
+    public PoissonDeffense(String nom,int pv, double x, double y){
         super(nom, pv, x, y);
-        this.coupUtilisation = coupUtilisation;
         this.projectiles = new ArrayList<>();
     }
     public void etoileDeMer(){
@@ -18,6 +16,13 @@ public class PoissonDeffense extends Poisson{
             setPv(100);
         }
 
+    }
+    public void enleveVie(PoissonAttaque r){
+        this.pv -= r.getDegats();
+    }
+    @Override
+    public boolean estMort() {
+        return super.estMort();
     }
 
     public void CreerBulle() {
@@ -38,10 +43,7 @@ public class PoissonDeffense extends Poisson{
         return this.projectiles;
     }
 
-    @Override
-    public boolean estMort() {
-        return super.estMort();
-    }
+
 
     public void agit() {
         compteur++;
@@ -66,6 +68,8 @@ public class PoissonDeffense extends Poisson{
         if (nom.equals("poissonGlobe2.png")) return 25;
         return 0;
     }
+
+
 
 
     public String getNom(){

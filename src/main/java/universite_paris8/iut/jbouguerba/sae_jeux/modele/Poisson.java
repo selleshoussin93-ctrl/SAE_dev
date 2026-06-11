@@ -14,12 +14,6 @@ public abstract class Poisson {
         this.y = y;
     }
 
-    public void perdrePv(int pv) {     // perdre pv pour requin
-        this.pv -= pv;
-        if (this.pv < 0) {
-            this.pv = 0;
-        }
-    }
 
     public String getNom() { return nom; }
     public int getPv() { return pv; }

@@ -17,7 +17,7 @@ public class Main1 extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 651);
         stage.setTitle("///");
         stage.setScene(scene);
-        PoissonDeffense p = new PoissonDeffense("poisson rouge",30,0,0,10);
+        PoissonDeffense p = new PoissonDeffense("poisson rouge",30,0,0);
         stage.show();
 
     }

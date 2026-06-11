@@ -12,20 +12,30 @@ public class PoissonVue {
     private Pane coucheBulle;
     private Image imageBulle;
 
-    public PoissonVue(TilePane map, Pane coucheBulle, Image imageBulle) {
+    public PoissonVue(TilePane map, Pane coucheBulle) {
         this.map = map;
         this.coucheBulle = coucheBulle;
-        this.imageBulle = imageBulle;
+        this.imageBulle = ImageLoader.charger("bulle2.png");
     }
 
-    public void afficherPoisson(int index, Image image) {
+
+    public void afficherPoisson(int index, String nomImage) {
+
         ImageView imv = (ImageView) map.getChildren().get(index);
-        imv.setImage(image);
+
+        imv.setImage(
+                ImageLoader.imagePoisson(nomImage)
+        );
     }
 
-    public void effacerPoisson(int index, Image imageOrigine) {
+
+    public void effacerPoisson(int index, int typeCase) {
+
         ImageView imv = (ImageView) map.getChildren().get(index);
-        imv.setImage(imageOrigine);
+
+        imv.setImage(
+                ImageLoader.imageCase(typeCase)
+        );
     }
 
     public void mettreAJourBulles(List<double[]> positions) {

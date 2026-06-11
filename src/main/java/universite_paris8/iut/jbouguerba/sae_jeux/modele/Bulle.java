@@ -19,11 +19,9 @@ public class Bulle {
 
     }
     public void avancer(){
-        this.setX(this.getX()+vitesse);// si la bulle se deplace vers la droite x augmente
+        this.setX(this.getX()+vitesse);
+        // si la bulle se deplace vers la droite x augmente
     }
-
-
-
     public double getX(){return this.x;}
     public void setX(double x) {this.x = x;}
     public double getY(){return this.y;}
@@ -31,11 +29,7 @@ public class Bulle {
     public int getDegats(){
         return this.degats;
     }
-    public String getPouvoir(){
-
-        return this.pouvoir;   }
-
-
+    public String getPouvoir(){return this.pouvoir;}
     public boolean estActive() { return active; }   // sert a voir si bulle deja utiliser
     public void desactiver() { active = false; }
 }

@@ -12,7 +12,6 @@ public class PoissonAttaque extends Poisson {
     private int tempRalenti;
 
 
-
     public PoissonAttaque(String nom, int pv,int degats, double x, double y, int recompense, double vitesse ) {
         super(nom, pv, x, y);
         this.recompense = recompense;
@@ -71,6 +70,10 @@ public class PoissonAttaque extends Poisson {
 
     public int getPv(){
         return super.getPv();
+    }
+    public int getDegats(){
+
+        return this.degats;
     }
 
 

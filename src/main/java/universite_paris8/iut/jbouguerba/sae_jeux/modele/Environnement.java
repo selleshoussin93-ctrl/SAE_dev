@@ -67,7 +67,7 @@ public class Environnement {
         for (int i = 0; i < 7; i++)
             vague3.add(new PoissonAttaque("Requin Baleine", 100, 100, (12+i)*114, i % 4 * 114, 30, 10.2));
         vagues.add(vague3);
-    }
+  }
 
     public void lancerVague() {
         if (numVague < vagues.size()) {
@@ -233,13 +233,12 @@ public class Environnement {
         if (map[ligne][col] == 2) {
             return false;
         }
-
         int prix = PoissonDeffense.getPrix(nom);
         if (getRessources() >= prix) {
             setRessources(getRessources() - prix);
             map[ligne][col] = 2;
             ajouterPoissonDeffense(
-                    new PoissonDeffense(nom, 100, col * 114, ligne * 114, 10)
+                    new PoissonDeffense(nom, 100, col * 114, ligne * 114)
             );
             return true;
         }
