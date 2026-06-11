@@ -102,9 +102,7 @@ public class Controller {
         if (outilSelectionne == null) return;
 
         if (outilSelectionne.equals("pelle")) {
-            // Modèle
             boolean succes = env.utiliserPelle(col, ligne, mapOriginale);
-            // Vue
             if (succes) {
                 poissonVue.effacerPoisson(
                         ligne * env.getLargeur() + col,
@@ -112,8 +110,7 @@ public class Controller {
                 );
             }
         } else {
-            int prix = getPrix(outilSelectionne);
-            boolean succes = env.placerPoisson(outilSelectionne, col, ligne, prix);
+            boolean succes = env.placerPoisson(outilSelectionne, col, ligne);
             if (succes) {
                 poissonVue.afficherPoisson(
                         ligne * env.getLargeur() + col,

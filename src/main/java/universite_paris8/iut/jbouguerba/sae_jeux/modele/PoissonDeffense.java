@@ -45,15 +45,15 @@ public class PoissonDeffense extends Poisson{
 
     public void agit() {
         compteur++;
-        //System.out.println("compteur : " + compteur + " nom : " + getNom());
 
         for (Bulle b : projectiles) {
             b.avancer();
         }
 
-        if (compteur >= intervalle) {
+        // retire les bulles désactivées (qui ont touché un requin)
+        projectiles.removeIf(b -> !b.estActive());
 
-          // projectiles.clear();
+        if (compteur >= intervalle) {
             CreerBulle();
             compteur = 0;
         }
