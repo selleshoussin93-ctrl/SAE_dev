@@ -7,11 +7,13 @@ public class PoissonDeffense extends Poisson{
     private ArrayList<Bulle> projectiles;
     private int compteur = 10;
     private int intervalle = 10;
+    private int degatsContact;
 
     public PoissonDeffense(String nom,int pv, double x, double y, int coupUtilisation){
         super(nom, pv, x, y);
         this.coupUtilisation = coupUtilisation;
         this.projectiles = new ArrayList<>();
+        this.degatsContact = getDegatsContact(nom);
     }
     public void etoileDeMer(){
         if(getNom().equals("etoile_mer.png")){
@@ -59,12 +61,21 @@ public class PoissonDeffense extends Poisson{
         }
     }
     public static int getPrix(String nom) {
-        if (nom.equals("poisson_rouge.png")) return 20;
+        if (nom.equals("poisson_rouge.png")) return 10;
         if (nom.equals("etoile_mer.png")) return 10;
         if (nom.equals("crabe.png")) return 20;
-        if (nom.equals("poulpe.png")) return 40;
-        if (nom.equals("poissonGlobe2.png")) return 25;
+        if (nom.equals("poulpe.png")) return 100;
+        if (nom.equals("poissonGlobe2.png")) return 50;
         return 0;
+    }
+
+    private int getDegatsContact(String nom) {
+        if (nom.equals("etoile_mer.png")) return 0;  // étoile = pas de dégâts contact
+        if (nom.equals("poisson_rouge.png")) return 10;
+        if (nom.equals("crabe.png")) return 15;
+        if (nom.equals("poulpe.png")) return 20;
+        if (nom.equals("poissonGlobe2.png")) return 8;
+        return 10;
     }
 
 
@@ -80,4 +91,6 @@ public class PoissonDeffense extends Poisson{
 
         return super.getY();
     }
+
+    public int getDegatsContact() { return degatsContact; }
 }

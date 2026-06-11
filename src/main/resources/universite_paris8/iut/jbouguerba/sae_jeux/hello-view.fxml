@@ -28,13 +28,13 @@
             </VBox>
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <Label prefHeight="19.0" prefWidth="102.0" text="25 res" />
+                  <Label prefHeight="19.0" prefWidth="102.0" text="50 res" />
                   <ImageView fx:id="poissonGlobe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
             <VBox prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <Label prefHeight="19.0" prefWidth="101.0" text="40 res" />
+                  <Label prefHeight="19.0" prefWidth="101.0" text="100 res" />
                   <ImageView fx:id="poulpe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
@@ -58,7 +58,19 @@
                </children></VBox>
             <VBox fx:id="statutPartie" prefHeight="70.0" prefWidth="601.0">
                <children>
-                  <Label prefHeight="15.0" prefWidth="606.0" text="Statut partie" />
+                  <Label text="Progression des vagues" />
+                  <StackPane>
+                     <children>
+                        <ProgressBar fx:id="barreProgression" prefWidth="580.0" prefHeight="20.0" progress="0.0" nodeOrientation="RIGHT_TO_LEFT" style="-fx-accent: blue;"/>
+                        <HBox prefWidth="580.0" prefHeight="20.0" alignment="CENTER_LEFT">
+                           <children>
+                              <Label prefWidth="193.0" text="Vague 3 🏆" alignment="CENTER" />
+                              <Label prefWidth="193.0" text="Vague 2" alignment="CENTER" />
+                              <Label prefWidth="194.0" text="Vague 1" alignment="CENTER" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </StackPane>
                </children>
             </VBox>
          </children>
