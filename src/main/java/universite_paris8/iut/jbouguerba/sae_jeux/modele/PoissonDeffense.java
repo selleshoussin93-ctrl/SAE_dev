@@ -13,6 +13,12 @@ public class PoissonDeffense extends Poisson{
         this.coupUtilisation = coupUtilisation;
         this.projectiles = new ArrayList<>();
     }
+    public void etoileDeMer(){
+        if(getNom().equals("etoile_mer.png")){
+            setPv(100);
+        }
+
+    }
 
     public void CreerBulle() {
 
@@ -46,7 +52,8 @@ public class PoissonDeffense extends Poisson{
         }
 
         if (compteur >= intervalle) {
-          //  projectiles.clear();
+
+          // projectiles.clear();
             CreerBulle();
             compteur = 0;
         }
@@ -59,12 +66,7 @@ public class PoissonDeffense extends Poisson{
         if (nom.equals("poissonGlobe2.png")) return 15;
         return 0;
     }
-    public void etoileDeMer(){
-        if(getNom().equals("etoile_mer.png")){
-            setPv(100);
-        }
 
-    }
 
     public String getNom(){
 

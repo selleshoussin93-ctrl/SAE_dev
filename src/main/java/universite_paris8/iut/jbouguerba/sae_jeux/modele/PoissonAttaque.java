@@ -79,19 +79,18 @@ public class PoissonAttaque extends Poisson {
     }
 
     public void toucher(Bulle projectile, PoissonAttaque requin) {
+        if (!projectile.estActive()) return; //  ignore les bulles déjà utilisées
 
         double distanceX = Math.abs(projectile.getX() - requin.getX());
-
-        // Comparer les lignes plutôt que les pixels Y
-        int ligneBulle = (int)(projectile.getY() / 114);
+        int ligneBuille = (int)(projectile.getY() / 114);
         int ligneRequin = (int)(requin.getY() / 114);
 
-        if (distanceX < 57 && ligneBulle == ligneRequin) {
+        if (distanceX < 57 && ligneBuille == ligneRequin) {
             enleveVie(projectile);
-
             if (projectile.getPouvoir().equals("gele")) {
                 this.ralentir();
             }
+            projectile.desactiver(); // ✅
         }
     }
     public void ralentir() {
