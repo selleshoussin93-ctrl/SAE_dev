@@ -58,7 +58,7 @@
                </children></VBox>
             <VBox fx:id="statutPartie" prefHeight="70.0" prefWidth="601.0">
                <children>
-                  <Label text="Progression des vagues" />
+                  <Label text="Progression partie" />
                   <StackPane>
                      <children>
                         <ProgressBar fx:id="barreProgression" prefWidth="580.0" prefHeight="20.0" progress="0.0" nodeOrientation="RIGHT_TO_LEFT" style="-fx-accent: blue;"/>

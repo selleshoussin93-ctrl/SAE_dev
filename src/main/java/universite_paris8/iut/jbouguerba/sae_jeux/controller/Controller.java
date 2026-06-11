@@ -12,6 +12,11 @@ import universite_paris8.iut.jbouguerba.sae_jeux.modele.*;
 import universite_paris8.iut.jbouguerba.sae_jeux.vue.*;
 import javafx.scene.control.ProgressBar;
 import java.util.List;
+import javafx.fxml.FXMLLoader;
+import universite_paris8.iut.jbouguerba.sae_jeux.Main1;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+
 public class Controller {
 
     private Environnement env;
@@ -117,6 +122,8 @@ public class Controller {
     }
 
     private void mettreAJourVue() {
+
+
         // Modèle — avancer les requins
         env.avancerRequins();
 
@@ -194,4 +201,7 @@ public class Controller {
         };
         barreProgression.setProgress(progression);
     }
+
+
+
 }
