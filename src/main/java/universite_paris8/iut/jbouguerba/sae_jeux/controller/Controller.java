@@ -125,10 +125,10 @@ public class Controller {
         env.agirPoissonsDeffense();
         poissonVue.mettreAJourBulles(env.getPositionsBulles());
 
-        // ✅ gererCollisions retourne les requins morts
+        //  gererCollisions retourne les requins morts
         List<PoissonAttaque> morts = env.gererCollisions();
 
-        // ✅ Resynchronise la vue si quelque chose a changé
+        //  Resynchronise la vue si quelque chose a changé
         if (!casesDetruites.isEmpty() || !morts.isEmpty()) {
             synchroniserRequins();
         }
