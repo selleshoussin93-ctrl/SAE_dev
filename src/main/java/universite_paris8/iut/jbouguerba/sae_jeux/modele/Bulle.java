@@ -20,6 +20,9 @@ public class Bulle {
     }
     public void avancer(){
         this.setX(this.getX()+vitesse);// si la bulle se deplace vers la droite x augmente
+        if (this.getX() > 800) { // empeche les bulles de partir plus loin que l'environnement donc empeche les requins de mourir hors de l'environnement
+            this.desactiver();
+        }
     }
 
 
@@ -27,7 +30,6 @@ public class Bulle {
     public double getX(){return this.x;}
     public void setX(double x) {this.x = x;}
     public double getY(){return this.y;}
-    public void setY(double y){this.y = y;}
     public int getDegats(){
         return this.degats;
     }

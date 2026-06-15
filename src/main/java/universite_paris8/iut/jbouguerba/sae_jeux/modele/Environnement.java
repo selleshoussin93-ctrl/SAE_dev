@@ -19,7 +19,7 @@ public class Environnement {
 
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
-    private ArrayList<Bulle> bulles;
+
     private IntegerProperty ressourcesProperty;
     private int numVague = 0;
     private List<List<PoissonAttaque>> vagues;
@@ -39,6 +39,7 @@ public class Environnement {
 
     private void initialiserVagues() {
         vagues = new ArrayList<>();
+
 
         // Vague 1
         List<PoissonAttaque> vague1 = new ArrayList<>();
@@ -84,14 +85,6 @@ public class Environnement {
         return numVague < vagues.size();
     }
 
-    public ArrayList<Bulle> getListeBulles() {
-        ArrayList<Bulle> bulles = new ArrayList<>();
-        for (PoissonDeffense p : poissonsDeff) {
-            bulles.addAll(p.getBull()); // addAll car getBull() retourne une liste
-        }
-        return bulles;
-    }
-
 
     public int[][] getMap() {
         return map;
@@ -105,10 +98,6 @@ public class Environnement {
 
     public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
         return poissonsAtt;
-    }
-
-    public ArrayList<PoissonDeffense> getListePoissonsDeffense() {
-        return poissonsDeff;
     }
 
     public void ajouterPoissonDeffense(PoissonDeffense p){
