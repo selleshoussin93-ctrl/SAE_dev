@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="universite_paris8.iut.jbouguerba.sae_jeux.controller.Controller">
    <bottom>
-      <HBox fx:id="PRessource" styleClass="background" stylesheets="@dark.css" BorderPane.alignment="CENTER">
+      <HBox fx:id="PRessource" prefHeight="119.0" prefWidth="840.0" styleClass="background" stylesheets="@dark.css" BorderPane.alignment="CENTER">
          <children>
             <VBox>
                <children>
@@ -38,6 +38,16 @@
                   <ImageView fx:id="poulpe" fitHeight="100.0" fitWidth="100.0" />
                </children>
             </VBox>
+            <VBox prefHeight="119.0" prefWidth="303.0">
+               <children>
+                  <Label prefHeight="19.0" prefWidth="402.0" text="                      \\ Pouvoir Poisson //" />
+                  <Label prefHeight="19.0" prefWidth="394.0" text="- PoissonRouge :  1boule -&gt; -10" />
+                  <Label prefHeight="19.0" prefWidth="401.0" text="- EtoileBleu :  ralenti toute une ligne" />
+                  <Label prefHeight="19.0" prefWidth="399.0" text="- Crabe : 1boule qui ralenti -&gt; -15" />
+                  <Label prefHeight="19.0" prefWidth="399.0" text="- PoissonGlobe : 1boule qui explose -&gt; -8" />
+                  <Label prefHeight="19.0" prefWidth="395.0" text="- Poulpe : 2boule -&gt; -20" />
+               </children>
+            </VBox>
          </children>
       </HBox>
    </bottom>
@@ -56,17 +66,17 @@
                   <Label prefHeight="17.0" prefWidth="136.0" text="          Pelle" />
                   <ImageView fx:id="pelle" fitHeight="49.0" fitWidth="134.0" pickOnBounds="true" />
                </children></VBox>
-            <VBox fx:id="statutPartie" prefHeight="70.0" prefWidth="601.0">
+            <VBox fx:id="statutPartie" prefHeight="70.0" prefWidth="485.0">
                <children>
                   <Label text="Progression partie" />
-                  <StackPane>
+                  <StackPane prefHeight="20.0" prefWidth="236.0">
                      <children>
-                        <ProgressBar fx:id="barreProgression" prefWidth="580.0" prefHeight="20.0" progress="0.0" nodeOrientation="RIGHT_TO_LEFT" style="-fx-accent: blue;"/>
-                        <HBox prefWidth="580.0" prefHeight="20.0" alignment="CENTER_LEFT">
+                        <ProgressBar fx:id="barreProgression" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" prefWidth="580.0" progress="0.0" style="-fx-accent: blue;" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="580.0">
                            <children>
-                              <Label prefWidth="193.0" text="Vague 3 🏆" alignment="CENTER" />
-                              <Label prefWidth="193.0" text="Vague 2" alignment="CENTER" />
-                              <Label prefWidth="194.0" text="Vague 1" alignment="CENTER" />
+                              <Label alignment="CENTER" prefWidth="193.0" text="Vague 3 🏆" />
+                              <Label alignment="CENTER" prefWidth="193.0" text="Vague 2" />
+                              <Label alignment="CENTER" prefHeight="19.0" prefWidth="206.0" text="Vague 1" />
                            </children>
                         </HBox>
                      </children>
