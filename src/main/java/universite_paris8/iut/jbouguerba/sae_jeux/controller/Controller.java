@@ -47,9 +47,7 @@ public class Controller {
 
         this.terrainVue = new TerrainVue(map);
         this.requinVue = new RequinVue(coucheEnnemi);
-        this.poissonVue = new PoissonVue(map, coucheBulle,
-                ImageLoader.charger("bulle2.png")
-        );
+        this.poissonVue = new PoissonVue(map, coucheBulle);
 
         initialiserOutils();
         initialiserTerrain();
@@ -85,102 +83,69 @@ public class Controller {
             }
         }
         // TerrainVue gère uniquement l'affichage
-        terrainVue.initialiserTerrain(
-                env.getMap(),
-                (col, l) -> gererClicCase(col, l)
-        );
+        terrainVue.initialiserTerrain(env.getMap(), (col, l) -> gererClicCase(col, l));
     }
-
     private void initialiserRequins() {
         for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-            requinVue.ajouterRequin(
-                    ImageLoader.imageRequin(e.getNom()),
-                    e.getX(), e.getY()
-            );
+            requinVue.ajouterRequin(e);
         }
     }
     private void gererClicCase(int col, int ligne) {
         if (outilSelectionne == null) return;
-
         if (outilSelectionne.equals("pelle")) {
             boolean succes = env.utiliserPelle(col, ligne, mapOriginale);
             if (succes) {
-                poissonVue.effacerPoisson(
-                        ligne * env.getLargeur() + col,
-                        ImageLoader.imageCase(mapOriginale[ligne][col])
-                );
+                poissonVue.effacerPoisson(ligne * env.getLargeur() + col, mapOriginale[ligne][col]);
             }
         } else {
             boolean succes = env.placerPoisson(outilSelectionne, col, ligne);
+
             if (succes) {
-                poissonVue.afficherPoisson(
-                        ligne * env.getLargeur() + col,
-                        ImageLoader.imagePoisson(outilSelectionne)
-                );
+                poissonVue.afficherPoisson(ligne * env.getLargeur() + col, outilSelectionne);
             }
         }
     }
-
     private void mettreAJourVue() {
 
 
         // Modèle — avancer les requins
         env.avancerRequins();
 
-        // met à jour positions requins dans la vue
         for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
             PoissonAttaque e = env.getListePoissonsAttaque().get(i);
             requinVue.mettreAJourPosition(i, e.getX(), e.getY());
         }
 
-        // collisions, retourne les cases à mettre à jour
         List<int[]> casesDetruites = env.verifierCollisionsRequins();
-
-        // met à jour les cases détruites dans la vue
         for (int[] c : casesDetruites) {
-            terrainVue.mettreAJourCase(
-                    c[0] * env.getLargeur() + c[1],
-                    ImageLoader.imageCase(mapOriginale[c[0]][c[1]])
-            );
+            terrainVue.mettreAJourCase(c[0] * env.getLargeur() + c[1], mapOriginale[c[0]][c[1]]);
             env.getMap()[c[0]][c[1]] = mapOriginale[c[0]][c[1]];
         }
-        // fais agir les poissons de défense
+
         env.agirPoissonsDeffense();
-        // passe les positions des bulles à la vue
         poissonVue.mettreAJourBulles(env.getPositionsBulles());
-        // collisions bulles/requins
-      //  env.gererCollisions();
 
-
+        // ✅ gererCollisions retourne les requins morts
         List<PoissonAttaque> morts = env.gererCollisions();
 
-        // Supprimer de la vue (indices décroissants pour ne pas décaler)
-        for (PoissonAttaque mort : morts) {
-            // On cherche l'index AVANT la suppression du modèle
-            // donc on reconstruit la vue entière
+        // ✅ Resynchronise la vue si quelque chose a changé
+        if (!casesDetruites.isEmpty() || !morts.isEmpty()) {
+            synchroniserRequins();
         }
 
-        // Resynchroniser la vue avec le modèle
-        requinVue.viderRequins();
-        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-            requinVue.ajouterRequin(
-                    ImageLoader.imageRequin(e.getNom()),
-                    e.getX(), e.getY()
-            );
-        }
-        if (env.vagueTerminee() && env.aUneProchainerVague()) { //declanche la vague suivante
+        if (env.vagueTerminee() && env.aUneProchainerVague()) {
             env.lancerVague();
-            requinVue.viderRequins();
-            for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-                requinVue.ajouterRequin(
-                        ImageLoader.imageRequin(e.getNom()),
-                        e.getX(), e.getY()
-                );
-            }
+            synchroniserRequins();
         }
         mettreAJourProgression();
     }
 
+    private void synchroniserRequins() {
+        requinVue.viderRequins();
+        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
+            requinVue.ajouterRequin(e);
+        }
+    }
     private void initAnimation() {
         gameLoop = new Timeline();
         temps = 0;

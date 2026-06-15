@@ -24,20 +24,13 @@ public class Bulle {
             this.desactiver();
         }
     }
-
-
-
     public double getX(){return this.x;}
     public void setX(double x) {this.x = x;}
     public double getY(){return this.y;}
     public int getDegats(){
         return this.degats;
     }
-    public String getPouvoir(){
-
-        return this.pouvoir;   }
-
-
+    public String getPouvoir(){return this.pouvoir;}
     public boolean estActive() { return active; }   // sert a voir si bulle deja utiliser
     public void desactiver() { active = false; }
 }

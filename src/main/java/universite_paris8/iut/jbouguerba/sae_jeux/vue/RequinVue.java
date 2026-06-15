@@ -1,5 +1,5 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.vue;
-
+import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,13 +11,17 @@ public class RequinVue {
         this.coucheEnnemi = coucheEnnemi;
     }
 
-    public void ajouterRequin(Image image, double x, double y) {
+    public void ajouterRequin(PoissonAttaque requin) {
 
-        ImageView imv = new ImageView(image);
+        ImageView imv = new ImageView(
+                ImageLoader.imageRequin(requin.getNom())
+        );
+
         imv.setFitWidth(114);
         imv.setFitHeight(114);
-        imv.setLayoutX(x);
-        imv.setLayoutY(y);
+        imv.setLayoutX(requin.getX());
+        imv.setLayoutY(requin.getY());
+
         coucheEnnemi.getChildren().add(imv);
     }
 
