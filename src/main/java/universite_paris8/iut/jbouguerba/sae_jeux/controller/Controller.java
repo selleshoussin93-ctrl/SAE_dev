@@ -104,41 +104,40 @@ public class Controller {
     }
     private void mettreAJourVue() {
 
-        // Modèle — avancer les requins
         env.avancerRequins();
-        // Mise à jour des positions des requins
+
         for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
             PoissonAttaque e = env.getListePoissonsAttaque().get(i);
             requinVue.mettreAJourPosition(i, e.getX(), e.getY());
         }
-        // Vérification des collisions requins / poissons
+
         List<int[]> casesDetruites = env.verifierCollisionsRequins();
-        // Mise à jour du terrain
         for (int[] c : casesDetruites) {
             terrainVue.mettreAJourCase(c[0] * env.getLargeur() + c[1], mapOriginale[c[0]][c[1]]);
-
             env.getMap()[c[0]][c[1]] = mapOriginale[c[0]][c[1]];
         }
-        // Action des poissons de défense
-        env.agirPoissonsDeffense();
-        // Mise à jour des bulles
-        poissonVue.mettreAJourBulles(env.getPositionsBulles());
-        // Gestion des collisions bulles / requins
-        env.gererCollisions();
-        // Synchronisation de la vue des requins
-        requinVue.viderRequins();
 
-        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-            requinVue.ajouterRequin(e);
+        env.agirPoissonsDeffense();
+        poissonVue.mettreAJourBulles(env.getPositionsBulles());
+
+        // ✅ gererCollisions retourne les requins morts
+        List<PoissonAttaque> morts = env.gererCollisions();
+
+        // ✅ Resynchronise la vue si quelque chose a changé
+        if (!casesDetruites.isEmpty() || !morts.isEmpty()) {
+            synchroniserRequins();
         }
-        // Lancement de la vague suivante
+
         if (env.vagueTerminee() && env.aUneProchainerVague()) {
             env.lancerVague();
-            requinVue.viderRequins();
+            synchroniserRequins();
+        }
+    }
 
-            for (PoissonAttaque e : env.getListePoissonsAttaque()) {
-                requinVue.ajouterRequin(e);
-            }
+    private void synchroniserRequins() {
+        requinVue.viderRequins();
+        for (PoissonAttaque e : env.getListePoissonsAttaque()) {
+            requinVue.ajouterRequin(e);
         }
     }
     private void initAnimation() {
