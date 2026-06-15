@@ -20,9 +20,13 @@ public class Environnement {
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
 
+
     private IntegerProperty ressourcesProperty;
     private int numVague = 0;
     private List<List<PoissonAttaque>> vagues;
+    private boolean perdu = false;
+
+
 
 
     public Environnement(int largeur, int hauteur) {
@@ -110,6 +114,7 @@ public class Environnement {
     public final void setRessources(int n) {
         ressourcesProperty.setValue(n);
     }
+    public boolean estPerdu() { return perdu; }
 
     public final IntegerProperty ressourcesProperty() {
         return ressourcesProperty;
@@ -166,6 +171,9 @@ public class Environnement {
             e.avancer();
             if(e.getX() <= 0){
                 sortis.add(e);
+                perdu = true ;
+
+
             }
         }
         poissonsAtt.removeAll(sortis);
@@ -230,7 +238,7 @@ public class Environnement {
     // Retourne true si la pelle a bien supprimé un poisson
     public boolean utiliserPelle(int col, int ligne, int[][] mapOriginale) {
         if (map[ligne][col] == 2) {
-            map[ligne][col] = mapOriginale[ligne][col];
+            map[ligne][col] = mapOriginale[ligne][col];   // ici
             supprimerPoissonDeffense(col * 114, ligne * 114);
             return true;
         }
@@ -245,7 +253,7 @@ public class Environnement {
         int prix = PoissonDeffense.getPrix(nom);
         if (getRessources() >= prix) {
             setRessources(getRessources() - prix);
-            map[ligne][col] = 2;
+            map[ligne][col] = 2;   // ici
             ajouterPoissonDeffense(
                     new PoissonDeffense(nom, 100, col * 114, ligne * 114)
             );
