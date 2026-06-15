@@ -19,7 +19,7 @@ public class Environnement {
 
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
-    private ArrayList<Bulle> bulles;
+
     private IntegerProperty ressourcesProperty;
     private int numVague = 0;
     private List<List<PoissonAttaque>> vagues;
@@ -31,7 +31,7 @@ public class Environnement {
 
         this.poissonsDeff = new ArrayList<>();
         this.poissonsAtt = new ArrayList<>();
-        this.ressourcesProperty = new SimpleIntegerProperty(40);
+        this.ressourcesProperty = new SimpleIntegerProperty(80);
 
         initialiserVagues();
         lancerVague();
@@ -40,12 +40,13 @@ public class Environnement {
     private void initialiserVagues() {
         vagues = new ArrayList<>();
 
+
         // Vague 1
         List<PoissonAttaque> vague1 = new ArrayList<>();
         for (int i = 0; i < 5; i++)
-            vague1.add(new PoissonAttaque("Requin Basic", 50, 50, (6+i)*114, i % 4 * 114, 10, 14.0));
-        vague1.add(new PoissonAttaque("Requin Marteau", 30, 30, 11*114, 1*114, 15, 20.0));
-        vague1.add(new PoissonAttaque("Requin Baleine", 100, 100, 12*114, 2*114, 30, 10.2));
+            vague1.add(new PoissonAttaque("Requin Basic", 20, 50, (6+i)*114, i % 4 * 114, 10, 14.0));
+        vague1.add(new PoissonAttaque("Requin Marteau", 10, 30, 11*114, 1*114, 15, 20.0));
+        vague1.add(new PoissonAttaque("Requin Baleine", 50, 100, 6*114, 2*114, 30, 10.2));
         vagues.add(vague1);
 
         // Vague 2
@@ -84,14 +85,6 @@ public class Environnement {
         return numVague < vagues.size();
     }
 
-    public ArrayList<Bulle> getListeBulles() {
-        ArrayList<Bulle> bulles = new ArrayList<>();
-        for (PoissonDeffense p : poissonsDeff) {
-            bulles.addAll(p.getBull()); // addAll car getBull() retourne une liste
-        }
-        return bulles;
-    }
-
 
     public int[][] getMap() {
         return map;
@@ -105,10 +98,6 @@ public class Environnement {
 
     public ArrayList<PoissonAttaque> getListePoissonsAttaque() {
         return poissonsAtt;
-    }
-
-    public ArrayList<PoissonDeffense> getListePoissonsDeffense() {
-        return poissonsDeff;
     }
 
     public void ajouterPoissonDeffense(PoissonDeffense p){
@@ -172,9 +161,14 @@ public class Environnement {
     }
     // Avancer tous les requins
     public void avancerRequins() {
+        List<PoissonAttaque> sortis = new ArrayList<>();
         for (PoissonAttaque e : poissonsAtt) {
             e.avancer();
+            if(e.getX() <= 0){
+                sortis.add(e);
+            }
         }
+        poissonsAtt.removeAll(sortis);
     }
     // Vérifier les collisions requin/case
     public List<int[]> verifierCollisionsRequins() {
@@ -186,11 +180,17 @@ public class Environnement {
             int ligne = (int)(e.getY() / 114);
             if (col >= 0 && col < getLargeur() && ligne >= 0 && ligne < getHauteur()) {
                 if (map[ligne][col] == 2) {
-                    e.subirAttaque(10);
+                    PoissonDeffense pdef = getPoissonDeffenseAt(col * 114, ligne * 114);
+                    if (pdef != null) {
+                        e.subirAttaque(pdef.getDegatsContact());
+                    }
+                    // Le poisson est toujours détruit quand un requin passe dessus
+                    supprimerPoissonDeffense(col * 114, ligne * 114);
+                    casesDetruites.add(new int[]{ligne, col});
+
                     if (e.estMort()) {
-                        supprimerPoissonDeffense(col * 114, ligne * 114);
-                        casesDetruites.add(new int[]{ligne, col});
                         morts.add(e);
+
                     }
                 }
             }
@@ -206,6 +206,15 @@ public class Environnement {
     public void agirPoissonsDeffense() {
         for (PoissonDeffense p : poissonsDeff) {
             p.agit();
+            if (p.getNom().equals("etoile_mer.png")) {
+                int ligneEtoile = (int)(p.getY() / 114);
+                for (PoissonAttaque requin : poissonsAtt) {
+                    int ligneRequin = (int)(requin.getY() / 114);
+                    if (ligneRequin == ligneEtoile) {
+                        requin.ralentir();
+                    }
+                }
+            }
         }
     }
     // Collecte la positions des bulles
@@ -244,4 +253,14 @@ public class Environnement {
         }
         return false;
     }
+
+    public PoissonDeffense getPoissonDeffenseAt(double x, double y) {
+        for (PoissonDeffense p : poissonsDeff) {
+            if (p.getX() == x && p.getY() == y) return p;
+        }
+        return null;
+    }
+    public int getNumVague() { return numVague; }
+
+
 }

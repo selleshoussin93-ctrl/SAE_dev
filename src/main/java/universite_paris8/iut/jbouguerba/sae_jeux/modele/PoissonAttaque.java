@@ -43,10 +43,10 @@ public class PoissonAttaque extends Poisson {
         }
 
         this.setX(this.getX() - this.getVitesse());
-        if(this.getX() <= 0){
+        /*if(this.getX() <= 0){
             this.setX(6 * 114);
             this.setPv(50);
-        }
+        }*/
 
     }
 

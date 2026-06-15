@@ -2,7 +2,6 @@ package universite_paris8.iut.jbouguerba.sae_jeux.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.control.Label;
@@ -11,9 +10,12 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.*;
 import universite_paris8.iut.jbouguerba.sae_jeux.vue.*;
-
-import java.util.ArrayList;
+import javafx.scene.control.ProgressBar;
 import java.util.List;
+import javafx.fxml.FXMLLoader;
+import universite_paris8.iut.jbouguerba.sae_jeux.Main1;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class Controller {
 
@@ -37,6 +39,7 @@ public class Controller {
     @FXML private Label nbRessource;
     @FXML private Pane coucheEnnemi;
     @FXML private Pane coucheBulle;
+    @FXML private ProgressBar barreProgression;
 
 
     public void initialize() {
@@ -104,6 +107,8 @@ public class Controller {
     }
     private void mettreAJourVue() {
 
+
+        // Modèle — avancer les requins
         env.avancerRequins();
 
         for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
@@ -132,6 +137,7 @@ public class Controller {
             env.lancerVague();
             synchroniserRequins();
         }
+        mettreAJourProgression();
     }
 
     private void synchroniserRequins() {
@@ -150,4 +156,17 @@ public class Controller {
         });
         gameLoop.getKeyFrames().add(kf);
     }
+
+    private void mettreAJourProgression() {
+        double progression = switch (env.getNumVague()) {
+            case 1 -> 0.0;   // vague 1 en cours
+            case 2 -> 0.33;  // vague 2 en cours
+            case 3 -> 0.66;  // vague 3 en cours
+            default -> 1.0;  // terminé
+        };
+        barreProgression.setProgress(progression);
+    }
+
+
+
 }
