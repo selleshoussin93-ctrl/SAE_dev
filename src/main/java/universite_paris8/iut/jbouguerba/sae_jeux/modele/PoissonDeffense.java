@@ -13,13 +13,13 @@ public class PoissonDeffense extends Poisson{
         this.projectiles = new ArrayList<>();
         this.degatsContact = getDegatsContact(nom);
     }
-    public void etoileDeMer(){
+    public void etoileDeMer(){                     ////////////////////////////////////////
         if(getNom().equals("etoile_mer.png")){
             setPv(100);
         }
 
     }
-    public void enleveVie(PoissonAttaque r){
+    public void enleveVie(PoissonAttaque r){ /////////////////////////////////////////////////////
         this.pv -= r.getDegats();
     }
     @Override
@@ -79,8 +79,6 @@ public class PoissonDeffense extends Poisson{
         if (nom.equals("poissonGlobe2.png")) return 8;
         return 10;
     }
-
-
 
 
     public String getNom(){
