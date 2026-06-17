@@ -49,5 +49,4 @@ public class PoissonVue {
             coucheBulle.getChildren().add(imvBulle);
         }
     }
-
 }

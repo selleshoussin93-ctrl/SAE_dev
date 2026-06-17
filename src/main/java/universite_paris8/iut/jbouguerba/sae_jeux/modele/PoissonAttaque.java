@@ -43,10 +43,6 @@ public class PoissonAttaque extends Poisson {
         }
 
         this.setX(this.getX() - this.getVitesse());
-        /*if(this.getX() <= 0){
-            this.setX(6 * 114);
-            this.setPv(50);
-        }*/
 
     }
 
@@ -81,28 +77,13 @@ public class PoissonAttaque extends Poisson {
         this.pv -= e.getDegats();
     }
 
-    public void toucher(Bulle projectile, PoissonAttaque requin) {
-        if (!projectile.estActive()) return; //  ignore les bulles déjà utilisées
-
-        double distanceX = Math.abs(projectile.getX() - requin.getX());
-        int ligneBuille = (int)(projectile.getY() / 114);
-        int ligneRequin = (int)(requin.getY() / 114);
-
-        if (distanceX < 57 && ligneBuille == ligneRequin) {
-            enleveVie(projectile);
-            if (projectile.getPouvoir().equals("gele")) {
-                this.ralentir();
-            }
-            projectile.desactiver(); // ✅
-        }
-    }
     public void ralentir() {
         //System.out.println("Vitesse avant : " + this.vitesse);
         if (!ralenti) {
             this.vitesse = 0;
             this.ralenti = true;
         }
-      //  System.out.println("Vitesse après : " + this.vitesse);
+        //  System.out.println("Vitesse après : " + this.vitesse);
     }
 
     public void retablirVitesse() {
@@ -110,7 +91,6 @@ public class PoissonAttaque extends Poisson {
         this.ralenti = false;
     }
 }
-
 
 
 

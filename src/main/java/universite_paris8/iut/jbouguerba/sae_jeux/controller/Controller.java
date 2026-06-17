@@ -16,6 +16,8 @@ import javafx.fxml.FXMLLoader;
 import universite_paris8.iut.jbouguerba.sae_jeux.Main1;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import java.io.IOException;
+import universite_paris8.iut.jbouguerba.sae_jeux.MainDefaite;
 
 public class Controller {
 
@@ -28,6 +30,8 @@ public class Controller {
     private TerrainVue terrainVue;
     private RequinVue requinVue;
     private PoissonVue poissonVue;
+
+
 
     @FXML private ImageView poissonRouge;
     @FXML private ImageView etoileDeMer;
@@ -76,10 +80,10 @@ public class Controller {
 
     private void initialiserTerrain() {
         // Le controller gère mapOriginale
-        mapOriginale = new int[env.getHauteur()][env.getLargeur()];
+        mapOriginale = new int[env.getHauteur()][env.getLargeur()];   //mapOriginale et la map fix elle ne bouge pas
         for (int i = 0; i < env.getHauteur(); i++) {
             for (int j = 0; j < env.getLargeur(); j++) {
-                mapOriginale[i][j] = env.getMap()[i][j];
+                mapOriginale[i][j] = env.getMap()[i][j]; // getMap lui change pendant la partie dans utiliserPelle et placerPoisson
             }
         }
         // TerrainVue gère uniquement l'affichage
@@ -110,6 +114,12 @@ public class Controller {
 
         // Modèle — avancer les requins
         env.avancerRequins();
+
+        if (env.estPerdu()) {
+            gameLoop.stop();
+            afficherEcranDefaite();
+            return;
+        }
 
         for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
             PoissonAttaque e = env.getListePoissonsAttaque().get(i);
@@ -159,12 +169,21 @@ public class Controller {
 
     private void mettreAJourProgression() {
         double progression = switch (env.getNumVague()) {
-            case 1 -> 0.0;   // vague 1 en cours
-            case 2 -> 0.33;  // vague 2 en cours
-            case 3 -> 0.66;  // vague 3 en cours
+            case 1 -> 0.0;   // vague 1 en pourcentage
+            case 2 -> 0.33;  // vague 2
+            case 3 -> 0.66;  // vague 3
             default -> 1.0;  // terminé
         };
         barreProgression.setProgress(progression);
+    }
+
+    private void afficherEcranDefaite()  {
+        try {
+            Stage stage = (Stage) barreProgression.getScene().getWindow();
+            MainDefaite.afficher(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
