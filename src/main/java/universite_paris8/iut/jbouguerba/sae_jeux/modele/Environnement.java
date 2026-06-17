@@ -19,6 +19,7 @@ public class Environnement {
 
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
+    private ArrayList<Bulle> bullesOrphelines = new ArrayList<>();
 
     private IntegerProperty ressourcesProperty;
     private int numVague = 0;
@@ -39,7 +40,6 @@ public class Environnement {
 
     private void initialiserVagues() {
         vagues = new ArrayList<>();
-
 
         // Vague 1
         List<PoissonAttaque> vague1 = new ArrayList<>();
@@ -68,7 +68,7 @@ public class Environnement {
         for (int i = 0; i < 7; i++)
             vague3.add(new PoissonAttaque("Requin Baleine", 100, 100, (12+i)*114, i % 4 * 114, 30, 10.2));
         vagues.add(vague3);
-  }
+    }
 
     public void lancerVague() {
         if (numVague < vagues.size()) {
@@ -84,7 +84,6 @@ public class Environnement {
     public boolean aUneProchainerVague() {
         return numVague < vagues.size();
     }
-
 
     public int[][] getMap() {
         return map;
@@ -115,8 +114,6 @@ public class Environnement {
         return ressourcesProperty;
     }
 
-    
-
     public void supprimerPoissonDeffense(double x, double y) {
         System.out.println("Suppression poisson à x=" + x + " y=" + y);
         System.out.println("Liste avant : " + poissonsDeff.size());
@@ -126,50 +123,67 @@ public class Environnement {
         });
         System.out.println("Liste après : " + poissonsDeff.size());
     }
+
     public List<PoissonAttaque> gererCollisions() {
         List<PoissonAttaque> morts = new ArrayList<>();
         for (PoissonDeffense p : poissonsDeff) {
             for (Bulle b : p.getBull()) {
-                if(!b.estActive()) continue;
+                if (!b.estActive()) continue;
                 for (PoissonAttaque requin : poissonsAtt) {
                     double distanceX = Math.abs(b.getX() - requin.getX());
-                    int ligneBulle  = (int)(b.getY() / 114);
+                    int ligneBulle = (int)(b.getY() / 114);
                     int ligneRequin = (int)(requin.getY() / 114);
 
                     if (distanceX < 57 && ligneBulle == ligneRequin) {
-                        requin.enleveVie(b);
 
-                        if (b.getPouvoir().equals("gele")) {
-                            requin.ralentir();
-                        }
-
-                        b.desactiver();// la bulle disparaît après impact
-                        if(requin.estMort()){
-                            morts.add(requin);
+                        if (b.getPouvoir().equals("explose")) {
+                            // Dégâts de zone — touche tous les requins dans le rayon
+                            for (PoissonAttaque autre : poissonsAtt) {
+                                double dist = Math.abs(b.getX() - autre.getX());
+                                if (dist <= b.getRayonExplosion()) {
+                                    autre.enleveVie(b);
+                                    if (autre.estMort() && !morts.contains(autre)) {
+                                        morts.add(autre);
+                                    }
+                                }
+                            }
+                            b.exploser(); // Marque la bulle comme explosée
+                        } else {
+                            // Dégâts normaux — touche un seul requin
+                            requin.enleveVie(b);
+                            if (b.getPouvoir().equals("gele")) {
+                                requin.ralentir();
+                            }
+                            b.desactiver(); // La bulle disparaît après impact
+                            if (requin.estMort()) {
+                                morts.add(requin);
+                            }
                         }
                         break;
                     }
                 }
             }
-
         }
+        // Récompenses et suppression des requins morts
         for (PoissonAttaque mort : morts) {
             setRessources(getRessources() + mort.getRecompense());
         }
         poissonsAtt.removeAll(morts);
         return morts;
     }
+
     // Avancer tous les requins
     public void avancerRequins() {
         List<PoissonAttaque> sortis = new ArrayList<>();
         for (PoissonAttaque e : poissonsAtt) {
             e.avancer();
-            if(e.getX() <= 0){
+            if (e.getX() <= 0) {
                 sortis.add(e);
             }
         }
         poissonsAtt.removeAll(sortis);
     }
+
     // Vérifier les collisions requin/case
     public List<int[]> verifierCollisionsRequins() {
         List<int[]> casesDetruites = new ArrayList<>();
@@ -190,22 +204,25 @@ public class Environnement {
 
                     if (e.estMort()) {
                         morts.add(e);
-
                     }
                 }
             }
         }
+        // Récompenses et suppression des requins morts
         for (PoissonAttaque mort : morts) {
             setRessources(getRessources() + mort.getRecompense());
         }
         poissonsAtt.removeAll(morts);
-        return casesDetruites; // le controller met à jour la vue avec ces cases
+        return casesDetruites; // Le controller met à jour la vue avec ces cases
     }
 
     // Fais agir les poissons de défense
     public void agirPoissonsDeffense() {
         for (PoissonDeffense p : poissonsDeff) {
+            // Passe la liste des ennemis pour que le poisson sache quand tirer
+            p.setEnnemis(poissonsAtt);
             p.agit();
+            // L'étoile de mer ralentit les requins sur sa ligne
             if (p.getNom().equals("etoile_mer.png")) {
                 int ligneEtoile = (int)(p.getY() / 114);
                 for (PoissonAttaque requin : poissonsAtt) {
@@ -217,7 +234,8 @@ public class Environnement {
             }
         }
     }
-    // Collecte la positions des bulles
+
+    // Collecte les positions des bulles
     public List<double[]> getPositionsBulles() {
         List<double[]> positions = new ArrayList<>();
         for (PoissonDeffense p : poissonsDeff) {
@@ -227,6 +245,7 @@ public class Environnement {
         }
         return positions;
     }
+
     // Retourne true si la pelle a bien supprimé un poisson
     public boolean utiliserPelle(int col, int ligne, int[][] mapOriginale) {
         if (map[ligne][col] == 2) {
@@ -236,6 +255,7 @@ public class Environnement {
         }
         return false;
     }
+
     // Retourne true si le poisson a bien été posé
     public boolean placerPoisson(String nom, int col, int ligne) {
         // Vérifie que la case n'est pas déjà occupée par un poisson
@@ -260,7 +280,6 @@ public class Environnement {
         }
         return null;
     }
+
     public int getNumVague() { return numVague; }
-
-
 }
