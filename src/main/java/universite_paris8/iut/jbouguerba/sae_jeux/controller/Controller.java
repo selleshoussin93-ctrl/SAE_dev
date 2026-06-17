@@ -12,10 +12,7 @@ import universite_paris8.iut.jbouguerba.sae_jeux.modele.*;
 import universite_paris8.iut.jbouguerba.sae_jeux.vue.*;
 import javafx.scene.control.ProgressBar;
 import java.util.List;
-import javafx.fxml.FXMLLoader;
-import universite_paris8.iut.jbouguerba.sae_jeux.Main1;
 import javafx.stage.Stage;
-import javafx.scene.Scene;
 import java.io.IOException;
 import universite_paris8.iut.jbouguerba.sae_jeux.MainDefaite;
 
@@ -31,8 +28,6 @@ public class Controller {
     private RequinVue requinVue;
     private PoissonVue poissonVue;
 
-
-
     @FXML private ImageView poissonRouge;
     @FXML private ImageView etoileDeMer;
     @FXML private ImageView crabe;
@@ -44,7 +39,6 @@ public class Controller {
     @FXML private Pane coucheEnnemi;
     @FXML private Pane coucheBulle;
     @FXML private ProgressBar barreProgression;
-
 
     public void initialize() {
         this.env = new Environnement(6, 4);
@@ -59,7 +53,7 @@ public class Controller {
 
         nbRessource.textProperty().bind(env.ressourcesProperty().asString());
         initAnimation();
-        gameLoop.play();
+        gameLoop.play(); // lance la boucle
     }
 
     private void initialiserOutils() {
@@ -70,6 +64,7 @@ public class Controller {
         poissonGlobe.setImage(ImageLoader.charger("poissonGlobe2.png"));
         pelle.setImage(ImageLoader.charger("pelle.png"));
 
+        // evenement au clic pour chosir l'image
         poissonRouge.setOnMouseClicked(e -> outilSelectionne = "poisson_rouge.png");
         etoileDeMer.setOnMouseClicked(e -> outilSelectionne = "etoile_mer.png");
         crabe.setOnMouseClicked(e -> outilSelectionne = "crabe.png");
@@ -89,13 +84,15 @@ public class Controller {
         // TerrainVue gère uniquement l'affichage
         terrainVue.initialiserTerrain(env.getMap(), (col, l) -> gererClicCase(col, l));
     }
+
     private void initialiserRequins() {
         for (PoissonAttaque e : env.getListePoissonsAttaque()) {
             requinVue.ajouterRequin(e);
         }
     }
+
     private void gererClicCase(int col, int ligne) {
-        if (outilSelectionne == null) return;
+        if (outilSelectionne == null) return; // si rien de selectionne on fait rien
         if (outilSelectionne.equals("pelle")) {
             boolean succes = env.utiliserPelle(col, ligne, mapOriginale);
             if (succes) {
@@ -109,21 +106,14 @@ public class Controller {
             }
         }
     }
+
     private void mettreAJourVue() {
-
-
-        // Modèle — avancer les requins
         env.avancerRequins();
 
-        if (env.estPerdu()) {
+        if (env.estPerdu()) { // si c'est perdu on arrete tout
             gameLoop.stop();
             afficherEcranDefaite();
             return;
-        }
-
-        for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
-            PoissonAttaque e = env.getListePoissonsAttaque().get(i);
-            requinVue.mettreAJourPosition(i, e.getX(), e.getY());
         }
 
         List<int[]> casesDetruites = env.verifierCollisionsRequins();
@@ -135,17 +125,20 @@ public class Controller {
         env.agirPoissonsDeffense();
         poissonVue.mettreAJourBulles(env.getPositionsBulles());
 
-        //  gererCollisions retourne les requins morts
         List<PoissonAttaque> morts = env.gererCollisions();
 
-        //  Resynchronise la vue si quelque chose a changé
         if (!casesDetruites.isEmpty() || !morts.isEmpty()) {
-            synchroniserRequins();
+            synchroniserRequins(); // refresh pour eviter les bugs d'index
+        } else {
+            for (int i = 0; i < env.getListePoissonsAttaque().size(); i++) {
+                PoissonAttaque e = env.getListePoissonsAttaque().get(i);
+                requinVue.mettreAJourPosition(i, e.getX(), e.getY());
+            }
         }
 
         if (env.vagueTerminee() && env.aUneProchainerVague()) {
             env.lancerVague();
-            synchroniserRequins();
+            synchroniserRequins(); // refresh pour la nouvelle vague
         }
         mettreAJourProgression();
     }
@@ -156,12 +149,13 @@ public class Controller {
             requinVue.ajouterRequin(e);
         }
     }
+
     private void initAnimation() {
         gameLoop = new Timeline();
         temps = 0;
         gameLoop.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.seconds(0.010), ev -> {
-            if (temps % 50 == 0) mettreAJourVue();
+            if (temps % 50 == 0) mettreAJourVue(); // rafraichit toutes les 50 frames
             temps++;
         });
         gameLoop.getKeyFrames().add(kf);
@@ -180,12 +174,9 @@ public class Controller {
     private void afficherEcranDefaite()  {
         try {
             Stage stage = (Stage) barreProgression.getScene().getWindow();
-            MainDefaite.afficher(stage);
+            MainDefaite.afficher(stage); // change de scene ici
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-
 }

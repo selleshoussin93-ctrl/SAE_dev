@@ -18,35 +18,33 @@ public class PoissonVue {
         this.imageBulle = ImageLoader.charger("bulle2.png");
     }
 
-
     public void afficherPoisson(int index, String nomImage) {
-
+        // recupere la case de la map pour mettre l'image du poisson
         ImageView imv = (ImageView) map.getChildren().get(index);
-
         imv.setImage(
                 ImageLoader.imagePoisson(nomImage)
         );
     }
 
-
     public void effacerPoisson(int index, int typeCase) {
-
+        // remet le fond d'origine de la case (pelle ou destruction)
         ImageView imv = (ImageView) map.getChildren().get(index);
-
         imv.setImage(
                 ImageLoader.imageCase(typeCase)
         );
     }
 
     public void mettreAJourBulles(List<double[]> positions) {
-        coucheBulle.getChildren().clear();
+        coucheBulle.getChildren().clear(); // vide l'affichage d'avant
+
+        // repositionne toutes les bulles de la liste
         for (double[] pos : positions) {
             ImageView imvBulle = new ImageView(imageBulle);
             imvBulle.setFitWidth(30);
             imvBulle.setFitHeight(30);
             imvBulle.setLayoutX(pos[0]);
             imvBulle.setLayoutY(pos[1]);
-            coucheBulle.getChildren().add(imvBulle);
+            coucheBulle.getChildren().add(imvBulle); // ajoute a la vue
         }
     }
 }

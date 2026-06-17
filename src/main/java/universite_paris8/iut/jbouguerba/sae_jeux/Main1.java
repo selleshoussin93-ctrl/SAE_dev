@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import universite_paris8.iut.jbouguerba.sae_jeux.modele.Bulle;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonDeffense;
 
 import java.io.IOException;

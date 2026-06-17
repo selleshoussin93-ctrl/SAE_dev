@@ -1,6 +1,5 @@
 package universite_paris8.iut.jbouguerba.sae_jeux.vue;
 import universite_paris8.iut.jbouguerba.sae_jeux.modele.PoissonAttaque;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 

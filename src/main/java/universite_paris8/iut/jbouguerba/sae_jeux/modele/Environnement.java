@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-
 public class Environnement {
     private int largeur;
     private int hauteur;
@@ -20,14 +19,10 @@ public class Environnement {
     private ArrayList<PoissonDeffense> poissonsDeff;
     private ArrayList<PoissonAttaque> poissonsAtt;
 
-
     private IntegerProperty ressourcesProperty;
     private int numVague = 0;
     private List<List<PoissonAttaque>> vagues;
     private boolean perdu = false;
-
-
-
 
     public Environnement(int largeur, int hauteur) {
         this.hauteur = map.length;
@@ -43,7 +38,6 @@ public class Environnement {
 
     private void initialiserVagues() {
         vagues = new ArrayList<>();
-
 
         // Vague 1
         List<PoissonAttaque> vague1 = new ArrayList<>();
@@ -72,7 +66,7 @@ public class Environnement {
         for (int i = 0; i < 7; i++)
             vague3.add(new PoissonAttaque("Requin Baleine", 100, 100, (12+i)*114, i % 4 * 114, 30, 10.2));
         vagues.add(vague3);
-  }
+    }
 
     public void lancerVague() {
         if (numVague < vagues.size()) {
@@ -88,7 +82,6 @@ public class Environnement {
     public boolean aUneProchainerVague() {
         return numVague < vagues.size();
     }
-
 
     public int[][] getMap() {
         return map;
@@ -120,8 +113,6 @@ public class Environnement {
         return ressourcesProperty;
     }
 
-    
-
     public void supprimerPoissonDeffense(double x, double y) {
         System.out.println("Suppression poisson à x=" + x + " y=" + y);
         System.out.println("Liste avant : " + poissonsDeff.size());
@@ -131,6 +122,7 @@ public class Environnement {
         });
         System.out.println("Liste après : " + poissonsDeff.size());
     }
+
     public List<PoissonAttaque> gererCollisions() {
         List<PoissonAttaque> morts = new ArrayList<>();
         for (PoissonDeffense p : poissonsDeff) {
@@ -148,7 +140,7 @@ public class Environnement {
                             requin.ralentir();
                         }
 
-                        b.desactiver();// la bulle disparaît après impact
+                        b.desactiver(); // disparition de la bulle
                         if(requin.estMort()){
                             morts.add(requin);
                         }
@@ -156,7 +148,6 @@ public class Environnement {
                     }
                 }
             }
-
         }
         for (PoissonAttaque mort : morts) {
             setRessources(getRessources() + mort.getRecompense());
@@ -164,7 +155,8 @@ public class Environnement {
         poissonsAtt.removeAll(morts);
         return morts;
     }
-    // Avancer tous les requins
+
+    // Deplacement des requins
     public void avancerRequins() {
         List<PoissonAttaque> sortis = new ArrayList<>();
         for (PoissonAttaque e : poissonsAtt) {
@@ -172,34 +164,58 @@ public class Environnement {
             if(e.getX() <= 0){
                 sortis.add(e);
                 perdu = true ;
-
-
             }
         }
         poissonsAtt.removeAll(sortis);
     }
-    // Vérifier les collisions requin/case
+
+    // Collisions entre les requins et les cases
     public List<int[]> verifierCollisionsRequins() {
         List<int[]> casesDetruites = new ArrayList<>();
         List<PoissonAttaque> morts = new ArrayList<>();
 
-        for (PoissonAttaque e : poissonsAtt) {
+        // Copie pour pouvoir modifier la liste d'origine pendant le parcours
+        List<PoissonAttaque> requinsAverifier = new ArrayList<>(poissonsAtt);
+
+        for (PoissonAttaque e : requinsAverifier) {
+            if (!poissonsAtt.contains(e)) continue;
+
             int col = (int)(e.getX() / 114);
             int ligne = (int)(e.getY() / 114);
             if (col >= 0 && col < getLargeur() && ligne >= 0 && ligne < getHauteur()) {
                 if (map[ligne][col] == 2) {
                     PoissonDeffense pdef = getPoissonDeffenseAt(col * 114, ligne * 114);
                     if (pdef != null) {
-                        e.subirAttaque(pdef.getDegatsContact());
+
+                        // Explosion du poisson-globe
+                        if (pdef.getNom().equals("poissonGlobe2.png")) {
+                            System.out.println("BOOM ! Le poisson-globe explose !");
+
+                            List<PoissonAttaque> ciblesPotentielles = new ArrayList<>(poissonsAtt);
+                            for (PoissonAttaque requin : ciblesPotentielles) {
+                                int ligneRequin = (int)(requin.getY() / 114);
+                                double distanceX = Math.abs(requin.getX() - pdef.getX());
+
+                                // Zone d'impact de 2 cases sur la meme ligne
+                                if (ligneRequin == ligne && distanceX <= 228) {
+                                    Bulle bulleExplosion = new Bulle(50, 0, requin.getX(), requin.getY(), "explosion");
+                                    requin.enleveVie(bulleExplosion);
+
+                                    if (requin.estMort() && !morts.contains(requin)) {
+                                        morts.add(requin);
+                                    }
+                                }
+                            }
+                        } else {
+                            // Attaque classique pour les autres poissons
+                            e.subirAttaque(pdef.getDegatsContact());
+                            if (e.estMort() && !morts.contains(e)) {
+                                morts.add(e);
+                            }
+                        }
                     }
-                    // Le poisson est toujours détruit quand un requin passe dessus
                     supprimerPoissonDeffense(col * 114, ligne * 114);
                     casesDetruites.add(new int[]{ligne, col});
-
-                    if (e.estMort()) {
-                        morts.add(e);
-
-                    }
                 }
             }
         }
@@ -207,10 +223,10 @@ public class Environnement {
             setRessources(getRessources() + mort.getRecompense());
         }
         poissonsAtt.removeAll(morts);
-        return casesDetruites; // le controller met à jour la vue avec ces cases
+        return casesDetruites;
     }
 
-    // Fais agir les poissons de défense
+    // Actions des poissons defensifs
     public void agirPoissonsDeffense() {
         for (PoissonDeffense p : poissonsDeff) {
             p.agit();
@@ -225,7 +241,8 @@ public class Environnement {
             }
         }
     }
-    // Collecte la positions des bulles
+
+    // Recupere les positions des projectiles
     public List<double[]> getPositionsBulles() {
         List<double[]> positions = new ArrayList<>();
         for (PoissonDeffense p : poissonsDeff) {
@@ -235,7 +252,7 @@ public class Environnement {
         }
         return positions;
     }
-    // Retourne true si la pelle a bien supprimé un poisson
+
     public boolean utiliserPelle(int col, int ligne, int[][] mapOriginale) {
         if (map[ligne][col] == 2) {
             map[ligne][col] = mapOriginale[ligne][col];   // ici
@@ -244,9 +261,8 @@ public class Environnement {
         }
         return false;
     }
-    // Retourne true si le poisson a bien été posé
+
     public boolean placerPoisson(String nom, int col, int ligne) {
-        // Vérifie que la case n'est pas déjà occupée par un poisson
         if (map[ligne][col] == 2) {
             return false;
         }
@@ -269,6 +285,4 @@ public class Environnement {
         return null;
     }
     public int getNumVague() { return numVague; }
-
-
 }
